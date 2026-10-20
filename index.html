@@ -60,69 +60,84 @@ table.t{width:100%;border-collapse:collapse;font-size:.95rem} table.t td,table.t
 @media (max-width:480px){html,body{font-size:16px}.big{font-size:1.8rem}}
 
 /* ---- ECRÃ (slides integrados) ---- */
-body.ecra{background:#111;overflow:hidden}
+body.ecra{background:#03101E;overflow:hidden}
 body.ecra #app{max-width:none;padding:0;margin:0}
-.stage{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:top left;background:#fff;color:var(--ink);overflow:hidden;font-size:26px;line-height:1.4}
-.stage .chrome-logo{position:absolute;top:44px;left:72px;height:52px}
-.stage .chrome-plmj{position:absolute;top:40px;right:72px;height:60px}
-.stage .foot{position:absolute;left:72px;right:72px;bottom:34px;border-top:1px solid #ddd;padding-top:8px;font-size:15px;color:#888;display:flex;justify-content:space-between}
+.stage{--nv:#061A2E;--nv2:#0B2740;--w:#F4F7FA;--soft:rgba(244,247,250,.72);--dim:rgba(244,247,250,.45);--line:rgba(255,255,255,.14);--panel:rgba(255,255,255,.06);--lav:#C9A8E0;
+ position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:top left;background:var(--nv);color:var(--w);overflow:hidden;font-size:26px;line-height:1.4;font-weight:400}
+.stage::before{content:"";position:absolute;inset:0;background:radial-gradient(1200px 700px at 85% 10%,rgba(0,156,209,.18),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(87,32,104,.35),transparent 60%);pointer-events:none}
+.stage>*{position:relative}
+.stage .chrome-logo{position:absolute;top:44px;left:72px;height:48px;opacity:.9}
+.stage .chrome-plmj{position:absolute;top:40px;right:72px;height:56px;opacity:.9}
+.stage .foot{position:absolute;left:72px;right:72px;bottom:34px;border-top:1px solid var(--line);padding-top:8px;font-size:14px;color:var(--dim);display:flex;justify-content:space-between;letter-spacing:.4px}
 .stage .content{position:absolute;left:72px;right:72px;top:150px;bottom:90px}
-.stage h1.title{font-size:54px;color:var(--roxo);margin:0 0 28px;line-height:1.12}
+.stage .kicker{font-size:17px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--azul);margin-bottom:14px}
+.stage h1.title{font-size:60px;color:var(--w);margin:0 0 30px;line-height:1.08;font-weight:900;letter-spacing:-.5px}
 .stage .num{font-family:"Playfair Display",serif;font-weight:900;color:var(--azul);font-size:64px;line-height:1;display:inline-block;margin-right:18px;vertical-align:middle}
-.stage .numtitle{display:flex;align-items:center;gap:18px}
+.stage .numtitle{display:flex;align-items:center;gap:18px;margin-bottom:30px}
 .stage p{margin:0 0 16px}
-.stage .lead{font-family:"Playfair Display",serif;font-size:34px;line-height:1.25;font-weight:700}
-.stage .it{font-style:italic} .stage .b{font-weight:700} .stage .small{font-size:19px;color:#777}
-.stage .blue{color:var(--azul)} .stage .purple{color:var(--roxo)} .stage .grey{color:#6E6E6E}
-.stage .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 30px;margin:0}
-.stage .card.tint{background:var(--tint)} .stage .card.tintp{background:var(--tintp)} .stage .card.grey{background:#F2F2F2}
-.stage .card.b-blue{border:3px solid var(--azul)} .stage .card.b-purple{border:3px solid var(--roxo)}
-.stage .card h3{font-size:30px;margin-bottom:10px}
+.stage .lead{font-family:"Playfair Display",serif;font-size:36px;line-height:1.25;font-weight:700}
+.stage .it{font-style:italic} .stage .b{font-weight:700} .stage .small{font-size:19px;color:var(--soft)} .stage .soft{color:var(--soft)} .stage .dim{color:var(--dim)}
+.stage .blue{color:var(--azul)} .stage .pu{color:var(--lav)}
+.stage .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 30px;margin:0}
+.stage .card.hi{border-color:var(--azul);box-shadow:inset 0 0 0 1px var(--azul)} .stage .card.dim{color:var(--soft)}
+.stage .card h3{font-size:30px;margin-bottom:10px;color:var(--w)} .stage .card.hi h3{color:var(--azul)} .stage .card.dim h3{color:var(--soft)}
 .stage .cols2{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-bottom:24px} .stage .cols2.w40{grid-template-columns:4fr 6fr} .stage .cols2.w55{grid-template-columns:55fr 45fr}
 .stage .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;margin-bottom:24px}
+.stage .tight{gap:20px} .stage .tight .card{padding:20px 24px} .stage .tight .card h3{font-size:24px}
 .stage .steps .step{display:flex;gap:18px;align-items:flex-start;margin-bottom:26px;font-size:27px}
 .stage .steps .num{font-size:56px}
-.stage .stats b{display:block;font-family:"Playfair Display",serif;font-size:96px;line-height:1;margin-bottom:14px} .stage .stats p{font-size:22px}
-.stage .mov b.num{font-size:110px;display:block;margin-bottom:10px} .stage .mov h3{font-size:40px;color:var(--roxo)}
-.stage .routes b{font-family:"Playfair Display",serif;font-size:48px;display:block;margin-bottom:8px;color:#6E6E6E} .stage .routes p{font-size:22px}
-.stage .tpl p{font-family:"Playfair Display",serif;font-size:36px;color:var(--roxo);font-weight:700;margin:0 0 18px}
+.stage .stats b{display:block;font-family:"Playfair Display",serif;font-size:110px;line-height:1;margin-bottom:14px;color:var(--azul)} .stage .stats p{font-size:22px} .stage .stats .src{font-size:15px;color:var(--dim);letter-spacing:.5px;text-transform:uppercase}
+.stage .mov b.num{font-size:120px;display:block;margin-bottom:10px} .stage .mov h3{font-size:40px;color:var(--w)}
+.stage .routes b{font-family:"Playfair Display",serif;font-size:52px;display:block;margin-bottom:8px;color:var(--dim)} .stage .routes p{font-size:22px} .stage .routes .rk{font-style:italic;color:var(--soft);font-size:19px}
+.stage .tpl p{font-family:"Playfair Display",serif;font-size:36px;color:var(--azul);font-weight:700;margin:0 0 18px}
+.stage .q{font-family:"Playfair Display",serif;font-size:30px;font-weight:700;color:var(--azul);border-top:1px solid var(--line);padding-top:16px}
 .stage .quad{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:460px;margin-left:auto}
-.stage .quad div{aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#fff;font-family:"Playfair Display",serif;font-weight:700;font-size:30px;border-radius:12px}
-.stage .quad .q1{background:var(--azul)} .stage .quad .q2{background:var(--roxo)}
-.stage .flow{display:grid;grid-template-columns:5fr 2fr 5fr;align-items:center;gap:20px;margin-bottom:30px} .stage .flow .arrow{font-size:110px;color:var(--roxo);text-align:center;line-height:1}
-.stage table.cy{width:100%;border-collapse:collapse;font-size:21px} .stage table.cy th{background:var(--roxo);color:#fff;font-family:"Playfair Display",serif;font-size:24px;padding:12px} .stage table.cy td{border:1px solid #ddd;padding:12px 14px;vertical-align:top} .stage table.cy td.lab{background:var(--tintp);color:var(--roxo);font-weight:700;font-size:17px;width:150px}
-.stage .caso{font-size:24px;background:var(--tintp);border-left:6px solid var(--roxo);padding:20px 24px;border-radius:8px}
-.stage .timing div{font-size:22px;margin:8px 0} .stage .timing b{display:inline-block;width:110px}
-.stage .livebox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 24px;min-height:300px}
+.stage .quad div{aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#fff;font-family:"Playfair Display",serif;font-weight:700;font-size:30px;border-radius:12px;background:var(--azul)}
+.stage .quad .p{background:var(--roxo)}
+.stage .flow{display:grid;grid-template-columns:5fr 2fr 5fr;align-items:center;gap:20px;margin-bottom:30px} .stage .flow .arrow{font-size:110px;color:var(--azul);text-align:center;line-height:1}
+.stage table.cy{width:100%;border-collapse:separate;border-spacing:0;font-size:21px;margin-bottom:16px} .stage table.cy th{color:var(--azul);font-family:"Playfair Display",serif;font-size:30px;padding:10px 14px;text-align:left;border-bottom:2px solid var(--azul)} .stage table.cy td{border-bottom:1px solid var(--line);padding:12px 14px;vertical-align:top;color:var(--soft)} .stage table.cy td.lab{color:var(--dim);font-size:15px;letter-spacing:2px;text-transform:uppercase;width:140px;padding-top:16px} .stage table.cy td.ex{font-family:"Playfair Display",serif;font-size:27px;color:var(--w);font-weight:700} .stage table.cy td.b{color:var(--w);font-weight:700}
+.stage .caso{font-size:24px;background:var(--panel);border-left:5px solid var(--azul);padding:20px 24px;border-radius:8px;color:var(--w)}
+.stage .timing div{font-size:22px;margin:8px 0;color:var(--soft)} .stage .timing b{display:inline-block;width:110px;color:var(--azul)}
+.stage .livebox{min-height:300px} .stage .livebox .lpanel{padding:20px 24px;min-height:300px} .stage .livebox .bar{font-size:18px;grid-template-columns:190px 1fr 56px} .stage .livebox h3{font-size:22px}
 .stage .lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px} .stage .lgrid.c2{grid-template-columns:1fr 1fr}
-.stage .lpanel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 18px}
-.stage .lpanel h3{font-size:19px;color:var(--roxo);margin-bottom:8px;line-height:1.2}
-.stage .bar{font-size:16px;line-height:1.2;grid-template-columns:150px 1fr 50px;margin:5px 0;gap:8px} .stage .bar .trk{height:16px} .stage .bar .lab{overflow:hidden}
-.stage .count{position:absolute;top:60px;right:180px;font-size:18px;color:#888} .stage .count b{font-family:"Playfair Display",serif;font-size:34px;color:var(--azul);margin-right:6px}
-.stage .verb{font-size:17px;line-height:1.3;padding:6px 10px;margin:5px 0}
-/* dark layouts */
-.stage.blue{background:var(--azul);color:#fff} .stage.purple{background:var(--roxo);color:#fff} .stage.dark{background:#231F20;color:#fff}
-.stage.blue .foot,.stage.purple .foot,.stage.dark .foot{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.3)}
-.stage .quote{font-family:"Playfair Display",serif;font-weight:700;font-size:64px;line-height:1.12;margin:0 0 30px}
-.stage .cite{font-size:20px;opacity:.85;margin-bottom:40px}
-.stage .kicker{font-size:26px;font-weight:700;letter-spacing:2px;color:var(--azul);margin-bottom:24px}
-.stage.dark .quote{font-size:76px}
-/* cover */
-.stage.cover{display:grid;grid-template-columns:1fr 1fr}
-.stage.cover .cl{padding:140px 80px} .stage.cover .cr{background:center/cover no-repeat}
-.stage.cover h1{font-size:72px;color:var(--roxo);margin:0 0 24px;line-height:1.1}
-.stage.cover .sub{font-size:26px;margin-bottom:8px} .stage.cover .by{font-size:20px;color:#777;margin-bottom:60px}
-.stage.cover .logos{display:flex;gap:40px;align-items:center} .stage.cover .logos img{height:64px}
-.stage .nav{position:absolute;right:28px;bottom:70px;display:flex;gap:6px;opacity:.25} .stage .nav button{font:inherit;font-size:22px;background:#fff;border:1px solid #ccc;border-radius:8px;padding:4px 14px;cursor:pointer}
+.stage .lpanel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 18px}
+.stage .lpanel h3{font-size:19px;color:var(--w);margin-bottom:8px;line-height:1.2} .stage .lpanel .muted{color:var(--dim)}
+.stage .bar{font-size:16px;line-height:1.2;grid-template-columns:150px 1fr 50px;margin:5px 0;gap:8px} .stage .bar .trk{height:16px;background:rgba(255,255,255,.1)} .stage .bar .lab{overflow:hidden;color:var(--soft)} .stage .bar .val{color:var(--w)} .stage .bar.alt .fil{background:var(--lav)}
+.stage table.t td,.stage table.t th{border-color:var(--line)} .stage table.t th{color:var(--azul)}
+.stage .count{position:absolute;top:60px;right:180px;font-size:18px;color:var(--dim)} .stage .count b{font-family:"Playfair Display",serif;font-size:34px;color:var(--azul);margin-right:6px}
+.stage .verb{font-size:17px;line-height:1.3;padding:6px 10px;margin:5px 0;background:var(--panel);border-left-color:var(--lav);color:var(--w)}
+.stage .after{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,var(--nv) 30%);padding-top:40px}
+.stage .quote{font-family:"Playfair Display",serif;font-weight:900;font-size:72px;line-height:1.1;margin:0 0 30px;letter-spacing:-.5px}
+.stage .cite{font-size:19px;color:var(--soft);margin-bottom:40px;letter-spacing:.5px}
+.stage.accent{background:var(--roxo)} .stage.accent::before{background:radial-gradient(1000px 700px at 90% 100%,rgba(0,156,209,.35),transparent 60%)}
+.stage.accent .quote{font-size:84px}
+.stage.accent .content{display:flex;flex-direction:column;justify-content:center}
+.stage.photo .bg{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat;animation:kb 40s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.08)}}
+.stage.photo .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,26,46,.92) 0%,rgba(6,26,46,.75) 45%,rgba(6,26,46,.15) 100%)}
+.stage.photo.side .bg{background-size:contain;background-position:right center;animation:none;left:auto;width:660px;right:72px;top:130px;bottom:90px;border-radius:8px} .stage.photo.side .content{width:760px} .stage.photo.side .quote{font-size:54px} .stage.photo.side .shade{background:none}
+.stage.photo .content{right:auto;width:900px;display:flex;flex-direction:column;justify-content:flex-end;bottom:110px}
+.stage.photo .quote{font-size:64px}
+.stage.cover .content{display:flex;flex-direction:column;justify-content:center;top:0;bottom:0}
+.stage.cover h1{font-family:"Playfair Display",serif;font-size:132px;color:var(--w);margin:0 0 18px;line-height:1;font-weight:900;letter-spacing:-2px}
+.stage.cover .sub{font-size:28px;color:var(--azul);margin-bottom:10px;letter-spacing:1px} .stage.cover .by{font-size:20px;color:var(--soft);margin-bottom:0}
+.stage.cover .logos{position:absolute;left:72px;bottom:60px;display:flex;gap:44px;align-items:center} .stage.cover .logos img{height:56px}
+.stage.cover svg.motif{position:absolute;right:0;top:0;height:900px;width:900px}
+.stage .nav{position:absolute;right:28px;bottom:70px;display:flex;gap:6px;opacity:.15} .stage .nav button{font:inherit;font-size:22px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:4px 14px;cursor:pointer}
 .stage .nav:hover{opacity:1}
-.stage .qrbig{display:flex;gap:60px;align-items:flex-start} .stage .qrbig .qr{align-items:flex-start} .stage .qrbig canvas,.stage .qrbig img{border:14px solid #fff;box-shadow:0 2px 20px rgba(0,0,0,.1)}
-.stage .qrurl{font-size:20px;color:#777;margin-top:12px}
+.stage .qrbig{display:flex;gap:60px;align-items:flex-start} .stage .qrbig .qr{align-items:flex-start} .stage .qrbig canvas,.stage .qrbig img,.stage .qr canvas,.stage .qr img{border:14px solid #fff;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.stage .qrurl{font-size:20px;color:var(--soft);margin-top:12px}
+.stage .rv{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
+.stage .rv.on{opacity:1;transform:none}
+.stage .rv.now{transition-delay:.05s}
+.stage td.rv,.stage th.rv{transform:none;transition:opacity .55s ease}
+.stage .pg{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.08)} .stage .pg i{display:block;height:100%;background:var(--azul);transition:width .4s}
 </style>
 </head>
 <body>
 <div id="app" class="wrap"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="assets.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 /* ======================= CONFIGURAÇÃO ======================= */
 const CONFIG = {
@@ -134,64 +149,100 @@ const CONFIG = {
 /* ============================================================ */
 
 /* ===================== SLIDES (ecrã integrado) =====================
-   layout: cover | light | blue | purple | dark
-   live:   p1 | p2 | regua | p3 | qr  (painéis em direto)
+   layout: cover | dark (default) | photo | accent
+   live:   p1 | p1b | p2 | regua | placar | p3 | qr | eval
    momento: ao chegar a este slide, o telemóvel dos participantes abre este pulso
    rodada:  para live:regua
+   passos: elementos com class="rv" data-s="n" aparecem no passo n (clique/seta)
 */
 const EVAL_URL = "https://forms.office.com/pages/responsepage.aspx?id=4zEpxDNn5kGNQsSLozS7pAC51C8oVxxGmHFIdAiFiMBUQlg0UzNNV1hYTklYNzU2MllLQkVPNE05MCQlQCNjPTEkJUAjdD1n";
+const rv=(n,html,cls)=>`<div class="rv ${cls||''}" data-s="${n}">${html}</div>`;
 const SLIDES = [
- {id:"capa", layout:"cover", title:"Resolução de Problemas", sub:"PLMJ · Plano de Formação 2026", by:"Rogério Oliveira · Nova SBE Executive Education"},
- {id:"qr", layout:"light", title:"Entre no pulso", live:"qr", momento:"p1",
-  body:`<p class="lead purple">Anónimo. Sem nome. Sem login.</p><p>Nove perguntas, três minutos — antes de qualquer conteúdo.</p><p>Responda com o que faria de verdade, não com o ideal.</p>`},
- {id:"opcaoA", layout:"light", title:"Hoje, vocês são o cliente", tag:"opção A",
-  body:steps([["Receba um cartão","Um papel: diretor de uma empresa, uma situação, um prazo até sexta."],["Cinco minutos","Leia e escreva o que quer perguntar ao advogado."],["O advogado sou eu","Pergunte. Ouça a resposta. Volte à sua mesa de diretor."]])+`<p class="lead blue it">Guardem o que sentiram. Voltamos aqui no fim.</p>`},
- {id:"opcaoB", layout:"light", title:"O seu maior problema", tag:"opção B",
-  body:steps([["Em duplas, 8 minutos","Conte ao colega o maior problema que já viveu. O colega só escuta."],["Depois, uma pergunta","Se pudesse, eliminava-o da sua vida?"],["Duas ou três duplas, 30 segundos","Não o problema — só a resposta e porquê."]])},
- {id:"sofa", layout:"purple", quote:"«O ser humano queria ser sofá. Mas é bicicleta.»", cite:"Victor Stirman · Elefantes na Neblina",
-  body:`<p>Precisamos do desequilíbrio para saber o que é equilíbrio — e voltar a ele.</p><p>Piaget: ninguém aprende sem perder o equilíbrio. O reequilíbrio nunca devolve ao ponto anterior; devolve a um ponto acima.</p>`},
- {id:"dificuldade", layout:"light", title:"Dificuldade bem dosada — não «sofrer faz crescer»",
-  body:`<div class="cols2"><div class="card grey"><h3 class="grey">«O trauma faz crescer»</h3><p>Popular. Medido antes e depois, o crescimento que as pessoas relatam não aparece.</p></div><div class="card tint"><h3 class="blue">Dificuldade moderada</h3><p>Quem passou por alguma lida melhor com a seguinte do que quem passou por nenhuma — ou por demais.</p></div></div><p class="lead purple it">A bicicleta, não o acidente.</p>`},
- {id:"res1", layout:"light", title:"O que a sala faz — três situações", live:"p1"},
- {id:"oficio", layout:"blue", quote:"Advogado não tem problemas. Trabalha com eles.",
-  body:`<p>Um médico trabalha com doenças. Um advogado, com problemas que outros trouxeram.</p><p>O dia sem problema é o dia sem trabalho.</p><p>Se o problema é o trabalho, dizer «não pode» é devolver o trabalho a quem o trouxe.</p>`},
- {id:"cynefin", layout:"light", title:"Quatro tipos de problema — Cynefin",
-  body:`<table class="cy"><tr><th></th><th>Simples</th><th>Complicado</th><th>Complexo</th><th>Caótico</th></tr>
-<tr><td class="lab">O que é</td><td>Regra conhecida, resposta conhecida</td><td>Há resposta certa, mas exige especialista e análise</td><td>Não há resposta certa antes de agir; só se percebe depois</td><td>Não há tempo de análise</td></tr>
-<tr><td class="lab">Como se resolve</td><td class="blue b">Consultar e aplicar</td><td class="blue b">Analisar, decompor, decidir</td><td class="blue b">Sondar com algo pequeno, observar, ajustar</td><td class="blue b">Agir para estabilizar, depois pensar</td></tr>
-<tr><td class="lab">Exemplo</td><td>Prazo processual; contrato-padrão</td><td>Estrutura fiscal de uma operação; due diligence</td><td>Lançar um produto num mercado sem lei clara nem jurisprudência</td><td>Fuga de dados em curso; crise de imprensa</td></tr></table><p class="small">Dave Snowden · a única framework nomeada da tarde</p>`},
- {id:"fronteira", layout:"light", title:"A fronteira: sem lei clara, sem jurisprudência",
-  body:`<div class="cols2 w40"><p class="lead blue">O erro mais comum não é resolver mal. É tratar um problema complexo como se fosse complicado.</p><div class="card tintp"><p>Procurar a lei que não existe, o precedente que não há, o parecer que fecha a questão.</p><p>Em problema complexo, o parecer que fecha é o parecer errado. O certo abre uma rota de teste.</p><p>Na fronteira ninguém chegou antes — é exatamente onde o cliente mais precisa de si.</p></div></div>`},
- {id:"exercicio", layout:"light", title:"Exercício: classifiquem dois problemas reais",
-  body:`<div class="cols2"><div><p class="lead purple">Em duplas · 8 minutos</p><p>Dois problemas que viveram na PLMJ. Em que quadrante caem?</p><p>Mão no ar por quadrante.</p><p>Quantos «complexos» foram tratados como «complicados»?</p></div><div class="quad"><div class="q1">Simples</div><div class="q1">Complicado</div><div class="q2">Complexo</div><div class="q2">Caótico</div></div></div>`},
- {id:"klink", layout:"dark", kicker:"1984 · Namíbia → Bahia · 100 dias a remo", quote:"O risco não foi eliminado. Foi desenhado.", cite:"Amyr Klink · Cem Dias Entre Céu e Mar",
-  body:`<p>Um barco feito para virar e voltar sozinho. Virou várias vezes. Voltou todas.</p><p class="it">«Metade do que estava escrito no meu projeto não aconteceu. Ainda bem!»</p>`},
- {id:"risco", layout:"light", title:"Para onde vai o risco quando o advogado diz «não»",
-  body:`<div class="flow"><div class="card tint b-blue"><h3 class="blue">Mesa do advogado</h3><p>quem sabia</p></div><div class="arrow">→</div><div class="card tintp b-purple"><h3 class="purple">Mesa do diretor</h3><p>quem precisa — com menos informação</p></div></div><p class="lead purple">O risco não desaparece. Muda de mesa.</p><p>O diretor que ouviu «não» ainda tem a meta, o prazo e o conselho em cima. Vai decidir — sozinho, com menos informação do que o advogado tinha.</p>`},
- {id:"numeros", layout:"light", title:"Três números",
-  body:`<div class="cols3 stats"><div><b class="blue">1 em 4</b><p>recusa qualquer risco de agir — mesmo quando não agir mata dez vezes mais. Não agir parece seguro.</p></div><div><b class="blue">1 em 4</b><p>das decisões mais importantes do ano, entre 950 gestores, foi tomada para proteger quem decidia — não a organização.</p></div><div><b class="purple">4,5×</b><p>mais procura de outras opiniões pelo negócio quando o jurídico é conservador demais. O risco migra para quem sabe menos.</p></div></div><p class="lead purple it">Não é defeito de carácter. A pergunta da tarde não é «tenham coragem» — é «tenham método».</p>`},
- {id:"res2", layout:"light", title:"O que pesa quando se evita propor um caminho", live:"p2", momento:"p2"},
- {id:"movimento", layout:"light", title:"O movimento — três passos, repetidos quatro vezes",
-  body:`<div class="cols3 mov"><div><b class="num">1</b><h3>Reenquadrar</h3><p>do pedido ao interesse de cada lado; uma pergunta nova</p></div><div><b class="num">2</b><h3>Terceira via</h3><p>três rotas — A, B, C — cada uma com o seu risco</p></div><div><b class="num">3</b><h3>Recomendar</h3><p>uma proposta em quatro linhas, não «o que acham?»</p></div></div><p class="small it">Primeiro fora do direito. Depois, três rondas com casos.</p>`},
- {id:"passo1", layout:"light", num:1, title:"Reenquadrar — posição × interesse",
-  body:`<div class="cols2 w40"><div><p class="lead blue">A posição é o que a pessoa decidiu. O interesse é o que a fez decidir.</p><p class="small">Fisher &amp; Ury</p></div><div class="card tintp"><p><b class="purple">Pedido:</b> «Vem no Natal.» Posição possível: ir ou não ir.</p><p><b class="purple">Interesse deles:</b> presença, ritual, saber que a família ainda se junta.</p><p><b class="purple">O seu:</b> a viagem — e não carregar culpa.</p><p><b class="blue">Pergunta reenquadrada:</b> <b>como garantir o ritual da família e a viagem com os amigos no mesmo dezembro?</b></p></div></div>`},
- {id:"passo2", layout:"light", num:2, title:"Terceira via — três rotas, risco graduado",
-  body:`<div class="cols3 routes"><div class="card grey"><b>A</b><p>Vou à viagem. Aviso que não vou no Natal.</p><p class="it grey">Risco: mágoa; a ausência vira assunto.</p></div><div class="card grey"><b>B</b><p>Cancelo a viagem.</p><p class="it grey">Risco: perder a viagem e levar ressentimento para o Natal.</p></div><div class="card tint b-blue"><b class="blue">C</b><p>Ceia da família a 20 ou 21, em casa deles, organizada por mim. Viagem. Réveillon com eles.</p><p class="it blue">Risco: «não é a mesma coisa». Mitigo: organizo eu a ceia, não só peço a data.</p></div></div><p><b class="blue">Teste:</b> o que cada lado queria de verdade continua inteiro? (Meio-termo perde um pedaço de cada lado.)</p><p><b class="purple">Travão:</b> antes de contornar uma regra, perceber o que ela protege. Pergunte antes de desenhar.</p>`},
- {id:"passo3", layout:"light", num:3, title:"Recomendar — em quatro linhas",
-  body:`<div class="cols2"><div class="card tint b-blue tpl"><p>Recomendo…</p><p>porque…</p><p>o risco é…, e reduzo-o com…</p><p>preciso de… até…</p></div><div><p class="small grey b">Antes</p><p class="grey">«Será que dava para…?» · «um dia destes» · «o que vocês acham?»</p><p class="small blue b">Depois</p><p>«Mãe, quero propor a nossa ceia de Natal no dia 21, lá em casa, e eu organizo — porque assim fico convosco com calma e vou à viagem de 22 a 28. Sei que não é o dia 25; por isso volto para o réveillon. Diz-me até domingo se o dia 21 também dá para o pai.»</p></div></div><p class="small it purple">«Quero propor», não «será que dava». Datas, não «um dia destes». Aceite o objetivo do outro antes de defender o seu.</p>`},
- {id:"emprestimo", layout:"light", title:"Em duplas — 10 minutos",
-  body:`<p class="lead purple">Um amigo próximo, em dificuldade, pede 1.500 € emprestados.</p><p>Tem o dinheiro, mas é a sua reserva — e já viu esse amigo não devolver a outros.</p><p>Folha de 1 página: reenquadrar · três rotas com risco · recomendação em quatro linhas.</p><p>Três duplas apresentam só o C e a recomendação.</p>`},
- {id:"ronda1", layout:"light", title:"Ronda 1 — cliente externo", live:"regua", momento:"regua", rodada:1, body:rondaBody("Uma empresa cliente quer fechar em dez dias um contrato com um fornecedor estrangeiro de quem depende. Uma cláusula da minuta é inaceitável à luz da lei portuguesa. O fornecedor «não negocia a minuta». O diretor comercial escreve: «Preciso de saber se podemos assinar isto. Sexta-feira.»")},
- {id:"ronda2", layout:"light", title:"Ronda 2 — cliente interno", live:"regua", momento:"regua", rodada:2, body:rondaBody("Terça, 18h. Um sócio pede «um parecer para amanhã de manhã» sobre uma questão que, feita a sério, levaria uma semana. Pelo contexto, tem uma reunião com o cliente às 10h e precisa de chegar lá com uma posição, não com um documento.")},
- {id:"ronda3", layout:"light", title:"Ronda 3 — compliance · pitch para a sala", live:"regua", momento:"regua", rodada:3, body:rondaBody("O onboarding de um cliente novo está travado há duas semanas: o compliance exige um documento que o cliente diz não conseguir em menos de dois meses. O sócio quer começar. O compliance não abre exceções — e tem razão. O e-mail do sócio diz só: «Resolve.»")},
- {id:"placar", layout:"light", title:"Placar", live:"placar"},
- {id:"papeis", layout:"light", title:"Três papéis",
-  body:`<div class="cols3 routes"><div class="card grey"><h3 class="grey">Par de mãos</h3><p>Executa a instrução.</p></div><div class="card tint"><h3 class="blue">Expert</h3><p>Dá a resposta jurídica.</p></div><div class="card tintp"><h3 class="purple">Colaborador</h3><p>Senta-se ao lado do cliente e co-define o problema.</p></div></div><p class="lead purple">Em silêncio: em qual passou a última semana? Em qual gostaria de passar a próxima?</p><p>Quatro horas mudam o que sabem e pretendem — não o que fazem. O que muda comportamento é um plano concreto com gatilho, e gente em volta.</p>`},
- {id:"res3", layout:"light", title:"Autoimagem × comportamento", live:"p3", momento:"p3"},
- {id:"tese", layout:"purple", quote:"Ninguém contrata um advogado para saber o que não pode.", live:"eval", momento:"fim", body:`<p>Obrigado.</p>`}
+ {id:"capa", layout:"cover", title:"Problem Solving", sub:"PLMJ · Plano de Formação 2026", by:"Rogério Oliveira · Nova SBE Executive Education"},
+
+ {id:"qr", title:"Entre no pulso", live:"qr", momento:"p1",
+  body:`<p class="lead">Anónimo. Sem nome. Sem login.</p><p>Dez perguntas, três minutos — antes de qualquer conteúdo.</p><p class="soft">Responda com o que faria de verdade, não com o ideal.</p>`},
+
+ {id:"abertura", kicker:"Abertura", title:"O seu maior problema",
+  body:steps([["Em duplas, 8 minutos","Conte ao colega o maior problema que já viveu. O colega só escuta."],["Depois, uma pergunta","Se pudesse, eliminava-o da sua vida?"],["Duas ou três duplas, 30 segundos","Não o problema — só a resposta, e porquê."]])},
+
+ {id:"sofa", layout:"accent", quote:"«O ser humano queria ser sofá. Mas ele é bicicleta.»"},
+
+ {id:"dificuldade", title:"Dificuldade bem dosada",
+  body:`<div class="cols2">${rv(1,`<div class="card dim"><h3>«Sofrer faz crescer»</h3><p>Popular. Medido antes e depois, o crescimento que as pessoas relatam não aparece.</p></div>`)}${rv(2,`<div class="card hi"><h3>Dificuldade moderada</h3><p>Quem passou por alguma lida melhor com a seguinte do que quem passou por nenhuma — ou por demais.</p></div>`)}</div>${rv(3,`<p class="lead blue">A bicicleta, não o acidente.</p>`)}`},
+
+ {id:"res1", title:"O que a sala faz", live:"p1",
+  after:rv(1,`<p class="lead blue">Advogado não tem problemas. Trabalha com eles. Devolver um «não» é devolver o trabalho a quem o trouxe.</p>`)},
+
+ {id:"cynefin", kicker:"Quatro tipos de problema", title:"Cynefin",
+  body:`<table class="cy">
+<tr><th></th>${["Simples","Complicado","Complexo","Caótico"].map((t,i)=>`<th class="rv" data-s="${i+1}">${t}</th>`).join("")}</tr>
+<tr><td class="lab">Exemplo</td>${["Uma lâmpada queimada","Uma apendicite","Criar um adolescente","Um avião sem motores sobre Nova Iorque"].map((t,i)=>`<td class="rv ex" data-s="${i+1}">${t}</td>`).join("")}</tr>
+<tr><td class="lab">O que é</td>${["Regra conhecida, resposta conhecida","Há resposta certa — mas exige especialista e análise","Não há resposta certa antes de agir; só se percebe depois","Não há tempo de análise"].map((t,i)=>`<td class="rv" data-s="${i+1}">${t}</td>`).join("")}</tr>
+<tr><td class="lab">Como se resolve</td>${["Consultar e aplicar","Analisar, decompor, decidir","Sondar com algo pequeno, observar, ajustar","Agir para estabilizar; depois pensar"].map((t,i)=>`<td class="rv b" data-s="${i+1}">${t}</td>`).join("")}</tr>
+<tr class="rv" data-s="5"><td class="lab">Ferramenta</td><td>Checklist, procedimento</td><td><b>Método McKinsey</b>: decompor (MECE), árvore de questões, hipótese</td><td><b>Design Thinking / MVP</b>: protótipo pequeno, observar, iterar</td><td>Comando: estabilizar primeiro</td></tr>
+</table><p class="small">Dave Snowden · <i>Cynefin</i>, galês: «o lugar das múltiplas pertenças» — a resposta depende do terreno onde se está</p>`},
+
+ {id:"errar", kicker:"Em duplas · 5 minutos", title:"E se errarmos o tipo?",
+  body:`<p class="soft">Um exemplo da vida comum para cada cruzamento. Nada de direito.</p><div class="cols2 tight">${rv(1,`<div class="card"><h3>Simples tratado como complicado</h3><p>Contratar um consultor para a lâmpada.</p></div>`)}${rv(2,`<div class="card"><h3>Complexo tratado como simples</h3><p>Um adolescente e uma regra só.</p></div>`)}${rv(3,`<div class="card"><h3>Caótico tratado como simples</h3><p>O barco a afundar e alguém a ler o manual.</p></div>`)}${rv(4,`<div class="card"><h3>Simples tratado como complexo</h3><p>Duas horas de reunião sobre a lâmpada.</p></div>`)}</div>`},
+
+ {id:"fronteira", title:"O erro mais comum",
+  body:`<p class="lead">Não é resolver mal. É tratar um problema complexo como se fosse complicado.</p><div class="cols2">${rv(1,`<div class="card dim"><h3>Na vida</h3><p>Insónia tratada como carro avariado: procurar o especialista que dá <i>a</i> resposta — em vez de mudar uma coisa pequena, dormir uma semana, observar, ajustar.</p></div>`)}${rv(2,`<div class="card hi"><h3>No escritório</h3><p>Procurar a lei que não existe, o precedente que não há, o parecer que fecha a questão.</p><p>Em problema complexo, o parecer que fecha é o parecer errado. O certo abre uma rota de teste.</p></div>`)}</div>${rv(3,`<p class="lead blue">Na fronteira ninguém chegou antes — é exatamente onde o cliente mais precisa de si.</p>`)}`},
+
+ {id:"exercicio", kicker:"Em duplas · 8 minutos", title:"Classifiquem dois problemas reais",
+  body:`<div class="cols2"><div><p>Dois problemas que viveram na PLMJ. Em que quadrante caem?</p><p>Mão no ar por quadrante.</p>${rv(1,`<p class="lead blue">Quantos «complexos» foram tratados como «complicados»?</p>`)}</div><div class="quad"><div>Simples</div><div>Complicado</div><div class="p">Complexo</div><div class="p">Caótico</div></div></div>`},
+
+ {id:"casa", title:"Isto é da casa ou do ofício?", live:"p1b",
+  after:rv(1,`<p class="lead blue">Os números são vossos, de há uma hora. Não há diagnóstico meu aqui — só a pergunta.</p>`)},
+
+ {id:"klink1", layout:"photo", img:"img/klink-barco.jpg", pos:"center 40%", kicker:"1984 · Lüderitz, Namíbia → Praia da Espera, Bahia", quote:"O risco não foi eliminado. Foi desenhado.", cite:"Amyr Klink · Cem Dias Entre Céu e Mar",
+  body:rv(1,`<p>Queria um barco que não virasse. Não existia sem ficar pesado e lento.</p><p>O engenheiro desenhou um barco <b>feito para virar e voltar sozinho</b>. Virou várias vezes. Voltou todas.</p>`)},
+
+ {id:"klink2", layout:"photo", img:"img/klink-mapa.jpg", pos:"center 55%", side:true, kicker:"100 dias · 6.800 km · a remo", quote:"«Metade do que estava escrito no meu projeto não aconteceu. Ainda bem!»", cite:"Amyr Klink",
+  body:rv(1,`<p>Dois anos a preparar. O plano não era prever tudo — era aguentar o que não se previu.</p>`)},
+
+ {id:"klink3", layout:"photo", img:"img/klink-2026.jpg", pos:"center 30%", kicker:"2026 · quarenta e dois anos depois", quote:"O segundo a fazer a travessia. Klink foi recebê-lo ao cais.",
+  body:rv(1,`<p class="lead">O desenho continua a valer.</p>`)},
+
+ {id:"risco", title:"Para onde vai o risco quando o advogado diz «não»",
+  body:`<div class="flow">${rv(1,`<div class="card hi"><h3>Mesa do advogado</h3><p>quem sabia</p></div>`)}${rv(2,`<div class="arrow">→</div>`)}${rv(2,`<div class="card dim"><h3>Mesa do diretor</h3><p>quem precisa — com menos informação</p></div>`)}</div>${rv(3,`<p class="lead blue">O risco não desaparece. Muda de mesa.</p><p>O diretor que ouviu «não» ainda tem a meta, o prazo e o conselho em cima. Vai decidir — sozinho, com menos informação do que o advogado tinha.</p>`)}`},
+
+ {id:"numeros", title:"Dois números e uma causa",
+  body:`<div class="cols3 stats">${rv(1,`<div><b>25%</b><p>das decisões mais importantes do ano, entre 950 gestores, foram tomadas para proteger quem decidia — não a organização.</p><span class="src">Artinger, Artinger &amp; Gigerenzer, 2019</span></div>`)}${rv(2,`<div><b>4,5×</b><p>mais procura de outras opiniões pelo negócio quando o jurídico é conservador demais. O risco migra para quem sabe menos.</p><span class="src">Gartner, 2020</span></div>`)}${rv(3,`<div><b class="pu">cultura</b><p>No mesmo estudo: quem via a cultura de erro da organização como negativa decidia mais defensivamente.</p><span class="src">a causa, não o carácter</span></div>`)}</div>${rv(4,`<p class="lead blue">A pergunta da tarde não é «tenham coragem». É «tenham método».</p>`)}`},
+
+ {id:"res2", title:"O que pesa quando se evita propor um caminho", live:"p2", momento:"p2"},
+
+ {id:"metodo", kicker:"Integrative Thinking · Roger Martin", title:"Terceira Via",
+  body:`<div class="cols3 mov">${rv(1,`<div><b class="num">1</b><h3>Reenquadrar</h3><p>do pedido ao interesse de cada lado; uma pergunta nova</p></div>`)}${rv(2,`<div><b class="num">2</b><h3>Terceira via</h3><p>três rotas — A, B, C — cada uma com o seu risco</p></div>`)}${rv(3,`<div><b class="num">3</b><h3>Recomendar</h3><p>uma proposta em quatro linhas, não «o que acham?»</p></div>`)}</div>${rv(4,`<p class="soft">Primeiro fora do direito, com um exemplo meu. Depois vocês, em duplas. Depois três rondas com casos.</p>`)}`},
+
+ {id:"passo1", num:1, title:"Reenquadrar — posição × interesse",
+  body:`<div class="cols2 w40"><div><p class="lead">A posição é o que cada lado diz que quer. O interesse é o que o faz querer.</p><p class="small">Fisher &amp; Ury</p>${rv(3,`<p class="soft">Reenquadrar não garante uma terceira via. Garante que a pergunta deixa de ter só duas respostas.</p>`)}</div><div class="card">${rv(1,`<p><b class="blue">Posições</b><br>Eles: «vem no Natal.» · Eu: «vou à viagem de 22 a 28.»</p>`)}${rv(2,`<p><b class="blue">Interesses</b><br>Eles: presença, ritual, saber que a família ainda se junta. · Eu: a viagem — e não carregar culpa.</p>`)}${rv(3,`<p class="q">Como garantir o ritual da família <i>e</i> a viagem com os amigos no mesmo dezembro?</p>`)}</div></div>`},
+
+ {id:"passo2", num:2, title:"Terceira via — três rotas, risco graduado",
+  body:`<div class="cols3 routes">${rv(1,`<div class="card dim"><b>A</b><p>Vou à viagem. Aviso que não vou no Natal.</p><p class="rk">Risco: mágoa; a ausência vira assunto.</p></div>`)}${rv(1,`<div class="card dim"><b>B</b><p>Cancelo a viagem.</p><p class="rk">Risco: perder a viagem e levar ressentimento para o Natal.</p></div>`)}${rv(2,`<div class="card hi"><b class="blue">C</b><p>Ceia da família a 20 ou 21, em casa deles, organizada por mim. Viagem. Réveillon com eles.</p><p class="rk">Risco: «não é a mesma coisa». Mitigo: organizo eu a ceia, não só peço a data.</p></div>`)}</div>${rv(3,`<div class="cols3 tight small"><div><b class="blue">Três formas de construir o C</b><br>um benefício de cada lado · tudo de A + o essencial de B · partir o problema em dois <span class="dim">(Riel &amp; Martin)</span></div><div><b class="blue">Teste</b><br>o que cada lado queria de verdade continua inteiro? Meio-termo perde um pedaço de cada lado.</div><div><b class="blue">Travão</b><br>antes de contornar uma regra, perceber o que ela protege. Pergunte antes de desenhar.</div></div>`)}`},
+
+ {id:"passo3", num:3, title:"Recomendar — em quatro linhas",
+  body:`<div class="cols2"><div class="card hi tpl">${rv(1,`<p>Recomendo…</p>`)}${rv(2,`<p>porque…</p>`)}${rv(3,`<p>o risco é…, e reduzo-o com…</p>`)}${rv(4,`<p>preciso de… até…</p>`)}</div><div>${rv(5,`<p class="small dim b">Antes</p><p class="dim">«Será que dava para…?» · «um dia destes» · «o que vocês acham?»</p><p class="small blue b">Depois</p><p>«Mãe, quero propor a nossa ceia de Natal no dia 21, lá em casa, e eu organizo — porque assim fico convosco com calma e vou à viagem de 22 a 28. Sei que não é o dia 25; por isso volto para o réveillon. Diz-me até domingo se o dia 21 também dá para o pai.»</p>`)}</div></div>${rv(5,`<p class="small soft">«Quero propor», não «será que dava». Datas, não «um dia destes». Aceite o objetivo do outro antes de defender o seu. <span class="dim">Resposta primeiro — Minto, McKinsey.</span></p>`)}`},
+
+ {id:"emprestimo", kicker:"Em duplas · 10 minutos", title:"Aquecimento",
+  body:`<p class="lead">Um amigo próximo, em dificuldade, pede 1.500 € emprestados.</p><p>Tem o dinheiro, mas é a sua reserva — e já viu esse amigo não devolver a outros.</p>${rv(1,`<p>Folha de 1 página: reenquadrar · três rotas com risco · recomendação em quatro linhas.</p><p class="soft">Três duplas apresentam só o C e a recomendação.</p>`)}`},
+
+ {id:"ronda1", kicker:"Ronda 1 · cliente externo", title:"Assinar ou não assinar", live:"regua", momento:"regua", rodada:1, body:rondaBody("Uma empresa cliente quer fechar em dez dias um contrato com um fornecedor estrangeiro de quem depende. Uma cláusula da minuta é inaceitável à luz da lei portuguesa. O fornecedor «não negocia a minuta». O diretor comercial escreve: «Preciso de saber se podemos assinar isto. Sexta-feira.»")},
+ {id:"ronda2", kicker:"Ronda 2 · cliente interno", title:"Um parecer para amanhã", live:"regua", momento:"regua", rodada:2, body:rondaBody("Terça, 18h. Um sócio pede «um parecer para amanhã de manhã» sobre uma questão que, feita a sério, levaria uma semana. Pelo contexto, tem uma reunião com o cliente às 10h e precisa de chegar lá com uma posição, não com um documento.")},
+ {id:"ronda3", kicker:"Ronda 3 · compliance · pitch para a sala", title:"«Resolve.»", live:"regua", momento:"regua", rodada:3, body:rondaBody("O onboarding de um cliente novo está travado há duas semanas: o compliance exige um documento que o cliente diz não conseguir em menos de dois meses. O sócio quer começar. O compliance não abre exceções — e tem razão. O e-mail do sócio diz só: «Resolve.»")},
+
+ {id:"placar", title:"Placar", live:"placar"},
+
+ {id:"papeis", title:"Três papéis",
+  body:`<div class="cols3 routes">${rv(1,`<div class="card dim"><h3>Par de mãos</h3><p>Executa a instrução.</p></div>`)}${rv(2,`<div class="card"><h3>Expert</h3><p>Dá a resposta jurídica.</p></div>`)}${rv(3,`<div class="card hi"><h3>Colaborador</h3><p>Senta-se ao lado do cliente e co-define o problema.</p></div>`)}</div>${rv(4,`<p class="lead blue">Em silêncio: em qual passou a última semana? Em qual gostaria de passar a próxima?</p>`)}${rv(5,`<p class="soft">Quatro horas mudam o que sabem e pretendem — não o que fazem. O que muda comportamento é um plano concreto com gatilho, e gente em volta.</p>`)}`},
+
+ {id:"res3", title:"Autoimagem × comportamento", live:"p3", momento:"p3"},
+
+ {id:"tese", layout:"accent", quote:"O cliente não paga para conhecer o obstáculo. Paga para descobrir o caminho.", live:"eval", momento:"fim", body:`<p>Obrigado.</p>`}
 ];
-function steps(arr){ return `<div class="steps">`+arr.map((s,i)=>`<div class="step"><b class="num">${i+1}</b><div><b class="purple">${s[0]}</b><br>${s[1]}</div></div>`).join("")+`</div>`; }
-function rondaBody(caso){ return `<div class="cols2 w55"><div><p class="caso">${caso}</p><div class="timing"><div><b class="blue">10 min</b> folha de 1 página</div><div><b class="blue">2 min</b> pitch para o trio-cliente</div><div><b class="blue">pulso</b> o trio-cliente avalia com a régua</div></div></div><div class="livebox" id="live"></div></div>`; }
+function steps(arr){ return `<div class="steps">`+arr.map((s,i)=>rv(i+1,`<div class="step"><b class="num">${i+1}</b><div><b class="blue">${s[0]}</b><br>${s[1]}</div></div>`)).join("")+`</div>`; }
+function rondaBody(caso){ return `<div class="cols2 w55"><div><p class="caso">${caso}</p><div class="timing"><div><b>10 min</b> folha de 1 página</div><div><b>2 min</b> pitch para o trio-cliente</div><div><b>pulso</b> o trio-cliente avalia com a régua</div></div></div><div class="livebox" id="live"></div></div>`; }
+function maxStep(s){ const all=(s.body||"")+(s.after||""); let m=0; all.replace(/data-s="(\d+)"/g,(_,n)=>{m=Math.max(m,+n);}); return m; }
 
 
 const MOMENTOS = {
@@ -324,45 +375,60 @@ function placarHtml(rows,upTo,cls){
 function nuvemHtml(rows,item,title,cls){ const o=rows.filter(r=>r.item===item&&r.valor&&r.valor.trim()); const max=cls?5:1000; const show=o.slice(-max); return `<div class="${cls||'panel'}"><h3>${esc(title)}${o.length>max?` <span class="muted">· ${o.length}, últimas ${max}</span>`:""}</h3>${show.map(r=>`<div class="verb">${esc(r.valor.slice(0,220))}</div>`).join("")||'<p class="muted">—</p>'}</div>`; }
 
 /* ---------- ECRÃ (slides) ---------- */
+const decode=v=>{ v=+v||1; return v>100?{n:Math.floor(v/100),p:v%100}:{n:v,p:0}; };
+const encode=(n,p)=>p?n*100+p:n;
 function liveContent(kind,est,rows,slide){
   const P="lpanel";
   if(kind==="qr") return `<div class="qrbig"><div class="qr"><div id="qr"></div><div class="qrurl">${esc(PURL().replace("https://",""))}</div></div><div>${slide.body}</div></div>`;
   if(kind==="p1") return `<div class="lgrid">${[["S1","E-mail do sócio: o que faz?"],["S2","Cláusula fora do âmbito: o que faz?"],["S3","«Posso fazer isto?» — como responde?"]].map(([id,tt])=>barsHtml(tt,id,qOf("p1",id).o,rows,false,P)).join("")}</div><div class="lgrid" style="margin-top:16px">${barsHtml("No último documento, a recomendação ocupava…","M1b",qOf("p1","M1b").o,rows,true,P)}${barsHtml("Diria numa frase o que o cliente quer alcançar?","C1",qOf("p1","C1").o,rows,true,P)}${barsHtml("Quem recebeu o documento…","M2",qOf("p1","M2").o,rows,true,P)}</div>`;
+  if(kind==="p1b") return `<div class="lgrid">${barsHtml("«Posso fazer isto?» — como responde?","S3",qOf("p1","S3").o,rows,false,P)}${barsHtml("Cláusula fora do âmbito: o que faz?","S2",qOf("p1","S2").o,rows,false,P)}${barsHtml("A recomendação ocupava…","M1b",qOf("p1","M1b").o,rows,true,P)}</div>`;
   if(kind==="p2") return `<div class="lgrid">${barsHtml("Qual seria pior para quem assinou?","E1",qOf("p2","E1").o,rows,true,P)}${barsHtml("Se um colega levasse uma alternativa ao sócio…","E3",qOf("p2","E3").o,rows,true,P)}${barsHtml("Tempo a perceber o objetivo antes de escrever","T2",qOf("p2","T2").o,rows,false,P)}</div><div class="lgrid" style="margin-top:16px">${barsHtml("Primeira conversa quando algo correu mal","E2",qOf("p2","E2").o,rows,false,P)}${barsHtml("Colegas que levam alternativa (estimativa)","P1",qOf("p2","P1").o,rows,false,P)}${barsHtml("Sócios que querem alternativas (estimativa)","P2",qOf("p2","P2").o,rows,false,P)}</div>`;
-  if(kind==="regua") return reguaHtml(rows,slide.rodada,"");
+  if(kind==="regua") return reguaHtml(rows,slide.rodada,"lpanel");
   if(kind==="placar") return `<div class="lgrid c2">${placarHtml(rows,Math.max(1,est.rodada),P)}<div>${[1,2,3].filter(r=>r<=est.rodada).map(r=>`<div class="lpanel" style="margin-bottom:14px"><h3>Ronda ${r} · média ${reguaStats(rows,r).n?reguaStats(rows,r).avg.toFixed(1):"–"} / 4 · ${reguaStats(rows,r).n} avaliações</h3></div>`).join("")}</div></div>`;
   if(kind==="p3") return `<div class="lgrid">${barsHtml("Os colegas levam alternativa? (estimativa, Pulso 2)","P1",qOf("p2","P1").o,rows,false,P)}${barsHtml("E eu, comparado com eles?","A1",qOf("p3","A1").o,rows,true,P)}${barsHtml("Confiança de usar na próxima semana","X2",qOf("p3","X2").o,rows,false,P)}</div><div class="lgrid c2" style="margin-top:22px">${nuvemHtml(rows,"O1","Uma alternativa que não foi apresentada — o que teria sido preciso?",P)}${nuvemHtml(rows,"O2","O que precisaria de saber sobre o cliente?",P)}</div>`;
   if(kind==="eval") return `<div class="qr" style="align-items:flex-start"><div id="qr"></div><div class="qrurl" style="color:#fff">Avalie a sessão</div></div>`;
   return "";
 }
+const MOTIF=`<svg class="motif" viewBox="0 0 900 900" fill="none" stroke-linecap="round"><g stroke="rgba(255,255,255,.07)" stroke-width="1"><circle cx="760" cy="300" r="140"/><circle cx="760" cy="300" r="260"/><circle cx="760" cy="300" r="380"/><circle cx="760" cy="300" r="500"/></g><path d="M80 780 L820 300" stroke="rgba(255,255,255,.18)" stroke-width="2" stroke-dasharray="2 14"/><path d="M80 780 L820 120" stroke="rgba(255,255,255,.18)" stroke-width="2" stroke-dasharray="2 14"/><path d="M80 780 C 420 760, 520 380, 820 210" stroke="#009CD1" stroke-width="5"/><circle cx="820" cy="210" r="9" fill="#009CD1"/><circle cx="80" cy="780" r="6" fill="rgba(255,255,255,.6)"/></svg>`;
+let lastSlideN=0;
 function renderEcra(est,rows){
-  const n=Math.min(Math.max(1,est.slide||1),SLIDES.length); const s=SLIDES[n-1];
-  const dark=["blue","purple","dark"].includes(s.layout);
-  const logoN=`<img class="chrome-logo" src="${dark?ASSETS.novaWhite:ASSETS.novaColor}" alt="">`, logoP=`<img class="chrome-plmj" src="${dark?ASSETS.plmjWhite:ASSETS.plmjSq}" alt="">`;
-  const foot=`<div class="foot"><span>Resolução de Problemas · PLMJ · Nova SBE Executive Education</span><span>${n} / ${SLIDES.length}</span></div>`;
-  const nav=`<div class="nav"><button onclick="goSlide(${n-1})">‹</button><button onclick="goSlide(${n+1})">›</button></div>`;
+  const {n:raw,p}=decode(est.slide); const n=Math.min(Math.max(1,raw),SLIDES.length); const s=SLIDES[n-1]; const ms=maxStep(s);
+  const logoN=`<img class="chrome-logo" src="${ASSETS.novaWhite}" alt="">`, logoP=`<img class="chrome-plmj" src="${ASSETS.plmjWhite}" alt="">`;
+  const foot=`<div class="foot"><span>Problem Solving · PLMJ · Nova SBE Executive Education</span><span>${n} / ${SLIDES.length}</span></div>`;
+  const nav=`<div class="nav"><button onclick="stepBack()">‹</button><button onclick="stepFwd()">›</button></div>`;
+  const pg=`<div class="pg"><i style="width:${(n-1)/(SLIDES.length-1)*100}%"></i></div>`;
   let inner="";
   if(s.layout==="cover"){
-    inner=`<div class="stage cover"><div class="cl"><h1>${esc(s.title)}</h1><div class="sub">${esc(s.sub)}</div><div class="by">${esc(s.by)}</div><div class="logos"><img src="${ASSETS.novaColor}" alt=""><img src="${ASSETS.plmjSq}" alt=""></div></div><div class="cr" style="background-image:url(${ASSETS.campus})"></div>${nav}</div>`;
+    inner=`<div class="stage cover">${MOTIF}<div class="content"><h1>${esc(s.title)}</h1><div class="sub">${esc(s.sub)}</div><div class="by">${esc(s.by)}</div></div><div class="logos"><img src="${ASSETS.novaWhite}" alt=""><img src="${ASSETS.plmjWhite}" alt=""></div>${nav}</div>`;
+  } else if(s.layout==="photo"){
+    inner=`<div class="stage photo ${s.side?'side':''}"><div class="bg" style="background-image:url(${s.img});background-position:${s.pos||'center'}"></div><div class="shade"></div>${logoN}${logoP}<div class="content">${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote)}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${foot}${nav}${pg}</div>`;
   } else if(s.quote){
     const live=s.live?liveContent(s.live,est,rows,s):"";
-    inner=`<div class="stage ${s.layout}">${logoN}${logoP}<div class="content" style="${s.live?'display:grid;grid-template-columns:3fr 2fr;gap:60px':''}"><div>${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote)}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${s.live?`<div>${live}</div>`:""}</div>${foot}${nav}</div>`;
+    inner=`<div class="stage ${s.layout||''}">${logoN}${logoP}<div class="content" style="${s.live?'display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:center':''}"><div>${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote)}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${s.live?`<div>${live}</div>`:""}</div>${foot}${nav}${pg}</div>`;
   } else {
-    const title=s.num?`<div class="numtitle"><span class="num">${s.num}</span><h1 class="title" style="margin:0">${esc(s.title)}</h1></div><div style="height:28px"></div>`:`<h1 class="title">${esc(s.title)}${s.tag?` <span class="tag" style="font-family:Open Sans;font-size:18px;vertical-align:middle">${s.tag}</span>`:""}</h1>`;
+    const kick=s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:"";
+    const title=s.num?`<div class="numtitle"><span class="num">${s.num}</span><h1 class="title" style="margin:0">${esc(s.title)}</h1></div>`:`${kick}<h1 class="title">${esc(s.title)}</h1>`;
     let body=s.body||"";
     if(s.live==="regua"){ body=body.replace('<div class="livebox" id="live"></div>',`<div class="livebox">${liveContent("regua",est,rows,s)}</div>`); }
     else if(s.live){ body=liveContent(s.live,est,rows,s); }
-    const devs=s.live&&["p1","p2","p3"].includes(s.live)?new Set(rows.filter(r=>r.momento===s.live).map(r=>r.dispositivo)).size:null;
-    inner=`<div class="stage ${s.layout}">${logoN}${logoP}${devs!==null?`<div class="count"><b>${devs}</b>respostas</div>`:""}<div class="content">${title}${body}</div>${foot}${nav}</div>`;
+    const devs=s.live&&["p1","p1b","p2","p3"].includes(s.live)?new Set(rows.filter(r=>r.momento===(s.live==="p1b"?"p1":s.live)).map(r=>r.dispositivo)).size:null;
+    const after=s.after?`<div class="after">${s.after}</div>`:"";
+    inner=`<div class="stage ${s.layout||''}">${logoN}${logoP}${devs!==null?`<div class="count"><b>${devs}</b>respostas</div>`:""}<div class="content">${title}${body}${after}</div>${foot}${nav}${pg}</div>`;
   }
   app.innerHTML=inner;
+  // passos: já revelados aparecem sem animação; o passo atual anima
+  const key=n+"|"+p; const same=(key===lastSlideN); lastSlideN=key;
+  document.querySelectorAll(".stage .rv").forEach(el=>{ const k=+el.dataset.s; if(k<p||(same&&k<=p)) el.classList.add("on"); });
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ document.querySelectorAll(".stage .rv").forEach(el=>{ if(+el.dataset.s<=p) el.classList.add("on"); }); }));
   if(s.live==="qr"||s.live==="eval"){ const el=$("#qr"); if(el){ try{ if(typeof QRCode==="undefined") throw new Error("qr lib"); new QRCode(el,{text:s.live==="qr"?PURL():EVAL_URL,width:s.live==="qr"?420:300,height:s.live==="qr"?420:300,colorDark:"#231F20",correctLevel:QRCode.CorrectLevel.L}); }catch(e){ el.innerHTML=`<div style="font-size:22px;word-break:break-all;max-width:420px">${esc(s.live==="qr"?PURL():EVAL_URL)}</div>`; } } }
   fitStage();
 }
 function fitStage(){ const st=document.querySelector(".stage"); if(!st) return; const k=Math.min(window.innerWidth/1600,window.innerHeight/900); st.style.transform=`scale(${k})`; st.style.left=((window.innerWidth-1600*k)/2)+"px"; st.style.top=((window.innerHeight-900*k)/2)+"px"; }
 window.addEventListener("resize",fitStage);
-window.goSlide=async(n)=>{ n=Math.min(Math.max(1,n),SLIDES.length); const s=SLIDES[n-1]; const patch={slide:n}; if(s.momento) patch.momento_ativo=s.momento; if(s.rodada) patch.rodada=s.rodada; await setEstado(patch); lastSig=""; tick(); };
-document.addEventListener("keydown",async e=>{ if(mode()!=="ecra") return; if(["ArrowRight","PageDown"," ","Enter"].includes(e.key)){ e.preventDefault(); goSlide((curEst.slide||1)+1);} if(["ArrowLeft","PageUp","Backspace"].includes(e.key)){ e.preventDefault(); goSlide((curEst.slide||1)-1);} if(e.key==="f"||e.key==="F"){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); } });
+window.goSlide=async(n,p=0)=>{ n=Math.min(Math.max(1,n),SLIDES.length); const s=SLIDES[n-1]; const patch={slide:encode(n,p)}; if(s.momento) patch.momento_ativo=s.momento; if(s.rodada) patch.rodada=s.rodada; await setEstado(patch); lastSig=""; tick(); };
+window.stepFwd=()=>{ const {n,p}=decode(curEst.slide); const s=SLIDES[Math.min(Math.max(1,n),SLIDES.length)-1]; if(p<maxStep(s)) goSlide(n,p+1); else goSlide(n+1,0); };
+window.stepBack=()=>{ const {n,p}=decode(curEst.slide); if(p>0) goSlide(n,p-1); else goSlide(n-1,0); };
+document.addEventListener("keydown",async e=>{ if(mode()!=="ecra") return; if(["ArrowRight","PageDown"," ","Enter","ArrowDown"].includes(e.key)){ e.preventDefault(); stepFwd();} if(["ArrowLeft","PageUp","Backspace","ArrowUp"].includes(e.key)){ e.preventDefault(); stepBack();} if(e.key==="f"||e.key==="F"){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); } });
 
 /* ---------- tela (só resultados, reserva) ---------- */
 function renderTela(est,rows){
@@ -379,14 +445,14 @@ function renderTela(est,rows){
 let adminOK=false;
 function renderAdmin(est,rows){
   if(!adminOK){ app.innerHTML=header("controlo")+`<div class="card"><h2>PIN</h2><input type="text" id="pin" inputmode="numeric"><button class="primary" onclick="if($('#pin').value===CONFIG.ADMIN_PIN){adminOK=true;lastSig='';tick();}else alert('PIN errado')">Entrar</button></div>`; return; }
-  const n=est.slide||1, s=SLIDES[n-1];
-  let h=header("controlo")+`<div class="adminbar"><button class="big" onclick="goSlide(${n-1})">‹</button><div style="flex:1;text-align:center"><b>${n}/${SLIDES.length}</b> · ${esc(s.title||s.quote||s.id)}</div><button class="big" onclick="goSlide(${n+1})">›</button></div>`;
+  const {n,p}=decode(est.slide); const s=SLIDES[Math.min(Math.max(1,n),SLIDES.length)-1]; const mx=maxStep(s);
+  let h=header("controlo")+`<div class="adminbar"><button class="big" onclick="stepBack()">‹</button><div style="flex:1;text-align:center"><b>${n}/${SLIDES.length}</b>${mx?` <span class="muted">· passo ${p}/${mx}</span>`:""}<br>${esc(s.title||s.quote||s.id)}</div><button class="big" onclick="stepFwd()">›</button></div>`;
   const ms=["espera","p1","p2","regua","p3","fim"];
   h+=`<p class="muted">Pulso aberto nos telemóveis: <b>${esc(MOMENTOS[est.momento_ativo].titulo)}</b>${est.momento_ativo==="regua"?" · ronda "+est.rodada:""} — muda sozinho ao avançar; aqui pode forçar:</p><div class="adminbar">${ms.map(x=>`<button class="${est.momento_ativo===x?'on':''}" onclick="go('${x}')">${esc(MOMENTOS[x].titulo)}</button>`).join("")}</div>`;
   h+=`<div class="adminbar"><span>Ronda:</span>${[1,2,3].map(r=>`<button class="${est.rodada===r?'on':''}" onclick="ronda(${r})">${r}</button>`).join("")}</div>`;
   const by={}; rows.forEach(r=>{by[r.momento]=by[r.momento]||new Set(); by[r.momento].add(r.dispositivo);});
   h+=`<div class="card"><table class="t"><tr><th>Momento</th><th>Dispositivos</th></tr>${["p1","p2","regua","p3"].map(x=>`<tr><td>${x}</td><td>${by[x]?by[x].size:0}</td></tr>`).join("")}</table></div>`;
-  h+=`<div class="adminbar"><button onclick="exportar()">Exportar CSV</button><button onclick="window.open(location.pathname+'#ecra','_blank')">Abrir ecrã</button></div>`;
+  h+=`<div class="adminbar"><button onclick="goSlide(${n+1},0)">Saltar para o slide seguinte</button><button onclick="exportar()">Exportar CSV</button><button onclick="window.open(location.pathname+'#ecra','_blank')">Abrir ecrã</button></div>`;
   h+=`<h2>Slides</h2><div class="slidelist">${SLIDES.map((x,i)=>`<button class="${i+1===n?'on':''}" onclick="goSlide(${i+1})"><span class="k">${i+1}</span>${esc(x.title||x.quote||x.id)}${x.live?' <span class="tag">'+x.live+'</span>':''}</button>`).join("")}</div>`;
   app.innerHTML=h;
 }
