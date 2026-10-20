@@ -128,7 +128,7 @@ body.ecra #app{max-width:none;padding:0;margin:0}
 .stage.photo.side{color:#14192B;--ink:#14192B;--soft:#4A5264} .stage.photo.side::before{display:block}
 .stage.photo.side .bg{background-size:contain;background-position:right center;animation:none;left:auto;width:660px;right:72px;top:130px;bottom:90px;border-radius:6px;border:2.5px solid #14192B;box-shadow:10px 10px 0 var(--must)} .stage.photo.side .content{width:760px} .stage.photo.side .quote{font-size:54px}
 .stage.photo.side .shade{background:none} .stage.photo.side .foot{border-color:#14192B;color:#4A5264}
-.stage.illus .bg{animation:none} .stage.illus::before{display:none} .stage.illus .content{width:720px;right:auto;display:flex;flex-direction:column;justify-content:center} .stage.illus .quote{font-size:66px} .stage.illus h1.title{font-size:54px} .stage.illus .lead{font-size:32px} .stage.illus p{font-size:23px} .stage.illus .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(247,243,236,.97) 0%,rgba(247,243,236,.92) 34%,rgba(247,243,236,.6) 46%,rgba(247,243,236,0) 58%)}
+.stage.illus .bg{animation:none} .stage.illus::before{display:none} .stage.illus .content{width:720px;right:auto;display:flex;flex-direction:column;justify-content:center} .stage.illus .quote{font-size:66px} .stage.illus h1.title{font-size:54px} .stage.illus .lead{font-size:32px} .stage.illus p{font-size:23px} .stage.illus .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(247,243,236,1) 0%,rgba(247,243,236,.9) 30%,rgba(247,243,236,.35) 42%,rgba(247,243,236,0) 50%)}
 .stage.cover.hasimg .bg{animation:kb 60s ease-in-out infinite alternate} .stage.cover.hasimg .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(247,243,236,1) 0%,rgba(247,243,236,.98) 46%,rgba(247,243,236,.75) 60%,rgba(247,243,236,0) 76%)} .stage.cover.hasimg::before{display:none}
 .stage.cover .content{display:flex;flex-direction:column;justify-content:center;top:0;bottom:0}
 .stage.cover h1{font-family:"Playfair Display",serif;font-size:150px;color:var(--ink);margin:0 0 22px;line-height:.98;font-weight:900;letter-spacing:-4px}
@@ -175,7 +175,7 @@ const SLIDES = [
  {id:"qr", title:"Entre no pulso", live:"qr", momento:"p1",
   body:`<p class="lead">Anónimo. Sem nome. Sem login.</p><p>Dez perguntas, três minutos — antes de qualquer conteúdo.</p><p class="soft">Responda com o que faria de verdade, não com o ideal.</p>`},
 
- {id:"abertura", layout:"illus", img:"img/r-abertura.jpg", size:"118% auto", pos:"right center", cw:600, kicker:"Abertura", title:"O seu maior <em>problema</em>",
+ {id:"abertura", layout:"illus", img:"img/r-abertura.jpg", size:"1600px 900px", pos:"160px 0", cw:600, kicker:"Abertura", title:"O seu maior <em>problema</em>",
   body:`<div class="steps vsm">${rv(1,`<div class="step"><b class="num">1</b><div><b class="blue">Em duplas, 8 minutos</b><br>Conte ao colega o maior problema que já viveu. O colega só escuta.</div></div>`)}${rv(2,`<div class="step"><b class="num">2</b><div><b class="blue">Depois, uma pergunta</b><br>Se pudesse, eliminava-o da sua vida?</div></div>`)}${rv(3,`<div class="step"><b class="num">3</b><div><b class="blue">Duas ou três duplas, 30 segundos</b><br>Não o problema — só a resposta, e porquê.</div></div>`)}</div>`},
 
  {id:"sofa", layout:"illus", img:"img/r-sofa.jpg", quote:"«O ser humano queria ser sofá. Mas ele é bicicleta.»"},
@@ -216,7 +216,7 @@ const SLIDES = [
  {id:"klink3", layout:"photo", img:"img/klink-2026.jpg", pos:"center 30%", kicker:"2026 · quarenta e dois anos depois", quote:"O segundo a fazer a travessia. Klink foi recebê-lo ao cais.",
   body:rv(1,`<p class="lead">O desenho continua a valer.</p>`)},
 
- {id:"risco", layout:"illus", img:"img/r-risco.jpg", size:"142% auto", pos:"right center", cw:500, title:"Para onde vai o risco quando o advogado diz «não»",
+ {id:"risco", layout:"illus", img:"img/r-risco.jpg", size:"1600px 900px", pos:"110px 0", cw:520, title:"Para onde vai o risco quando o advogado diz «não»",
   body:rv(1,`<p class="lead blue">O risco não desaparece. Muda de mesa.</p>`)+rv(2,`<p>Sai da mesa de quem sabia. Cai na mesa de quem precisa — e que vai decidir sozinho, com menos informação do que o advogado tinha.</p>`)},
 
  {id:"numeros", title:"Dois números e uma causa",
@@ -224,7 +224,7 @@ const SLIDES = [
 
  {id:"res2", title:"O que pesa quando se evita propor um caminho", live:"p2", momento:"p2"},
 
- {id:"metodo", layout:"illus", img:"img/r-via.jpg", size:"136% auto", pos:"right center", cw:540, kicker:"Integrative Thinking · Roger Martin", title:"Terceira <em>Via</em>",
+ {id:"metodo", layout:"illus", img:"img/r-via.jpg", size:"1600px 900px", pos:"90px 0", cw:540, kicker:"Integrative Thinking · Roger Martin", title:"Terceira <em>Via</em>",
   body:`<div class="steps vsm">${rv(1,`<div class="step"><b class="num">1</b><div><b class="blue">Reenquadrar</b><br>do pedido ao interesse de cada lado; uma pergunta nova</div></div>`)}${rv(2,`<div class="step"><b class="num">2</b><div><b class="blue">Terceira via</b><br>três rotas — A, B, C — cada uma com o seu risco</div></div>`)}${rv(3,`<div class="step"><b class="num">3</b><div><b class="blue">Recomendar</b><br>uma proposta em quatro linhas, não «o que acham?»</div></div>`)}</div>${rv(4,`<p class="small">Primeiro fora do direito, com um exemplo meu. Depois vocês, em duplas. Depois três rondas com casos.</p>`)}`},
 
  {id:"passo1", num:1, title:"Reenquadrar — posição × interesse",
