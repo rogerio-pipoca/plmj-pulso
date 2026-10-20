@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
-:root{--azul:#009CD1;--roxo:#572068;--ink:#231F20;--bg:#ffffff;--card:#f5f7f9;--line:#dfe5ea;--muted:#6b7680;--ok:#1a9c6b}
+:root{--azul:#009CD1;--roxo:#572068;--ink:#231F20;--bg:#ffffff;--card:#f5f7f9;--line:#dfe5ea;--muted:#6b7680;--ok:#1a9c6b;--tint:#F3F8FB;--tintp:#F5F0F7}
 :root:not([data-theme="light"]){color-scheme:light}
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Open Sans",Arial,sans-serif;font-size:17px;line-height:1.45}
@@ -33,10 +33,8 @@ button.ghost{background:#fff;color:var(--roxo);border:1.5px solid var(--roxo);bo
 .center{text-align:center}
 .big{font-family:"Playfair Display",serif;font-size:2.2rem;color:var(--roxo);line-height:1.1}
 .err{background:#fdecec;border:1px solid #f3b4b4;color:#8a1c1c;padding:12px;border-radius:10px;margin-bottom:14px}
-.ok{color:var(--ok);font-weight:600}
-/* screen */
+/* ---- tela (só resultados, reserva) ---- */
 .tela .wrap{max-width:1500px;padding:28px 40px}
-.tela h1{font-size:2.6rem}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:22px}
 .panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px}
 .panel h3{font-size:1.15rem;color:var(--roxo);margin-bottom:12px}
@@ -50,16 +48,81 @@ button.ghost{background:#fff;color:var(--roxo);border:1.5px solid var(--roxo);bo
 .qr img,.qr canvas{border:10px solid #fff;border-radius:8px;box-shadow:0 2px 14px rgba(0,0,0,.08)}
 .verb{background:#f5f7f9;border-left:4px solid var(--roxo);padding:10px 14px;margin:8px 0;border-radius:6px;font-size:1.05rem}
 .tag{display:inline-block;background:var(--roxo);color:#fff;font-size:.75rem;padding:3px 9px;border-radius:999px;margin-left:8px;vertical-align:middle;letter-spacing:.3px}
-.adminbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}
+.adminbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px;align-items:center}
 .adminbar button{font:inherit;padding:9px 14px;border-radius:10px;border:1.5px solid var(--azul);background:#fff;color:var(--azul);font-weight:600;cursor:pointer}
 .adminbar button.on{background:var(--azul);color:#fff}
+.adminbar button.big{font-size:1.4rem;padding:10px 22px}
+.slidelist{display:flex;flex-direction:column;gap:4px;margin:10px 0}
+.slidelist button{font:inherit;text-align:left;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.slidelist button.on{border-color:var(--roxo);background:var(--tintp);font-weight:700}
+.slidelist button .k{display:inline-block;width:28px;color:var(--azul);font-weight:700}
 table.t{width:100%;border-collapse:collapse;font-size:.95rem} table.t td,table.t th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left} table.t th{color:var(--roxo)}
 @media (max-width:480px){html,body{font-size:16px}.big{font-size:1.8rem}}
+
+/* ---- ECRÃ (slides integrados) ---- */
+body.ecra{background:#111;overflow:hidden}
+body.ecra #app{max-width:none;padding:0;margin:0}
+.stage{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:top left;background:#fff;color:var(--ink);overflow:hidden;font-size:26px;line-height:1.4}
+.stage .chrome-logo{position:absolute;top:44px;left:72px;height:52px}
+.stage .chrome-plmj{position:absolute;top:40px;right:72px;height:60px}
+.stage .foot{position:absolute;left:72px;right:72px;bottom:34px;border-top:1px solid #ddd;padding-top:8px;font-size:15px;color:#888;display:flex;justify-content:space-between}
+.stage .content{position:absolute;left:72px;right:72px;top:150px;bottom:90px}
+.stage h1.title{font-size:54px;color:var(--roxo);margin:0 0 28px;line-height:1.12}
+.stage .num{font-family:"Playfair Display",serif;font-weight:900;color:var(--azul);font-size:64px;line-height:1;display:inline-block;margin-right:18px;vertical-align:middle}
+.stage .numtitle{display:flex;align-items:center;gap:18px}
+.stage p{margin:0 0 16px}
+.stage .lead{font-family:"Playfair Display",serif;font-size:34px;line-height:1.25;font-weight:700}
+.stage .it{font-style:italic} .stage .b{font-weight:700} .stage .small{font-size:19px;color:#777}
+.stage .blue{color:var(--azul)} .stage .purple{color:var(--roxo)} .stage .grey{color:#6E6E6E}
+.stage .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 30px;margin:0}
+.stage .card.tint{background:var(--tint)} .stage .card.tintp{background:var(--tintp)} .stage .card.grey{background:#F2F2F2}
+.stage .card.b-blue{border:3px solid var(--azul)} .stage .card.b-purple{border:3px solid var(--roxo)}
+.stage .card h3{font-size:30px;margin-bottom:10px}
+.stage .cols2{display:grid;grid-template-columns:1fr 1fr;gap:36px;margin-bottom:24px} .stage .cols2.w40{grid-template-columns:4fr 6fr} .stage .cols2.w55{grid-template-columns:55fr 45fr}
+.stage .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:30px;margin-bottom:24px}
+.stage .steps .step{display:flex;gap:18px;align-items:flex-start;margin-bottom:26px;font-size:27px}
+.stage .steps .num{font-size:56px}
+.stage .stats b{display:block;font-family:"Playfair Display",serif;font-size:96px;line-height:1;margin-bottom:14px} .stage .stats p{font-size:22px}
+.stage .mov b.num{font-size:110px;display:block;margin-bottom:10px} .stage .mov h3{font-size:40px;color:var(--roxo)}
+.stage .routes b{font-family:"Playfair Display",serif;font-size:48px;display:block;margin-bottom:8px;color:#6E6E6E} .stage .routes p{font-size:22px}
+.stage .tpl p{font-family:"Playfair Display",serif;font-size:36px;color:var(--roxo);font-weight:700;margin:0 0 18px}
+.stage .quad{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:460px;margin-left:auto}
+.stage .quad div{aspect-ratio:1;display:flex;align-items:center;justify-content:center;color:#fff;font-family:"Playfair Display",serif;font-weight:700;font-size:30px;border-radius:12px}
+.stage .quad .q1{background:var(--azul)} .stage .quad .q2{background:var(--roxo)}
+.stage .flow{display:grid;grid-template-columns:5fr 2fr 5fr;align-items:center;gap:20px;margin-bottom:30px} .stage .flow .arrow{font-size:110px;color:var(--roxo);text-align:center;line-height:1}
+.stage table.cy{width:100%;border-collapse:collapse;font-size:21px} .stage table.cy th{background:var(--roxo);color:#fff;font-family:"Playfair Display",serif;font-size:24px;padding:12px} .stage table.cy td{border:1px solid #ddd;padding:12px 14px;vertical-align:top} .stage table.cy td.lab{background:var(--tintp);color:var(--roxo);font-weight:700;font-size:17px;width:150px}
+.stage .caso{font-size:24px;background:var(--tintp);border-left:6px solid var(--roxo);padding:20px 24px;border-radius:8px}
+.stage .timing div{font-size:22px;margin:8px 0} .stage .timing b{display:inline-block;width:110px}
+.stage .livebox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 24px;min-height:300px}
+.stage .lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px} .stage .lgrid.c2{grid-template-columns:1fr 1fr}
+.stage .lpanel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 18px}
+.stage .lpanel h3{font-size:19px;color:var(--roxo);margin-bottom:8px;line-height:1.2}
+.stage .bar{font-size:16px;line-height:1.2;grid-template-columns:150px 1fr 50px;margin:5px 0;gap:8px} .stage .bar .trk{height:16px} .stage .bar .lab{overflow:hidden}
+.stage .count{position:absolute;top:60px;right:180px;font-size:18px;color:#888} .stage .count b{font-family:"Playfair Display",serif;font-size:34px;color:var(--azul);margin-right:6px}
+.stage .verb{font-size:17px;line-height:1.3;padding:6px 10px;margin:5px 0}
+/* dark layouts */
+.stage.blue{background:var(--azul);color:#fff} .stage.purple{background:var(--roxo);color:#fff} .stage.dark{background:#231F20;color:#fff}
+.stage.blue .foot,.stage.purple .foot,.stage.dark .foot{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.3)}
+.stage .quote{font-family:"Playfair Display",serif;font-weight:700;font-size:64px;line-height:1.12;margin:0 0 30px}
+.stage .cite{font-size:20px;opacity:.85;margin-bottom:40px}
+.stage .kicker{font-size:26px;font-weight:700;letter-spacing:2px;color:var(--azul);margin-bottom:24px}
+.stage.dark .quote{font-size:76px}
+/* cover */
+.stage.cover{display:grid;grid-template-columns:1fr 1fr}
+.stage.cover .cl{padding:140px 80px} .stage.cover .cr{background:center/cover no-repeat}
+.stage.cover h1{font-size:72px;color:var(--roxo);margin:0 0 24px;line-height:1.1}
+.stage.cover .sub{font-size:26px;margin-bottom:8px} .stage.cover .by{font-size:20px;color:#777;margin-bottom:60px}
+.stage.cover .logos{display:flex;gap:40px;align-items:center} .stage.cover .logos img{height:64px}
+.stage .nav{position:absolute;right:28px;bottom:70px;display:flex;gap:6px;opacity:.25} .stage .nav button{font:inherit;font-size:22px;background:#fff;border:1px solid #ccc;border-radius:8px;padding:4px 14px;cursor:pointer}
+.stage .nav:hover{opacity:1}
+.stage .qrbig{display:flex;gap:60px;align-items:flex-start} .stage .qrbig .qr{align-items:flex-start} .stage .qrbig canvas,.stage .qrbig img{border:14px solid #fff;box-shadow:0 2px 20px rgba(0,0,0,.1)}
+.stage .qrurl{font-size:20px;color:#777;margin-top:12px}
 </style>
 </head>
 <body>
 <div id="app" class="wrap"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="assets.js"></script>
 <script>
 /* ======================= CONFIGURAÇÃO ======================= */
 const CONFIG = {
@@ -70,12 +133,73 @@ const CONFIG = {
 };
 /* ============================================================ */
 
+/* ===================== SLIDES (ecrã integrado) =====================
+   layout: cover | light | blue | purple | dark
+   live:   p1 | p2 | regua | p3 | qr  (painéis em direto)
+   momento: ao chegar a este slide, o telemóvel dos participantes abre este pulso
+   rodada:  para live:regua
+*/
+const EVAL_URL = "https://forms.office.com/pages/responsepage.aspx?id=4zEpxDNn5kGNQsSLozS7pAC51C8oVxxGmHFIdAiFiMBUQlg0UzNNV1hYTklYNzU2MllLQkVPNE05MCQlQCNjPTEkJUAjdD1n";
+const SLIDES = [
+ {id:"capa", layout:"cover", title:"Resolução de Problemas", sub:"PLMJ · Plano de Formação 2026", by:"Rogério Oliveira · Nova SBE Executive Education"},
+ {id:"qr", layout:"light", title:"Entre no pulso", live:"qr", momento:"p1",
+  body:`<p class="lead purple">Anónimo. Sem nome. Sem login.</p><p>Nove perguntas, três minutos — antes de qualquer conteúdo.</p><p>Responda com o que faria de verdade, não com o ideal.</p>`},
+ {id:"opcaoA", layout:"light", title:"Hoje, vocês são o cliente", tag:"opção A",
+  body:steps([["Receba um cartão","Um papel: diretor de uma empresa, uma situação, um prazo até sexta."],["Cinco minutos","Leia e escreva o que quer perguntar ao advogado."],["O advogado sou eu","Pergunte. Ouça a resposta. Volte à sua mesa de diretor."]])+`<p class="lead blue it">Guardem o que sentiram. Voltamos aqui no fim.</p>`},
+ {id:"opcaoB", layout:"light", title:"O seu maior problema", tag:"opção B",
+  body:steps([["Em duplas, 8 minutos","Conte ao colega o maior problema que já viveu. O colega só escuta."],["Depois, uma pergunta","Se pudesse, eliminava-o da sua vida?"],["Duas ou três duplas, 30 segundos","Não o problema — só a resposta e porquê."]])},
+ {id:"sofa", layout:"purple", quote:"«O ser humano queria ser sofá. Mas é bicicleta.»", cite:"Victor Stirman · Elefantes na Neblina",
+  body:`<p>Precisamos do desequilíbrio para saber o que é equilíbrio — e voltar a ele.</p><p>Piaget: ninguém aprende sem perder o equilíbrio. O reequilíbrio nunca devolve ao ponto anterior; devolve a um ponto acima.</p>`},
+ {id:"dificuldade", layout:"light", title:"Dificuldade bem dosada — não «sofrer faz crescer»",
+  body:`<div class="cols2"><div class="card grey"><h3 class="grey">«O trauma faz crescer»</h3><p>Popular. Medido antes e depois, o crescimento que as pessoas relatam não aparece.</p></div><div class="card tint"><h3 class="blue">Dificuldade moderada</h3><p>Quem passou por alguma lida melhor com a seguinte do que quem passou por nenhuma — ou por demais.</p></div></div><p class="lead purple it">A bicicleta, não o acidente.</p>`},
+ {id:"res1", layout:"light", title:"O que a sala faz — três situações", live:"p1"},
+ {id:"oficio", layout:"blue", quote:"Advogado não tem problemas. Trabalha com eles.",
+  body:`<p>Um médico trabalha com doenças. Um advogado, com problemas que outros trouxeram.</p><p>O dia sem problema é o dia sem trabalho.</p><p>Se o problema é o trabalho, dizer «não pode» é devolver o trabalho a quem o trouxe.</p>`},
+ {id:"cynefin", layout:"light", title:"Quatro tipos de problema — Cynefin",
+  body:`<table class="cy"><tr><th></th><th>Simples</th><th>Complicado</th><th>Complexo</th><th>Caótico</th></tr>
+<tr><td class="lab">O que é</td><td>Regra conhecida, resposta conhecida</td><td>Há resposta certa, mas exige especialista e análise</td><td>Não há resposta certa antes de agir; só se percebe depois</td><td>Não há tempo de análise</td></tr>
+<tr><td class="lab">Como se resolve</td><td class="blue b">Consultar e aplicar</td><td class="blue b">Analisar, decompor, decidir</td><td class="blue b">Sondar com algo pequeno, observar, ajustar</td><td class="blue b">Agir para estabilizar, depois pensar</td></tr>
+<tr><td class="lab">Exemplo</td><td>Prazo processual; contrato-padrão</td><td>Estrutura fiscal de uma operação; due diligence</td><td>Lançar um produto num mercado sem lei clara nem jurisprudência</td><td>Fuga de dados em curso; crise de imprensa</td></tr></table><p class="small">Dave Snowden · a única framework nomeada da tarde</p>`},
+ {id:"fronteira", layout:"light", title:"A fronteira: sem lei clara, sem jurisprudência",
+  body:`<div class="cols2 w40"><p class="lead blue">O erro mais comum não é resolver mal. É tratar um problema complexo como se fosse complicado.</p><div class="card tintp"><p>Procurar a lei que não existe, o precedente que não há, o parecer que fecha a questão.</p><p>Em problema complexo, o parecer que fecha é o parecer errado. O certo abre uma rota de teste.</p><p>Na fronteira ninguém chegou antes — é exatamente onde o cliente mais precisa de si.</p></div></div>`},
+ {id:"exercicio", layout:"light", title:"Exercício: classifiquem dois problemas reais",
+  body:`<div class="cols2"><div><p class="lead purple">Em duplas · 8 minutos</p><p>Dois problemas que viveram na PLMJ. Em que quadrante caem?</p><p>Mão no ar por quadrante.</p><p>Quantos «complexos» foram tratados como «complicados»?</p></div><div class="quad"><div class="q1">Simples</div><div class="q1">Complicado</div><div class="q2">Complexo</div><div class="q2">Caótico</div></div></div>`},
+ {id:"klink", layout:"dark", kicker:"1984 · Namíbia → Bahia · 100 dias a remo", quote:"O risco não foi eliminado. Foi desenhado.", cite:"Amyr Klink · Cem Dias Entre Céu e Mar",
+  body:`<p>Um barco feito para virar e voltar sozinho. Virou várias vezes. Voltou todas.</p><p class="it">«Metade do que estava escrito no meu projeto não aconteceu. Ainda bem!»</p>`},
+ {id:"risco", layout:"light", title:"Para onde vai o risco quando o advogado diz «não»",
+  body:`<div class="flow"><div class="card tint b-blue"><h3 class="blue">Mesa do advogado</h3><p>quem sabia</p></div><div class="arrow">→</div><div class="card tintp b-purple"><h3 class="purple">Mesa do diretor</h3><p>quem precisa — com menos informação</p></div></div><p class="lead purple">O risco não desaparece. Muda de mesa.</p><p>O diretor que ouviu «não» ainda tem a meta, o prazo e o conselho em cima. Vai decidir — sozinho, com menos informação do que o advogado tinha.</p>`},
+ {id:"numeros", layout:"light", title:"Três números",
+  body:`<div class="cols3 stats"><div><b class="blue">1 em 4</b><p>recusa qualquer risco de agir — mesmo quando não agir mata dez vezes mais. Não agir parece seguro.</p></div><div><b class="blue">1 em 4</b><p>das decisões mais importantes do ano, entre 950 gestores, foi tomada para proteger quem decidia — não a organização.</p></div><div><b class="purple">4,5×</b><p>mais procura de outras opiniões pelo negócio quando o jurídico é conservador demais. O risco migra para quem sabe menos.</p></div></div><p class="lead purple it">Não é defeito de carácter. A pergunta da tarde não é «tenham coragem» — é «tenham método».</p>`},
+ {id:"res2", layout:"light", title:"O que pesa quando se evita propor um caminho", live:"p2", momento:"p2"},
+ {id:"movimento", layout:"light", title:"O movimento — três passos, repetidos quatro vezes",
+  body:`<div class="cols3 mov"><div><b class="num">1</b><h3>Reenquadrar</h3><p>do pedido ao interesse de cada lado; uma pergunta nova</p></div><div><b class="num">2</b><h3>Terceira via</h3><p>três rotas — A, B, C — cada uma com o seu risco</p></div><div><b class="num">3</b><h3>Recomendar</h3><p>uma proposta em quatro linhas, não «o que acham?»</p></div></div><p class="small it">Primeiro fora do direito. Depois, três rondas com casos.</p>`},
+ {id:"passo1", layout:"light", num:1, title:"Reenquadrar — posição × interesse",
+  body:`<div class="cols2 w40"><div><p class="lead blue">A posição é o que a pessoa decidiu. O interesse é o que a fez decidir.</p><p class="small">Fisher &amp; Ury</p></div><div class="card tintp"><p><b class="purple">Pedido:</b> «Vem no Natal.» Posição possível: ir ou não ir.</p><p><b class="purple">Interesse deles:</b> presença, ritual, saber que a família ainda se junta.</p><p><b class="purple">O seu:</b> a viagem — e não carregar culpa.</p><p><b class="blue">Pergunta reenquadrada:</b> <b>como garantir o ritual da família e a viagem com os amigos no mesmo dezembro?</b></p></div></div>`},
+ {id:"passo2", layout:"light", num:2, title:"Terceira via — três rotas, risco graduado",
+  body:`<div class="cols3 routes"><div class="card grey"><b>A</b><p>Vou à viagem. Aviso que não vou no Natal.</p><p class="it grey">Risco: mágoa; a ausência vira assunto.</p></div><div class="card grey"><b>B</b><p>Cancelo a viagem.</p><p class="it grey">Risco: perder a viagem e levar ressentimento para o Natal.</p></div><div class="card tint b-blue"><b class="blue">C</b><p>Ceia da família a 20 ou 21, em casa deles, organizada por mim. Viagem. Réveillon com eles.</p><p class="it blue">Risco: «não é a mesma coisa». Mitigo: organizo eu a ceia, não só peço a data.</p></div></div><p><b class="blue">Teste:</b> o que cada lado queria de verdade continua inteiro? (Meio-termo perde um pedaço de cada lado.)</p><p><b class="purple">Travão:</b> antes de contornar uma regra, perceber o que ela protege. Pergunte antes de desenhar.</p>`},
+ {id:"passo3", layout:"light", num:3, title:"Recomendar — em quatro linhas",
+  body:`<div class="cols2"><div class="card tint b-blue tpl"><p>Recomendo…</p><p>porque…</p><p>o risco é…, e reduzo-o com…</p><p>preciso de… até…</p></div><div><p class="small grey b">Antes</p><p class="grey">«Será que dava para…?» · «um dia destes» · «o que vocês acham?»</p><p class="small blue b">Depois</p><p>«Mãe, quero propor a nossa ceia de Natal no dia 21, lá em casa, e eu organizo — porque assim fico convosco com calma e vou à viagem de 22 a 28. Sei que não é o dia 25; por isso volto para o réveillon. Diz-me até domingo se o dia 21 também dá para o pai.»</p></div></div><p class="small it purple">«Quero propor», não «será que dava». Datas, não «um dia destes». Aceite o objetivo do outro antes de defender o seu.</p>`},
+ {id:"emprestimo", layout:"light", title:"Em duplas — 10 minutos",
+  body:`<p class="lead purple">Um amigo próximo, em dificuldade, pede 1.500 € emprestados.</p><p>Tem o dinheiro, mas é a sua reserva — e já viu esse amigo não devolver a outros.</p><p>Folha de 1 página: reenquadrar · três rotas com risco · recomendação em quatro linhas.</p><p>Três duplas apresentam só o C e a recomendação.</p>`},
+ {id:"ronda1", layout:"light", title:"Ronda 1 — cliente externo", live:"regua", momento:"regua", rodada:1, body:rondaBody("Uma empresa cliente quer fechar em dez dias um contrato com um fornecedor estrangeiro de quem depende. Uma cláusula da minuta é inaceitável à luz da lei portuguesa. O fornecedor «não negocia a minuta». O diretor comercial escreve: «Preciso de saber se podemos assinar isto. Sexta-feira.»")},
+ {id:"ronda2", layout:"light", title:"Ronda 2 — cliente interno", live:"regua", momento:"regua", rodada:2, body:rondaBody("Terça, 18h. Um sócio pede «um parecer para amanhã de manhã» sobre uma questão que, feita a sério, levaria uma semana. Pelo contexto, tem uma reunião com o cliente às 10h e precisa de chegar lá com uma posição, não com um documento.")},
+ {id:"ronda3", layout:"light", title:"Ronda 3 — compliance · pitch para a sala", live:"regua", momento:"regua", rodada:3, body:rondaBody("O onboarding de um cliente novo está travado há duas semanas: o compliance exige um documento que o cliente diz não conseguir em menos de dois meses. O sócio quer começar. O compliance não abre exceções — e tem razão. O e-mail do sócio diz só: «Resolve.»")},
+ {id:"placar", layout:"light", title:"Placar", live:"placar"},
+ {id:"papeis", layout:"light", title:"Três papéis",
+  body:`<div class="cols3 routes"><div class="card grey"><h3 class="grey">Par de mãos</h3><p>Executa a instrução.</p></div><div class="card tint"><h3 class="blue">Expert</h3><p>Dá a resposta jurídica.</p></div><div class="card tintp"><h3 class="purple">Colaborador</h3><p>Senta-se ao lado do cliente e co-define o problema.</p></div></div><p class="lead purple">Em silêncio: em qual passou a última semana? Em qual gostaria de passar a próxima?</p><p>Quatro horas mudam o que sabem e pretendem — não o que fazem. O que muda comportamento é um plano concreto com gatilho, e gente em volta.</p>`},
+ {id:"res3", layout:"light", title:"Autoimagem × comportamento", live:"p3", momento:"p3"},
+ {id:"tese", layout:"purple", quote:"Ninguém contrata um advogado para saber o que não pode.", live:"eval", momento:"fim", body:`<p>Obrigado.</p>`}
+];
+function steps(arr){ return `<div class="steps">`+arr.map((s,i)=>`<div class="step"><b class="num">${i+1}</b><div><b class="purple">${s[0]}</b><br>${s[1]}</div></div>`).join("")+`</div>`; }
+function rondaBody(caso){ return `<div class="cols2 w55"><div><p class="caso">${caso}</p><div class="timing"><div><b class="blue">10 min</b> folha de 1 página</div><div><b class="blue">2 min</b> pitch para o trio-cliente</div><div><b class="blue">pulso</b> o trio-cliente avalia com a régua</div></div></div><div class="livebox" id="live"></div></div>`; }
+
+
 const MOMENTOS = {
   espera:{titulo:"Bem-vindo/a",desc:"Aguarde. A primeira ronda abre em instantes."},
-  p1:{titulo:"Pulso 1",desc:"Nove perguntas rápidas. Anónimo. Responda com o que faria de verdade, não com o ideal."},
+  p1:{titulo:"Pulso 1",desc:"Dez perguntas rápidas. Anónimo. Responda com o que faria de verdade, não com o ideal."},
   p2:{titulo:"Pulso 2",desc:"Sete perguntas sobre a sua área — não sobre o escritório inteiro."},
   regua:{titulo:"Régua da ronda",desc:"O vosso trio avalia o pitch que acabou de ouvir. Uma resposta por trio."},
-  p3:{titulo:"Pulso 3",desc:"Para fechar. Seis itens."},
+  p3:{titulo:"Pulso 3",desc:"Para fechar. Sete itens."},
   fim:{titulo:"Obrigado",desc:"A sessão terminou. Avalie a formação no QR do último slide."}
 };
 
@@ -123,7 +247,6 @@ const Q = {
 /* ---------- infra ---------- */
 const $ = s=>document.querySelector(s);
 const app = $("#app");
-const configured = ()=>CONFIG.SUPABASE_URL.startsWith("https://") && CONFIG.SUPABASE_ANON.length>20;
 const H = ()=>({apikey:CONFIG.SUPABASE_ANON,Authorization:"Bearer "+CONFIG.SUPABASE_ANON,"Content-Type":"application/json"});
 async function sb(path,opt={}){
   const r = await fetch(CONFIG.SUPABASE_URL+"/rest/v1/"+path,{...opt,headers:{...H(),...(opt.headers||{})}});
@@ -133,41 +256,26 @@ async function sb(path,opt={}){
 const getEstado = ()=>sb(`plmj_estado?sessao=eq.${CONFIG.SESSAO}&select=*`).then(r=>r[0]);
 const setEstado = (patch)=>sb(`plmj_estado?sessao=eq.${CONFIG.SESSAO}`,{method:"PATCH",body:JSON.stringify({...patch,atualizado:new Date().toISOString()}),headers:{Prefer:"return=minimal"}});
 const getRespostas = (momento)=>sb(`plmj_respostas?sessao=eq.${CONFIG.SESSAO}${momento?`&momento=eq.${momento}`:""}&select=dispositivo,momento,item,valor,criado&limit=5000`);
-async function upsert(rows){
-  return sb(`plmj_respostas?on_conflict=sessao,dispositivo,momento,item`,{method:"POST",body:JSON.stringify(rows),headers:{Prefer:"resolution=merge-duplicates,return=minimal"}});
-}
-function devId(){
-  let id=null; try{id=localStorage.getItem("plmj_dev");}catch(e){}
-  if(!id){id=Math.random().toString(36).slice(2)+Date.now().toString(36); try{localStorage.setItem("plmj_dev",id);}catch(e){}}
-  return id;
-}
+async function upsert(rows){ return sb(`plmj_respostas?on_conflict=sessao,dispositivo,momento,item`,{method:"POST",body:JSON.stringify(rows),headers:{Prefer:"resolution=merge-duplicates,return=minimal"}}); }
+function devId(){ let id=null; try{id=localStorage.getItem("plmj_dev");}catch(e){} if(!id){id=Math.random().toString(36).slice(2)+Date.now().toString(36); try{localStorage.setItem("plmj_dev",id);}catch(e){}} return id; }
 const esc = s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pct = (n,d)=>d?Math.round(100*n/d):0;
+const PURL = ()=>location.origin+location.pathname;
 
 /* ---------- participante ---------- */
 let pState={momento:null,answers:{},sent:{}};
 function header(sub){return `<div class="top"><div><div class="brand">Pulso</div><div class="sub">${esc(sub||"PLMJ · Resolução de Problemas")}</div></div><div class="sub">anónimo</div></div>`;}
 function renderParticipante(est){
-  const m = est.momento_ativo;
-  const info = MOMENTOS[m]||MOMENTOS.espera;
-  if(m==="espera"||m==="fim"){
-    app.innerHTML = header()+`<div class="card center"><h1>${esc(info.titulo)}</h1><p>${esc(info.desc)}</p>${m==="espera"?'<p class="muted">Mantenha esta página aberta.</p>':""}</div>`; return;
-  }
+  const m = est.momento_ativo; const info = MOMENTOS[m]||MOMENTOS.espera;
+  if(m==="espera"||m==="fim"){ app.innerHTML = header()+`<div class="card center"><h1>${esc(info.titulo)}</h1><p>${esc(info.desc)}</p>${m==="espera"?'<p class="muted">Mantenha esta página aberta.</p>':""}</div>`; return; }
   const key = m==="regua"?`regua_r${est.rodada}`:m;
-  if(pState.sent[key]){
-    app.innerHTML = header()+`<div class="card center"><h2>Recebido.</h2><p class="muted">Obrigado. Aguarde a próxima ronda.</p>${m==="regua"?'<button class="ghost" onclick="editar()">Corrigir a avaliação</button>':""}</div>`; return;
-  }
-  const qs = Q[m];
-  const a = pState.answers[key]||(pState.answers[key]={});
+  if(pState.sent[key]){ app.innerHTML = header()+`<div class="card center"><h2>Recebido.</h2><p class="muted">Obrigado. Aguarde a próxima ronda.</p>${m==="regua"?'<button class="ghost" onclick="editar()">Corrigir a avaliação</button>':""}</div>`; return; }
+  const qs = Q[m]; const a = pState.answers[key]||(pState.answers[key]={});
   let html = header()+`<h1>${esc(info.titulo)}${m==="regua"?` <span class="tag">ronda ${est.rodada}</span>`:""}</h1><p class="muted">${esc(info.desc)}</p>`;
   qs.forEach((q,i)=>{
     html+=`<div class="q"><div class="t"><span class="n">${i+1}</span>${esc(q.t)}${q.opt?' <span class="muted">(opcional)</span>':""}</div>`;
-    if(q.text){ html+=`<textarea rows="3" data-id="${q.id}" oninput="setAns('${key}','${q.id}',this.value)">${esc(a[q.id]||"")}</textarea>`; }
-    else{
-      html+=`<div class="${q.row?'row':''}">`;
-      q.o.forEach(o=>{ html+=`<button type="button" class="opt ${a[q.id]===o?'sel':''}" onclick="pick('${key}','${q.id}',this)">${esc(o)}</button>`; });
-      html+=`</div>`;
-    }
+    if(q.text){ html+=`<textarea rows="3" oninput="setAns('${key}','${q.id}',this.value)">${esc(a[q.id]||"")}</textarea>`; }
+    else{ html+=`<div class="${q.row?'row':''}">`; q.o.forEach(o=>{ html+=`<button type="button" class="opt ${a[q.id]===o?'sel':''}" onclick="pick('${key}','${q.id}',this)">${esc(o)}</button>`; }); html+=`</div>`; }
     html+=`</div>`;
   });
   const done = qs.every(q=>q.opt||(a[q.id]&&String(a[q.id]).trim()));
@@ -177,121 +285,136 @@ function renderParticipante(est){
 window.setAns=(key,id,v)=>{(pState.answers[key]||(pState.answers[key]={}))[id]=v; refreshSend(key);};
 window.pick=(key,id,btn)=>{ const a=(pState.answers[key]||(pState.answers[key]={})); a[id]=btn.textContent; btn.parentElement.querySelectorAll(".opt").forEach(b=>b.classList.remove("sel")); btn.classList.add("sel"); refreshSend(key); };
 function refreshSend(key){ const m=key.startsWith("regua")?"regua":key; const a=pState.answers[key]||{}; const done=Q[m].every(q=>q.opt||(a[q.id]&&String(a[q.id]).trim())); const b=$("#send"); if(b) b.disabled=!done; }
-window.editar=()=>{ const k=Object.keys(pState.sent).pop(); delete pState.sent[k]; tick(); };
+window.editar=()=>{ const k=Object.keys(pState.sent).pop(); delete pState.sent[k]; pState.momento=null; tick(); };
 window.enviar=async(m,key,rodada)=>{
   const a=pState.answers[key]||{}; const dev=devId();
   const rows=Object.entries(a).filter(([k,v])=>String(v).trim()).map(([item,valor])=>({sessao:CONFIG.SESSAO,dispositivo:dev,momento:m,item:(m==="regua"?`r${rodada}_`:"")+item,valor:String(valor).slice(0,2000)}));
   const b=$("#send"); b.disabled=true; b.textContent="A enviar…";
-  try{ await upsert(rows); pState.sent[key]=true; try{localStorage.setItem("plmj_sent",JSON.stringify(pState.sent));}catch(e){} tick(); }
+  try{ await upsert(rows); pState.sent[key]=true; try{localStorage.setItem("plmj_sent",JSON.stringify(pState.sent));}catch(e){} pState.momento=null; tick(); }
   catch(e){ b.disabled=false; b.textContent="Enviar"; alert("Não foi possível enviar. Verifique a ligação e tente de novo."); console.error(e); }
 };
 try{ pState.sent=JSON.parse(localStorage.getItem("plmj_sent")||"{}"); }catch(e){}
 
-/* ---------- telão ---------- */
+/* ---------- painéis em direto (partilhados) ---------- */
 function count(rows,item,opts){ const c={}; opts.forEach(o=>c[o]=0); let n=0; rows.filter(r=>r.item===item).forEach(r=>{ if(c[r.valor]!==undefined){c[r.valor]++; n++;} }); return {c,n}; }
-function bars(title,item,opts,rows,alt){ const {c,n}=count(rows,item,opts); let h=`<div class="panel"><h3>${esc(title)} <span class="muted">· ${n}</span></h3>`; opts.forEach(o=>{ h+=`<div class="bar ${alt?'alt':''}"><div class="lab">${esc(o)}</div><div class="trk"><div class="fil" style="width:${pct(c[o],n)}%"></div></div><div class="val">${pct(c[o],n)}%</div></div>`; }); return h+`</div>`; }
+const SHORT={"Preparo a resposta ao que foi pedido, bem fundamentada":"Respondo ao pedido","Preparo a resposta ao que foi pedido e acrescento uma nota sobre a outra forma":"Respondo + nota","Antes de preparar, pergunto ao sócio qual é o objetivo do cliente":"Pergunto o objetivo","Preparo duas versões e deixo o sócio escolher":"Duas versões","Revejo o que foi pedido; o resto não é o âmbito":"Só o âmbito","Menciono de passagem na entrega":"Menciono de passagem","Escrevo um parágrafo separado com o risco e o que faria":"Parágrafo com o risco","Falo com quem pediu antes de entregar":"Falo antes de entregar","Com a análise do obstáculo e a conclusão de que não é recomendável":"Obstáculo + não recomendo","Com a análise do obstáculo e a sugestão de que se avalie outra estrutura":"Obstáculo + sugiro avaliar","Com uma estrutura alternativa já desenhada, com os riscos dela":"Alternativa desenhada","Peço mais tempo para estudar alternativas antes de responder":"Peço tempo","Um parecer conservador demais — e o cliente perdeu uma oportunidade":"Conservador demais","Um parecer permissivo demais — e o cliente correu um risco que se concretizou":"Permissivo demais","Seriam igualmente graves":"Igualmente graves","Pedir para pôr por escrito e depois ver":"Pedir por escrito","Agradecer e seguir o plano original":"Agradecer e seguir","Depende muito do sócio":"Depende do sócio","Não me lembro de um caso":"Não lembro"};
+const sh=o=>SHORT[o]||o;
+function barsHtml(title,item,opts,rows,alt,cls){ const {c,n}=count(rows,item,opts); let h=`<div class="${cls||'panel'}"><h3>${esc(title)} <span class="muted">· ${n}</span></h3>`; opts.forEach(o=>{ h+=`<div class="bar ${alt?'alt':''}"><div class="lab">${esc(cls?sh(o):o)}</div><div class="trk"><div class="fil" style="width:${pct(c[o],n)}%"></div></div><div class="val">${pct(c[o],n)}%</div></div>`; }); return h+`</div>`; }
 function qOf(m,id){ return Q[m].find(q=>q.id===id); }
+function reguaStats(rows,r){
+  const rr=rows.filter(x=>x.momento==="regua"&&x.item.startsWith(`r${r}_`)); const byDev={}; rr.forEach(x=>{(byDev[x.dispositivo]||(byDev[x.dispositivo]={}))[x.item.slice(3)]=x.valor;});
+  const votes=Object.values(byDev).filter(v=>v.alvo); const porTrio={}; let tot=0;
+  votes.forEach(v=>{ const s=["q1","q2","q3","q4"].reduce((a,q)=>a+(v[q]==="Sim"?1:0),0); tot+=s; (porTrio[v.alvo]||(porTrio[v.alvo]=[])).push(s); });
+  return {votes,porTrio,avg:votes.length?tot/votes.length:0,n:votes.length};
+}
+function reguaHtml(rows,r,cls){
+  const st=reguaStats(rows,r); let h=`<div class="${cls||'panel'}"><h3>Ronda ${r} <span class="muted">· ${st.n} avaliações · média ${st.n?st.avg.toFixed(1):"–"} / 4</span></h3>`;
+  Object.keys(st.porTrio).sort().forEach(t=>{ const arr=st.porTrio[t]; const avg=arr.reduce((a,b)=>a+b,0)/arr.length; h+=`<div class="bar"><div class="lab">Trio ${esc(t)}</div><div class="trk"><div class="fil" style="width:${avg/4*100}%"></div></div><div class="val">${avg.toFixed(1)}</div></div>`; });
+  ["q1","q2","q3","q4"].forEach((q,i)=>{ const yes=st.votes.filter(v=>v[q]==="Sim").length; h+=`<div class="bar alt"><div class="lab muted">${esc(Q.regua[i+2].t)}</div><div class="trk"><div class="fil" style="width:${pct(yes,st.n)}%"></div></div><div class="val">${pct(yes,st.n)}%</div></div>`; });
+  return h+`</div>`;
+}
+function placarHtml(rows,upTo,cls){
+  const trios={}; for(let r=1;r<=upTo;r++){ const st=reguaStats(rows,r); Object.keys(st.porTrio).forEach(t=>{ const arr=st.porTrio[t]; (trios[t]||(trios[t]={}))[r]=arr.reduce((a,b)=>a+b,0)/arr.length; }); }
+  const keys=Object.keys(trios).sort((a,b)=>{ const sa=Object.values(trios[a]).reduce((x,y)=>x+y,0), sb=Object.values(trios[b]).reduce((x,y)=>x+y,0); return sb-sa; });
+  let h=`<div class="${cls||'panel'}"><h3>Placar <span class="muted">· média da régua por ronda</span></h3><table class="t" style="font-size:inherit"><tr><th>Trio</th>${[...Array(upTo)].map((_,i)=>`<th>R${i+1}</th>`).join("")}<th>Total</th></tr>`;
+  keys.forEach(t=>{ let tot=0; h+=`<tr><td><b>Trio ${esc(t)}</b></td>`; for(let r=1;r<=upTo;r++){ const v=trios[t][r]; tot+=v||0; h+=`<td>${v!==undefined?v.toFixed(1):"–"}</td>`; } h+=`<td><b>${tot.toFixed(1)}</b></td></tr>`; });
+  if(!keys.length) h+=`<tr><td colspan="9" class="muted">ainda sem avaliações</td></tr>`;
+  return h+`</table></div>`;
+}
+function nuvemHtml(rows,item,title,cls){ const o=rows.filter(r=>r.item===item&&r.valor&&r.valor.trim()); const max=cls?5:1000; const show=o.slice(-max); return `<div class="${cls||'panel'}"><h3>${esc(title)}${o.length>max?` <span class="muted">· ${o.length}, últimas ${max}</span>`:""}</h3>${show.map(r=>`<div class="verb">${esc(r.valor.slice(0,220))}</div>`).join("")||'<p class="muted">—</p>'}</div>`; }
+
+/* ---------- ECRÃ (slides) ---------- */
+function liveContent(kind,est,rows,slide){
+  const P="lpanel";
+  if(kind==="qr") return `<div class="qrbig"><div class="qr"><div id="qr"></div><div class="qrurl">${esc(PURL().replace("https://",""))}</div></div><div>${slide.body}</div></div>`;
+  if(kind==="p1") return `<div class="lgrid">${[["S1","E-mail do sócio: o que faz?"],["S2","Cláusula fora do âmbito: o que faz?"],["S3","«Posso fazer isto?» — como responde?"]].map(([id,tt])=>barsHtml(tt,id,qOf("p1",id).o,rows,false,P)).join("")}</div><div class="lgrid" style="margin-top:16px">${barsHtml("No último documento, a recomendação ocupava…","M1b",qOf("p1","M1b").o,rows,true,P)}${barsHtml("Diria numa frase o que o cliente quer alcançar?","C1",qOf("p1","C1").o,rows,true,P)}${barsHtml("Quem recebeu o documento…","M2",qOf("p1","M2").o,rows,true,P)}</div>`;
+  if(kind==="p2") return `<div class="lgrid">${barsHtml("Qual seria pior para quem assinou?","E1",qOf("p2","E1").o,rows,true,P)}${barsHtml("Se um colega levasse uma alternativa ao sócio…","E3",qOf("p2","E3").o,rows,true,P)}${barsHtml("Tempo a perceber o objetivo antes de escrever","T2",qOf("p2","T2").o,rows,false,P)}</div><div class="lgrid" style="margin-top:16px">${barsHtml("Primeira conversa quando algo correu mal","E2",qOf("p2","E2").o,rows,false,P)}${barsHtml("Colegas que levam alternativa (estimativa)","P1",qOf("p2","P1").o,rows,false,P)}${barsHtml("Sócios que querem alternativas (estimativa)","P2",qOf("p2","P2").o,rows,false,P)}</div>`;
+  if(kind==="regua") return reguaHtml(rows,slide.rodada,"");
+  if(kind==="placar") return `<div class="lgrid c2">${placarHtml(rows,Math.max(1,est.rodada),P)}<div>${[1,2,3].filter(r=>r<=est.rodada).map(r=>`<div class="lpanel" style="margin-bottom:14px"><h3>Ronda ${r} · média ${reguaStats(rows,r).n?reguaStats(rows,r).avg.toFixed(1):"–"} / 4 · ${reguaStats(rows,r).n} avaliações</h3></div>`).join("")}</div></div>`;
+  if(kind==="p3") return `<div class="lgrid">${barsHtml("Os colegas levam alternativa? (estimativa, Pulso 2)","P1",qOf("p2","P1").o,rows,false,P)}${barsHtml("E eu, comparado com eles?","A1",qOf("p3","A1").o,rows,true,P)}${barsHtml("Confiança de usar na próxima semana","X2",qOf("p3","X2").o,rows,false,P)}</div><div class="lgrid c2" style="margin-top:22px">${nuvemHtml(rows,"O1","Uma alternativa que não foi apresentada — o que teria sido preciso?",P)}${nuvemHtml(rows,"O2","O que precisaria de saber sobre o cliente?",P)}</div>`;
+  if(kind==="eval") return `<div class="qr" style="align-items:flex-start"><div id="qr"></div><div class="qrurl" style="color:#fff">Avalie a sessão</div></div>`;
+  return "";
+}
+function renderEcra(est,rows){
+  const n=Math.min(Math.max(1,est.slide||1),SLIDES.length); const s=SLIDES[n-1];
+  const dark=["blue","purple","dark"].includes(s.layout);
+  const logoN=`<img class="chrome-logo" src="${dark?ASSETS.novaWhite:ASSETS.novaColor}" alt="">`, logoP=`<img class="chrome-plmj" src="${dark?ASSETS.plmjWhite:ASSETS.plmjSq}" alt="">`;
+  const foot=`<div class="foot"><span>Resolução de Problemas · PLMJ · Nova SBE Executive Education</span><span>${n} / ${SLIDES.length}</span></div>`;
+  const nav=`<div class="nav"><button onclick="goSlide(${n-1})">‹</button><button onclick="goSlide(${n+1})">›</button></div>`;
+  let inner="";
+  if(s.layout==="cover"){
+    inner=`<div class="stage cover"><div class="cl"><h1>${esc(s.title)}</h1><div class="sub">${esc(s.sub)}</div><div class="by">${esc(s.by)}</div><div class="logos"><img src="${ASSETS.novaColor}" alt=""><img src="${ASSETS.plmjSq}" alt=""></div></div><div class="cr" style="background-image:url(${ASSETS.campus})"></div>${nav}</div>`;
+  } else if(s.quote){
+    const live=s.live?liveContent(s.live,est,rows,s):"";
+    inner=`<div class="stage ${s.layout}">${logoN}${logoP}<div class="content" style="${s.live?'display:grid;grid-template-columns:3fr 2fr;gap:60px':''}"><div>${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote)}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${s.live?`<div>${live}</div>`:""}</div>${foot}${nav}</div>`;
+  } else {
+    const title=s.num?`<div class="numtitle"><span class="num">${s.num}</span><h1 class="title" style="margin:0">${esc(s.title)}</h1></div><div style="height:28px"></div>`:`<h1 class="title">${esc(s.title)}${s.tag?` <span class="tag" style="font-family:Open Sans;font-size:18px;vertical-align:middle">${s.tag}</span>`:""}</h1>`;
+    let body=s.body||"";
+    if(s.live==="regua"){ body=body.replace('<div class="livebox" id="live"></div>',`<div class="livebox">${liveContent("regua",est,rows,s)}</div>`); }
+    else if(s.live){ body=liveContent(s.live,est,rows,s); }
+    const devs=s.live&&["p1","p2","p3"].includes(s.live)?new Set(rows.filter(r=>r.momento===s.live).map(r=>r.dispositivo)).size:null;
+    inner=`<div class="stage ${s.layout}">${logoN}${logoP}${devs!==null?`<div class="count"><b>${devs}</b>respostas</div>`:""}<div class="content">${title}${body}</div>${foot}${nav}</div>`;
+  }
+  app.innerHTML=inner;
+  if(s.live==="qr"||s.live==="eval"){ const el=$("#qr"); if(el){ try{ if(typeof QRCode==="undefined") throw new Error("qr lib"); new QRCode(el,{text:s.live==="qr"?PURL():EVAL_URL,width:s.live==="qr"?420:300,height:s.live==="qr"?420:300,colorDark:"#231F20",correctLevel:QRCode.CorrectLevel.L}); }catch(e){ el.innerHTML=`<div style="font-size:22px;word-break:break-all;max-width:420px">${esc(s.live==="qr"?PURL():EVAL_URL)}</div>`; } } }
+  fitStage();
+}
+function fitStage(){ const st=document.querySelector(".stage"); if(!st) return; const k=Math.min(window.innerWidth/1600,window.innerHeight/900); st.style.transform=`scale(${k})`; st.style.left=((window.innerWidth-1600*k)/2)+"px"; st.style.top=((window.innerHeight-900*k)/2)+"px"; }
+window.addEventListener("resize",fitStage);
+window.goSlide=async(n)=>{ n=Math.min(Math.max(1,n),SLIDES.length); const s=SLIDES[n-1]; const patch={slide:n}; if(s.momento) patch.momento_ativo=s.momento; if(s.rodada) patch.rodada=s.rodada; await setEstado(patch); lastSig=""; tick(); };
+document.addEventListener("keydown",async e=>{ if(mode()!=="ecra") return; if(["ArrowRight","PageDown"," ","Enter"].includes(e.key)){ e.preventDefault(); goSlide((curEst.slide||1)+1);} if(["ArrowLeft","PageUp","Backspace"].includes(e.key)){ e.preventDefault(); goSlide((curEst.slide||1)-1);} if(e.key==="f"||e.key==="F"){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); } });
+
+/* ---------- tela (só resultados, reserva) ---------- */
 function renderTela(est,rows){
-  const m=est.momento_ativo; const devs=new Set(rows.filter(r=>r.momento===(m==="regua"?"regua":m)).map(r=>r.dispositivo)).size;
-  let h=`<div class="top"><div><div class="brand" style="font-size:1.6rem">Pulso · PLMJ</div><div class="sub">Resolução de Problemas · Nova SBE Executive Education</div></div><div class="sub">${esc((MOMENTOS[m]||{}).titulo||"")}${m==="regua"?" · ronda "+est.rodada:""}</div></div>`;
-  const url=location.origin+location.pathname;
-  if(m==="espera"){
-    h+=`<div class="grid"><div class="panel qr"><h3>Entre no pulso</h3><div id="qr"></div><p class="muted">${esc(url)}</p><p>Anónimo. Sem nome. Sem login.</p></div><div class="panel"><h1>Problemas não são a exceção do trabalho.</h1><p class="big" style="font-size:1.6rem">São o trabalho.</p></div></div>`;
-    app.innerHTML=h; new QRCode($("#qr"),{text:url,width:320,height:320,colorDark:"#231F20"}); return;
-  }
-  h+=`<div class="kpi"><div><b>${devs}</b>respostas</div></div>`;
-  if(m==="p1"){
-    h+=`<div class="grid">`;
-    ["S1","S2","S3"].forEach(id=>h+=bars(qOf("p1",id).t,id,qOf("p1",id).o,rows));
-    h+=bars("Último documento: a maior parte era…","M1",qOf("p1","M1").o,rows,true);
-    h+=bars("…e a recomendação ocupava","M1b",qOf("p1","M1b").o,rows,true);
-    h+=bars("Objetivo do cliente, numa frase?","C1",qOf("p1","C1").o,rows);
-    h+=`</div>`;
-  }
-  if(m==="p2"){
-    h+=`<div class="grid">`;
-    h+=bars("Qual seria pior para quem assinou?","E1",qOf("p2","E1").o,rows,true);
-    h+=bars("Se um colega levasse uma alternativa ao sócio…","E3",qOf("p2","E3").o,rows,true);
-    h+=bars("Primeira conversa quando algo correu mal","E2",qOf("p2","E2").o,rows);
-    h+=bars("Tempo a perceber o objetivo antes de escrever","T2",qOf("p2","T2").o,rows);
-    h+=bars("Colegas que levam alternativa (estimativa)","P1",qOf("p2","P1").o,rows);
-    h+=bars("Sócios que querem alternativas (estimativa)","P2",qOf("p2","P2").o,rows);
-    h+=`</div>`;
-  }
-  if(m==="regua"){
-    h+=`<div class="grid">`;
-    for(let r=1;r<=est.rodada;r++){
-      const rr=rows.filter(x=>x.item.startsWith(`r${r}_`));
-      const byDev={}; rr.forEach(x=>{(byDev[x.dispositivo]||(byDev[x.dispositivo]={}))[x.item.slice(3)]=x.valor;});
-      const votes=Object.values(byDev).filter(v=>v.alvo);
-      const porTrio={}; let tot=0,nv=0;
-      votes.forEach(v=>{ const s=["q1","q2","q3","q4"].reduce((a,q)=>a+(v[q]==="Sim"?1:0),0); tot+=s; nv++; (porTrio[v.alvo]||(porTrio[v.alvo]=[])).push(s); });
-      h+=`<div class="panel"><h3>Ronda ${r} <span class="muted">· ${nv} avaliações · média ${nv?(tot/nv).toFixed(1):"–"} / 4</span></h3>`;
-      Object.keys(porTrio).sort().forEach(t=>{ const arr=porTrio[t]; const avg=arr.reduce((a,b)=>a+b,0)/arr.length; h+=`<div class="bar"><div class="lab">Trio ${esc(t)}</div><div class="trk"><div class="fil" style="width:${avg/4*100}%"></div></div><div class="val">${avg.toFixed(1)}</div></div>`; });
-      ["q1","q2","q3","q4"].forEach((q,i)=>{ const yes=votes.filter(v=>v[q]==="Sim").length; h+=`<div class="bar alt"><div class="lab muted">${esc(Q.regua[i+2].t)}</div><div class="trk"><div class="fil" style="width:${pct(yes,nv)}%"></div></div><div class="val">${pct(yes,nv)}%</div></div>`; });
-      h+=`</div>`;
-    }
-    h+=`</div>`;
-  }
-  if(m==="p3"){
-    const p1=count(rows,"P1",qOf("p2","P1").o), a1=count(rows,"A1",qOf("p3","A1").o);
-    h+=`<div class="grid"><div class="panel"><h3>Os colegas levam alternativa? <span class="muted">· ${p1.n}</span></h3>`;
-    qOf("p2","P1").o.forEach(o=>h+=`<div class="bar"><div class="lab">${esc(o)}</div><div class="trk"><div class="fil" style="width:${pct(p1.c[o],p1.n)}%"></div></div><div class="val">${pct(p1.c[o],p1.n)}%</div></div>`);
-    h+=`</div><div class="panel"><h3>E eu, comparado com eles? <span class="muted">· ${a1.n}</span></h3>`;
-    qOf("p3","A1").o.forEach(o=>h+=`<div class="bar alt"><div class="lab">${esc(o)}</div><div class="trk"><div class="fil" style="width:${pct(a1.c[o],a1.n)}%"></div></div><div class="val">${pct(a1.c[o],a1.n)}%</div></div>`);
-    h+=`</div>`;
-    h+=bars("Confiança de usar na próxima semana","X2",qOf("p3","X2").o,rows);
-    const o1=rows.filter(r=>r.item==="O1"&&r.valor&&r.valor.trim()), o2=rows.filter(r=>r.item==="O2"&&r.valor&&r.valor.trim());
-    h+=`<div class="panel" style="grid-column:1/-1"><h3>Uma alternativa que não foi apresentada — o que teria sido preciso?</h3>${o1.map(r=>`<div class="verb">${esc(r.valor)}</div>`).join("")||'<p class="muted">—</p>'}</div>`;
-    h+=`<div class="panel" style="grid-column:1/-1"><h3>O que precisaria de saber sobre o cliente?</h3>${o2.map(r=>`<div class="verb">${esc(r.valor)}</div>`).join("")||'<p class="muted">—</p>'}</div>`;
-    h+=`</div>`;
-  }
-  if(m==="fim"){ h+=`<div class="panel center"><h1>Ninguém contrata um advogado para saber o que não pode.</h1></div>`; }
+  const m=est.momento_ativo; let h=`<div class="top"><div><div class="brand" style="font-size:1.6rem">Pulso · PLMJ</div></div><div class="sub">${esc((MOMENTOS[m]||{}).titulo||"")}</div></div>`;
+  if(m==="p1") h+=`<div class="grid">${liveContent("p1",est,rows,{}).replace(/lpanel/g,"panel")}</div>`;
+  else if(m==="p2") h+=`<div class="grid">${liveContent("p2",est,rows,{}).replace(/lpanel/g,"panel")}</div>`;
+  else if(m==="regua") h+=`<div class="grid">${[1,2,3].filter(r=>r<=est.rodada).map(r=>reguaHtml(rows,r)).join("")}${placarHtml(rows,est.rodada)}</div>`;
+  else if(m==="p3") h+=`<div class="grid">${liveContent("p3",est,rows,{}).replace(/lpanel/g,"panel")}</div>`;
+  else h+=`<div class="panel center"><h1>${esc((MOMENTOS[m]||{}).titulo||"")}</h1></div>`;
   app.innerHTML=h;
 }
 
 /* ---------- admin ---------- */
 let adminOK=false;
 function renderAdmin(est,rows){
-  if(!adminOK){ app.innerHTML=header("controlo")+`<div class="card"><h2>PIN</h2><input type="text" id="pin" inputmode="numeric"><button class="primary" onclick="if($('#pin').value===CONFIG.ADMIN_PIN){adminOK=true;tick();}else alert('PIN errado')">Entrar</button></div>`; return; }
+  if(!adminOK){ app.innerHTML=header("controlo")+`<div class="card"><h2>PIN</h2><input type="text" id="pin" inputmode="numeric"><button class="primary" onclick="if($('#pin').value===CONFIG.ADMIN_PIN){adminOK=true;lastSig='';tick();}else alert('PIN errado')">Entrar</button></div>`; return; }
+  const n=est.slide||1, s=SLIDES[n-1];
+  let h=header("controlo")+`<div class="adminbar"><button class="big" onclick="goSlide(${n-1})">‹</button><div style="flex:1;text-align:center"><b>${n}/${SLIDES.length}</b> · ${esc(s.title||s.quote||s.id)}</div><button class="big" onclick="goSlide(${n+1})">›</button></div>`;
   const ms=["espera","p1","p2","regua","p3","fim"];
-  let h=header("controlo")+`<h1>Controlo</h1><div class="adminbar">${ms.map(x=>`<button class="${est.momento_ativo===x?'on':''}" onclick="go('${x}')">${esc(MOMENTOS[x].titulo)}</button>`).join("")}</div>`;
-  h+=`<div class="adminbar"><span style="align-self:center">Ronda da régua:</span>${[1,2,3].map(r=>`<button class="${est.rodada===r?'on':''}" onclick="ronda(${r})">${r}</button>`).join("")}</div>`;
+  h+=`<p class="muted">Pulso aberto nos telemóveis: <b>${esc(MOMENTOS[est.momento_ativo].titulo)}</b>${est.momento_ativo==="regua"?" · ronda "+est.rodada:""} — muda sozinho ao avançar; aqui pode forçar:</p><div class="adminbar">${ms.map(x=>`<button class="${est.momento_ativo===x?'on':''}" onclick="go('${x}')">${esc(MOMENTOS[x].titulo)}</button>`).join("")}</div>`;
+  h+=`<div class="adminbar"><span>Ronda:</span>${[1,2,3].map(r=>`<button class="${est.rodada===r?'on':''}" onclick="ronda(${r})">${r}</button>`).join("")}</div>`;
   const by={}; rows.forEach(r=>{by[r.momento]=by[r.momento]||new Set(); by[r.momento].add(r.dispositivo);});
-  h+=`<div class="card"><table class="t"><tr><th>Momento</th><th>Dispositivos</th><th>Linhas</th></tr>${["p1","p2","regua","p3"].map(x=>`<tr><td>${x}</td><td>${by[x]?by[x].size:0}</td><td>${rows.filter(r=>r.momento===x).length}</td></tr>`).join("")}</table></div>`;
-  h+=`<div class="adminbar"><button onclick="exportar()">Exportar CSV (todas as respostas)</button><button onclick="window.open(location.pathname+'#tela','_blank')">Abrir ecrã</button><button onclick="window.open(location.pathname,'_blank')">Abrir como participante</button></div>`;
-  h+=`<p class="muted">URL dos participantes: ${esc(location.origin+location.pathname)}</p>`;
+  h+=`<div class="card"><table class="t"><tr><th>Momento</th><th>Dispositivos</th></tr>${["p1","p2","regua","p3"].map(x=>`<tr><td>${x}</td><td>${by[x]?by[x].size:0}</td></tr>`).join("")}</table></div>`;
+  h+=`<div class="adminbar"><button onclick="exportar()">Exportar CSV</button><button onclick="window.open(location.pathname+'#ecra','_blank')">Abrir ecrã</button></div>`;
+  h+=`<h2>Slides</h2><div class="slidelist">${SLIDES.map((x,i)=>`<button class="${i+1===n?'on':''}" onclick="goSlide(${i+1})"><span class="k">${i+1}</span>${esc(x.title||x.quote||x.id)}${x.live?' <span class="tag">'+x.live+'</span>':''}</button>`).join("")}</div>`;
   app.innerHTML=h;
 }
-window.go=async m=>{ await setEstado({momento_ativo:m}); tick(); };
-window.ronda=async r=>{ await setEstado({rodada:r,momento_ativo:"regua"}); tick(); };
+window.go=async m=>{ await setEstado({momento_ativo:m}); lastSig=""; tick(); };
+window.ronda=async r=>{ await setEstado({rodada:r,momento_ativo:"regua"}); lastSig=""; tick(); };
 window.exportar=async()=>{
   const rows=await getRespostas(); const head="dispositivo,momento,item,valor,criado\n";
   const csv=head+rows.map(r=>[r.dispositivo,r.momento,r.item,r.valor,r.criado].map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\n");
-  const name=`pulso-plmj-${new Date().toISOString().slice(0,10)}.csv`;
-  if(window.claude){ try{ const dl=await claude.use("downloads"); if(dl){ await dl.save({filename:name,data:"\ufeff"+csv}); return; } }catch(e){ console.warn(e); } }
-  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv"})); a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob(["﻿"+csv],{type:"text/csv"})); a.download=`pulso-plmj-${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(a); a.click(); a.remove();
 };
 
 /* ---------- loop ---------- */
-const mode = ()=>location.hash==="#tela"?"tela":location.hash==="#admin"?"admin":"p";
-let lastSig="";
+const mode = ()=>({"#tela":"tela","#admin":"admin","#ecra":"ecra"})[location.hash]||"p";
+let lastSig="", curEst={slide:1};
 async function tick(){
-  if(!configured()){ app.innerHTML=header()+`<div class="err">Configuração em falta: preencher SUPABASE_URL e SUPABASE_ANON no topo do ficheiro.</div>`; return; }
   try{
-    const est=await getEstado(); if(!est) throw new Error("estado não encontrado — correr o script SQL");
-    if(mode()==="p"){ renderParticipante(est); }
-    else{
-      const m=est.momento_ativo; const rows = mode()==="admin"?await getRespostas(): (m==="p3"?await getRespostas():await getRespostas(m==="regua"?"regua":m));
-      const sig=JSON.stringify([est.momento_ativo,est.rodada,rows.length,adminOK]);
-      if(sig!==lastSig||mode()==="tela"){ lastSig=sig; mode()==="tela"?renderTela(est,rows):renderAdmin(est,rows); }
-    }
+    const est=await getEstado(); if(!est) throw new Error("estado não encontrado"); curEst=est;
+    const md=mode();
+    if(md==="p"){ const k=est.momento_ativo+"|"+est.rodada; if(k!==pState.momento){pState.momento=k; renderParticipante(est);} return; }
+    const rows=await getRespostas();
+    const sig=JSON.stringify([md,est.momento_ativo,est.rodada,est.slide,rows.length,adminOK]);
+    if(sig!==lastSig){ lastSig=sig; md==="ecra"?renderEcra(est,rows):md==="tela"?renderTela(est,rows):renderAdmin(est,rows); }
   }catch(e){ app.innerHTML=header()+`<div class="err">Erro de ligação: ${esc(e.message)}</div>`; console.error(e); }
 }
-document.body.classList.toggle("tela",mode()==="tela");
-window.addEventListener("hashchange",()=>{document.body.classList.toggle("tela",mode()==="tela"); lastSig=""; tick();});
-tick();
-setInterval(()=>{ if(mode()==="p"){ getEstado().then(est=>{ const k=est.momento_ativo+"|"+est.rodada; if(k!==pState.momento){pState.momento=k; renderParticipante(est);} }).catch(()=>{}); } else tick(); }, mode()==="p"?4000:3000);
+function applyMode(){ const md=mode(); document.body.classList.toggle("tela",md==="tela"); document.body.classList.toggle("ecra",md==="ecra"); lastSig=""; pState.momento=null; }
+applyMode(); tick();
+window.addEventListener("hashchange",()=>{applyMode(); tick();});
+setInterval(tick, 3000);
 </script>
 </body>
 </html>
