@@ -338,7 +338,7 @@ const SLIDES = [
  {id:"abre3", kicker:"Telemóvel", title:"Pulso 3", live:"abre", momento:"p3", body:`<p class="lead">Para fechar: sete itens, três minutos.</p><p>Três perguntas sobre si, duas respostas livres para a organização, e uma situação concreta da próxima semana.</p>`},
  {id:"res3", title:"Autoimagem × comportamento", live:"p3"},
 
- {id:"tese", layout:"accent", quote:"Um cliente não contrata advogados para conhecer os obstáculos. Mas para descobrirem o caminho.", live:"eval", momento:"fim", body:`<p>Obrigado.</p><p class="small" style="color:rgba(255,255,255,.85)">No telemóvel: avaliação da sessão e toolkit em PDF.</p>`}
+ {id:"tese", layout:"accent", qsize:60, quote:"Um cliente não contrata advogados para conhecer os obstáculos. Mas para descobrirem o caminho.", live:"eval", momento:"fim", body:`<p>Obrigado.</p><p class="small" style="color:rgba(255,255,255,.85)">No telemóvel: avaliação da sessão e toolkit em PDF.</p>`}
 ];
 function steps(arr){ return `<div class="steps">`+arr.map((s,i)=>rv(i+1,`<div class="step"><b class="num">${i+1}</b><div><b class="blue">${s[0]}</b><br>${s[1]}</div></div>`)).join("")+`</div>`; }
 function rondaBody(caso){ return `<div class="cols2 w55"><div><p class="caso">${caso}</p><div class="timing"><div><b>8 min</b> no papel: reenquadrar · 3 rotas com risco · recomendação</div><div><b>2 min</b> pitch para o trio-cliente</div><div><b>pulso</b> o trio-cliente avalia com a régua</div></div><div class="pitchline"></div></div><div class="livebox" id="live"></div></div>`; }
@@ -561,7 +561,7 @@ function renderEcra(est,rows){
   } else if(s.quote){
     const live=s.live?liveContent(s.live,est,rows,s):"";
     const bgq=s.bg?`<div class="bg" style="background-image:url(${s.bg});background-position:${s.pos||'center'}"></div><div class="shade ${s.layout==='accent'?'accentbg':'heavy'}"></div>`:"";
-    inner=`<div class="stage ${s.layout||''} ${s.bg?'hasbg':''}">${bgq}${logoN}${logoP}<div class="content" style="${s.live?'display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:center':''}"><div>${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote).replace(/\n/g,"<br>")}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${s.live?`<div>${live}</div>`:""}</div>${foot}${nav}${pg}</div>`;
+    inner=`<div class="stage ${s.layout||''} ${s.bg?'hasbg':''}">${bgq}${logoN}${logoP}<div class="content" style="${s.live?'display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:center':''}"><div>${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote" style="${s.qsize?`font-size:${s.qsize}px`:''}">${esc(s.quote).replace(/\n/g,"<br>")}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${s.live?`<div>${live}</div>`:""}</div>${foot}${nav}${pg}</div>`;
   } else {
     const kick=s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:"";
     const tt=/<span/.test(s.title||"")?s.title:esc(s.title); const title=s.num?`<div class="numtitle"><span class="num">${s.num}</span><h1 class="title" style="margin:0">${tt}</h1></div>`:`${kick}<h1 class="title">${tt}</h1>`;
