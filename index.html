@@ -151,6 +151,7 @@ body.ecra #app{max-width:none;padding:0;margin:0}
 .stage .ref .card{padding:22px 24px} .stage .ref h3{font-size:30px;display:flex;align-items:center;gap:10px} .stage .ref h3 .num{font-size:44px;margin:0} .stage .ref p{font-size:20px;line-height:1.35;margin-bottom:10px} .stage .ref .rk{font-style:italic;color:var(--soft)} .stage .ref .q{font-size:24px;border-top:1px solid rgba(20,25,43,.25);padding-top:10px}
 .stage .regua p{font-size:21px;padding:7px 0;border-bottom:1px solid rgba(20,25,43,.2);margin:0} .stage .regua p::before{content:"☐  ";color:var(--coral)} .stage .regua p.small{border:0;font-size:16px;padding-top:8px} .stage .regua p.small::before{content:""}
 .stage .pitch{font-size:21px;background:#fff;border:2px solid var(--ink);border-radius:6px;padding:12px 18px;box-shadow:5px 5px 0 var(--must);margin-top:14px;line-height:1.5} .stage .pitch span{white-space:nowrap;margin-right:6px} .stage .pitch b{color:var(--coral)}
+.stage .leitura{background:var(--paper);padding:10px 0 0}
 .stage .pg{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(20,25,43,.12)} .stage .pg i{display:block;height:100%;background:var(--coral);transition:width .4s}
 
 /* ===== TEMA PRO (Nova / NAV) ===== */
@@ -236,8 +237,10 @@ const SLIDES = [
  {id:"qr", title:"Entre no pulso", live:"qr", momento:"p1",
   body:`<p class="lead">Anónimo. Sem nome. Sem login.</p><p>Dez perguntas, três minutos — antes de qualquer conteúdo.</p><p class="soft">Responda com o que faria de verdade, não com o ideal.</p>`},
 
+ {id:"pergunta", layout:"accent", quote:"Se pudesse, eliminava o maior problema da sua vida?"},
+
  {id:"paraque", title:"Para que servem os problemas",
-  body:`<div class="cols2 w40"><div class="stats">${rv(1,`<b style="font-size:120px;letter-spacing:-3px">2.398</b><p>adultos acompanhados durante anos. Quem tinha passado por <strong>alguma</strong> adversidade estava melhor — saúde mental, bem-estar, satisfação — do que quem não tinha passado por nenhuma. E do que quem tinha passado por demasiada.</p><span class="src">Seery, Holman &amp; Silver, 2010</span>`)}</div><div>${rv(2,`<p class="lead">Não é «sofrer faz crescer». É que uma vida sem problema nenhum não treina ninguém para o problema seguinte.</p>`)}${rv(3,`<p class="lead blue" style="margin-top:30px">Se pudesse, eliminava o maior problema da sua vida?</p><p class="soft">É o que vão responder a seguir, em duplas.</p>`)}</div></div>`},
+  body:`<div class="cols2 w40"><div class="stats">${rv(1,`<b style="font-size:120px;letter-spacing:-3px">2.398</b><p>adultos acompanhados durante anos. Quem tinha passado por <strong>alguma</strong> adversidade estava melhor — saúde mental, bem-estar, satisfação — do que quem não tinha passado por nenhuma. E do que quem tinha passado por demasiada.</p><span class="src">Seery, Holman &amp; Silver, 2010</span>`)}</div><div>${rv(2,`<p class="lead">Não é «sofrer faz crescer». É que uma vida sem problema nenhum não treina ninguém para o problema seguinte.</p>`)}</div></div>`},
 
  {id:"duplas1", kicker:"Sorteio", title:"Duplas", live:"sorteio", k:2},
 
@@ -249,9 +252,9 @@ const SLIDES = [
  {id:"dificuldade", title:"Dificuldade bem dosada",
   body:`<div class="cols2">${rv(1,`<div class="card dim"><h3>«Sofrer faz crescer»</h3><p>Popular. Medido antes e depois, o crescimento que as pessoas relatam não aparece.</p></div>`)}${rv(2,`<div class="card hi"><h3>Dificuldade moderada</h3><p>A dose certa de desequilíbrio: a que obriga a reequilibrar — e devolve a um ponto acima do anterior.</p></div>`)}</div>${rv(3,`<p class="lead blue">A bicicleta, não o acidente.</p>`)}`},
 
- {id:"res1", title:"O que a sala faz", live:"p1"},
+ {id:"res1", title:"O que a sala faz", live:"p1", after:rv(1,`<div class="leitura" id="leitura"></div>`)},
 
- {id:"cynefin", kicker:"Quatro tipos de problema", title:"Cynefin",
+ {id:"cynefin", title:"Quatro tipos de problema <span class=\"dim\" style=\"font-size:.55em;font-weight:400\">(Cynefin)</span>",
   body:`<table class="cy">
 <tr><th></th>${["Simples","Complicado","Complexo","Caótico"].map((t,i)=>`<th class="rv" data-s="${i+1}">${t}</th>`).join("")}</tr>
 <tr><td class="lab">Exemplo</td>${["Uma lâmpada queimada","Uma apendicite","Criar um adolescente","Um avião sem motores sobre Nova Iorque"].map((t,i)=>`<td class="rv ex" data-s="${i+1}">${t}</td>`).join("")}</tr>
@@ -261,10 +264,10 @@ const SLIDES = [
 </table><p class="small">Dave Snowden · <i>Cynefin</i>, galês: «o lugar das múltiplas pertenças» — a resposta depende do terreno onde se está</p>`},
 
  {id:"errar", timer:4, kicker:"Em duplas · 4 minutos", title:"E se errarmos o tipo?",
-  body:`<p class="soft">Um exemplo da vida comum para cada cruzamento. Nada de direito.</p><div class="cols2 tight">${rv(1,`<div class="card"><h3>Simples tratado como complicado</h3><p>Contratar um consultor para a lâmpada.</p></div>`)}${rv(2,`<div class="card"><h3>Complexo tratado como simples</h3><p>Um adolescente e uma regra só.</p></div>`)}${rv(3,`<div class="card"><h3>Caótico tratado como simples</h3><p>O barco a afundar e alguém a ler o manual.</p></div>`)}${rv(4,`<div class="card"><h3>Simples tratado como complexo</h3><p>Duas horas de reunião sobre a lâmpada.</p></div>`)}</div>`},
+  body:`<p class="soft">Um exemplo da vida comum para cada cruzamento. Depois comparamos com os meus.</p><div class="cols2 tight"><div class="card"><h3>Simples tratado como complicado</h3>${rv(1,`<p>Contratar um consultor para a lâmpada.</p>`)}</div><div class="card"><h3>Complexo tratado como simples</h3>${rv(2,`<p>Um adolescente e uma regra só.</p>`)}</div><div class="card"><h3>Caótico tratado como simples</h3>${rv(3,`<p>O barco a afundar e alguém a ler o manual.</p>`)}</div><div class="card"><h3>Simples tratado como complexo</h3>${rv(4,`<p>Duas horas de reunião sobre a lâmpada.</p>`)}</div></div>`},
 
  {id:"fronteira", title:"O erro mais comum",
-  body:`<p class="lead">Não é resolver mal. É tratar um problema complexo como se fosse complicado.</p><div class="cols2">${rv(1,`<div class="card dim"><h3>Na vida</h3><p>Insónia tratada como carro avariado: procurar o especialista que dá <i>a</i> resposta — em vez de mudar uma coisa pequena, dormir uma semana, observar, ajustar.</p></div>`)}${rv(2,`<div class="card hi"><h3>No escritório</h3><p>Procurar a lei que não existe, o precedente que não há, o parecer que fecha a questão.</p><p>Em problema complexo, o parecer que fecha é o parecer errado. O certo abre uma rota de teste.</p></div>`)}</div>${rv(3,`<p class="lead blue">Na fronteira ninguém chegou antes — é exatamente onde o cliente mais precisa de si.</p>`)}`},
+  body:`<p class="lead">Não é resolver mal. É tratar um problema complexo como se fosse complicado.</p><div class="cols2">${rv(1,`<div class="card dim"><h3>Na vida</h3><p>Insónia tratada como carro avariado: procurar o especialista que dá <i>a</i> resposta — em vez de mudar uma coisa pequena, dormir uma semana, observar, ajustar.</p></div>`)}${rv(2,`<div class="card hi"><h3>No escritório</h3><p>Procurar a lei que não existe, o precedente que não há, o parecer que fecha a questão.</p><p>Em problema complexo, o parecer que fecha é o parecer errado. O certo abre uma rota de teste.</p></div>`)}</div>${rv(3,`<p class="lead blue" style="font-size:31px;white-space:nowrap">Na fronteira ninguém chegou antes — é exatamente onde o cliente mais precisa de si.</p>`)}`},
 
  {id:"exercicio", timer:5, kicker:"Em duplas · 5 minutos", title:"Classifiquem dois problemas reais",
   body:`<div class="cols2"><div><p>Dois problemas que viveram na PLMJ. Em que quadrante caem?</p><p>Mão no ar por quadrante.</p>${rv(1,`<p class="lead blue">Quantos «complexos» foram tratados como «complicados»?</p>`)}</div><div class="quad"><div>Simples</div><div>Complicado</div><div class="p">Complexo</div><div class="p">Caótico</div></div></div>`},
@@ -514,6 +517,24 @@ function liveContent(kind,est,rows,slide){
 }
 const MOTIF=`<svg class="motif" viewBox="0 0 900 900" fill="none" stroke-linecap="round"><g class="m-rings" stroke="rgba(20,25,43,.12)" stroke-width="1.5"><circle class="m-r1" cx="760" cy="300" r="140"/><circle class="m-r2" cx="760" cy="300" r="260"/><circle class="m-r3" cx="760" cy="300" r="380"/><circle class="m-r4" cx="760" cy="300" r="500"/></g><path class="m-dots" d="M80 780 L820 300" stroke="#14192B" stroke-width="3" stroke-dasharray="2 16"/><path class="m-dots" d="M80 780 L820 120" stroke="#14192B" stroke-width="3" stroke-dasharray="2 16"/><path class="m-curve" d="M80 780 C 420 760, 520 380, 820 210" stroke="#FF5A36" stroke-width="9"/><circle class="m-end" cx="820" cy="210" r="16" fill="#F2B705" stroke="#14192B" stroke-width="3"/><circle cx="80" cy="780" r="10" fill="#14192B"/></svg>`;
 let lastSlideN=0;
+function leituras(rows){ const out=[]; const pc=(item,opts,i)=>{ const {c,n}=count(rows,item,opts); return n?Math.round(100*c[opts[i]]/n):null; }; const q=id=>qOf("p1",id).o;
+  const s3a=pc("S3",q("S3"),0), s3c=pc("S3",q("S3"),2), s3d=pc("S3",q("S3"),3);
+  if(s3a!==null&&s3a>=50) out.push(`${s3a}% respondem ao «posso fazer isto?» com o obstáculo e a conclusão de que não é recomendável — sem alternativa.`);
+  else if(s3c!==null&&s3c>=40) out.push(`${s3c}% já levam uma estrutura alternativa desenhada. É a minoria na maior parte das salas.`);
+  if(s3d!==null&&s3d>=30) out.push(`${s3d}% pedem mais tempo antes de responder — o tempo é o custo da alternativa.`);
+  const s1c=pc("S1",q("S1"),2), s1a=pc("S1",q("S1"),0);
+  if(s1c!==null&&s1c>=50) out.push(`No e-mail do sócio, ${s1c}% perguntam primeiro qual é o objetivo do cliente.`);
+  else if(s1a!==null&&s1a>=40) out.push(`No e-mail do sócio, ${s1a}% preparam a resposta ao que foi pedido — sem perguntar o objetivo.`);
+  const c1=pc("C1",q("C1"),0), c1n=pc("C1",q("C1"),2)+pc("C1",q("C1"),3);
+  if(c1!==null&&c1>=60) out.push(`${c1}% dizem numa frase o que o cliente queria alcançar.`);
+  else if(c1n>=40) out.push(`${c1n}% não sabem, ou nunca lhes foi dito, o que o cliente queria alcançar no último dossiê.`);
+  const m0=pc("M1b",q("M1b"),0)+pc("M1b",q("M1b"),1), m3=pc("M1b",q("M1b"),3);
+  if(m0>=50) out.push(`Em ${m0}% dos últimos documentos a recomendação ocupava uma frase — ou não existia.`);
+  else if(m3!==null&&m3>=40) out.push(`Em ${m3}% dos documentos a recomendação era a maior parte.`);
+  const m2=pc("M2",q("M2"),2), m2n=pc("M2",q("M2"),4);
+  if(m2!==null&&m2>=30) out.push(`${m2}% dos documentos levaram a um «manda a versão curta».`);
+  if(m2n!==null&&m2n>=40) out.push(`${m2n}% não sabem o que quem recebeu o documento fez com ele.`);
+  return out.slice(0,3); }
 function renderEcra(est,rows){
   const {n:raw,p}=decode(est.slide); const n=Math.min(Math.max(1,raw),SLIDES.length); const s=SLIDES[n-1]; const ms=maxStep(s);
   const PRO=document.body.classList.contains("t-pro"); const darkS=(s.layout==="photo"&&(!s.side||PRO))||s.layout==="accent"||(PRO&&s.layout==="illus"); const logoN=`<img class="chrome-logo" src="${darkS?ASSETS.novaWhite:ASSETS.novaColor}" alt="">`, logoP=`<img class="chrome-plmj" src="${darkS?ASSETS.plmjWhite:ASSETS.plmjSq}" alt="">`;
@@ -533,7 +554,7 @@ function renderEcra(est,rows){
     inner=`<div class="stage ${s.layout||''} ${s.bg?'hasbg':''}">${bgq}${logoN}${logoP}<div class="content" style="${s.live?'display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:center':''}"><div>${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote).replace(/\n/g,"<br>")}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${s.live?`<div>${live}</div>`:""}</div>${foot}${nav}${pg}</div>`;
   } else {
     const kick=s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:"";
-    const title=s.num?`<div class="numtitle"><span class="num">${s.num}</span><h1 class="title" style="margin:0">${esc(s.title)}</h1></div>`:`${kick}<h1 class="title">${esc(s.title)}</h1>`;
+    const tt=/<span/.test(s.title||"")?s.title:esc(s.title); const title=s.num?`<div class="numtitle"><span class="num">${s.num}</span><h1 class="title" style="margin:0">${tt}</h1></div>`:`${kick}<h1 class="title">${tt}</h1>`;
     let body=s.body||"";
     if(s.live==="regua"){ body=body.replace('<div class="livebox" id="live"></div>',`<div class="livebox">${liveContent("regua",est,rows,s)}</div>`); }
     else if(s.live){ body=liveContent(s.live,est,rows,s); }
@@ -544,7 +565,7 @@ function renderEcra(est,rows){
     inner=`<div class="stage ${s.layout||''} ${s.bg?'hasbg':''}">${bg}${logoN}${logoP}${devs!==null?`<div class="count"><b>${devs}</b>respostas</div>`:""}<div class="content">${title}${body}${after}</div>${foot}${nav}${pg}</div>`;
   }
   const fim=timerFim(rows); if(s.timer){ const st=document.createElement("div"); st.className="clockwrap"; st.innerHTML=fim&&fim>Date.now()-5000?`<div class="clock" id="clock" data-fim="${fim}">--:--</div>`:`<div class="clock idle">${s.timer} min · <b>T</b> para arrancar</div>`; inner=inner.replace('<div class="foot">',st.outerHTML+'<div class="foot">'); }
-  app.innerHTML=inner; clearInterval(clockIv); if(document.getElementById("clock")){ pintarRelogio(); clockIv=setInterval(pintarRelogio,250); }
+  app.innerHTML=inner; const le=document.getElementById("leitura"); if(le){ const L=leituras(rows); le.innerHTML=L.length?`<div class="small dim" style="letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:6px">Leitura</div>`+L.map(x=>`<p class="lead blue" style="font-size:28px;margin-bottom:6px">${esc(x)}</p>`).join(""):""; } clearInterval(clockIv); if(document.getElementById("clock")){ pintarRelogio(); clockIv=setInterval(pintarRelogio,250); }
   // passos: já revelados aparecem sem animação; o passo atual anima
   const key=n+"|"+p; const same=(key===lastSlideN); lastSlideN=key;
   document.querySelectorAll(".stage .rv").forEach(el=>{ const k=+el.dataset.s; if(k<p||(same&&k<=p)) el.classList.add("on"); });
@@ -559,7 +580,8 @@ let localUntil=0, lastRows=[];
 window.goSlide=(n,p=0)=>{ n=Math.min(Math.max(1,n),SLIDES.length); const s=SLIDES[n-1]; const patch={slide:encode(n,p)}; if(s.momento) patch.momento_ativo=s.momento; if(s.rodada) patch.rodada=s.rodada;
   curEst={...curEst,...patch}; localUntil=Date.now()+2500; lastSig="";
   if(mode()==="ecra") renderEcra(curEst,lastRows); else if(mode()==="admin") renderAdmin(curEst,lastRows);
-  pendingPatch={...(pendingPatch||{}),...patch}; saveChain=saveChain.then(async()=>{ const p=pendingPatch; if(!p) return; pendingPatch=null; await setEstado(p); localUntil=Date.now()+2500; }).catch(e=>console.error(e)); };
+  pendingPatch={...(pendingPatch||{}),...patch}; pendingSaves++; saveChain=saveChain.then(async()=>{ const p=pendingPatch; if(p){ pendingPatch=null; await setEstado(p); } }).catch(e=>console.error(e)).then(()=>{ pendingSaves=Math.max(0,pendingSaves-1); localUntil=Date.now()+3000; }); };
+let pendingSaves=0;
 let pendingPatch=null, saveChain=Promise.resolve();
 window.stepFwd=()=>{ const {n,p}=decode(curEst.slide); const s=SLIDES[Math.min(Math.max(1,n),SLIDES.length)-1]; if(p<maxStep(s)) goSlide(n,p+1); else goSlide(n+1,0); };
 window.stepBack=()=>{ const {n,p}=decode(curEst.slide); if(p>0) goSlide(n,p-1); else goSlide(n-1,0); };
@@ -606,7 +628,7 @@ let lastSig="", curEst={slide:1};
 async function tick(){
   try{
     let est=await getEstado(); if(!est) throw new Error("estado não encontrado");
-    if(Date.now()<localUntil){ est={...est,slide:curEst.slide,momento_ativo:curEst.momento_ativo,rodada:curEst.rodada}; }
+    if(pendingSaves>0||Date.now()<localUntil){ est={...est,slide:curEst.slide,momento_ativo:curEst.momento_ativo,rodada:curEst.rodada}; }
     curEst=est;
     const md=mode();
     if(md==="p"){ registarPresenca(); let ex=[]; try{ ex=await getExtras(); }catch(e){} const gsig=JSON.stringify(ex.filter(r=>r.momento==="grupos").map(r=>r.valor)); const k=est.momento_ativo+"|"+est.rodada+"|"+gsig; if(k!==pState.momento){pState.momento=k; pExtras=ex; renderParticipante(est);} return; }
