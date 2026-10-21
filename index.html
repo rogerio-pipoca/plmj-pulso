@@ -590,6 +590,7 @@ function fitStage(){ const st=document.querySelector(".stage"); if(!st) return; 
 window.addEventListener("resize",fitStage);
 let localUntil=0, lastRows=[];
 window.goSlide=(n,p=0)=>{ n=Math.min(Math.max(1,n),SLIDES.length); const s=SLIDES[n-1]; const patch={slide:encode(n,p)}; if(s.momento) patch.momento_ativo=s.momento; if(s.rodada) patch.rodada=s.rodada;
+  const prevN=decode(curEst.slide).n; if(s.timer&&p===0&&n!==prevN){ upsert([{sessao:CONFIG.SESSAO,dispositivo:"TIMER",momento:"timer",item:"fim",valor:new Date(Date.now()+s.timer*60000).toISOString()}]).catch(e=>console.error(e)); } else if(!s.timer&&n!==prevN&&timerFim(lastRows)>Date.now()){ upsert([{sessao:CONFIG.SESSAO,dispositivo:"TIMER",momento:"timer",item:"fim",valor:""}]).catch(e=>console.error(e)); }
   curEst={...curEst,...patch}; localUntil=Date.now()+2500; lastSig="";
   if(mode()==="ecra") renderEcra(curEst,lastRows); else if(mode()==="admin") renderAdmin(curEst,lastRows);
   pendingPatch={...(pendingPatch||{}),...patch}; pendingSaves++; saveChain=saveChain.then(async()=>{ const p=pendingPatch; if(p){ pendingPatch=null; await setEstado(p); } }).catch(e=>console.error(e)).then(()=>{ pendingSaves=Math.max(0,pendingSaves-1); localUntil=Date.now()+3000; }); };
@@ -612,19 +613,33 @@ function renderTela(est,rows){
 
 /* ---------- admin ---------- */
 let adminOK=false;
+let adminMais=false;
 function renderAdmin(est,rows){
   if(!adminOK){ app.innerHTML=header("controlo")+`<div class="card"><h2>PIN</h2><input type="text" id="pin" inputmode="numeric"><button class="primary" onclick="if($('#pin').value===CONFIG.ADMIN_PIN){adminOK=true;lastSig='';tick();}else alert('PIN errado')">Entrar</button></div>`; return; }
-  const {n,p}=decode(est.slide); const s=SLIDES[Math.min(Math.max(1,n),SLIDES.length)-1]; const mx=maxStep(s);
-  let h=header("controlo")+`<div class="adminbar"><button class="big" onclick="stepBack()">‹</button><div style="flex:1;text-align:center"><b>${n}/${SLIDES.length}</b>${mx?` <span class="muted">· passo ${p}/${mx}</span>`:""}<br>${esc(s.title||s.quote||s.id)}</div><button class="big" onclick="stepFwd()">›</button></div>`;
-  const ms=["espera","p1","p2","regua","pp","pe","p3","fim"];
-  h+=`<p class="muted">Pulso aberto nos telemóveis: <b>${esc(MOMENTOS[est.momento_ativo].titulo)}</b>${est.momento_ativo==="regua"?" · ronda "+est.rodada:""} — muda sozinho ao avançar; aqui pode forçar:</p><div class="adminbar">${ms.map(x=>`<button class="${est.momento_ativo===x?'on':''}" onclick="go('${x}')">${esc(MOMENTOS[x].titulo)}</button>`).join("")}</div>`;
-  h+=`<div class="adminbar"><span>Ronda:</span>${[1,2,3].map(r=>`<button class="${est.rodada===r?'on':''}" onclick="ronda(${r})">${r}</button>`).join("")}</div>`;
-  const by={}; rows.forEach(r=>{by[r.momento]=by[r.momento]||new Set(); by[r.momento].add(r.dispositivo);});
-  h+=`<div class="card"><table class="t"><tr><th>Momento</th><th>Dispositivos</th></tr>${["presenca","p1","p2","regua","pp","pe","p3","email"].map(x=>`<tr><td>${x}</td><td>${by[x]?by[x].size:0}</td></tr>`).join("")}</table></div>`;
-  h+=`<div class="adminbar"><button onclick="sortear(2)">Sortear duplas</button><button onclick="sortear(3)">Sortear trios</button>${s.timer?`<button class="${timerFim(rows)>Date.now()?'on':''}" onclick="relogio(${s.timer})">${timerFim(rows)>Date.now()?'Parar relógio':'Relógio '+s.timer+' min'}</button>`:""}</div>`;
-  h+=`<div class="adminbar"><button onclick="goSlide(${n+1},0)">Saltar para o slide seguinte</button><button onclick="exportar()">Exportar CSV</button><button onclick="window.open(location.pathname+'#ecra','_blank')">Abrir ecrã</button></div>`;
-  h+=`<h2>Slides</h2><div class="slidelist">${SLIDES.map((x,i)=>`<button class="${i+1===n?'on':''}" onclick="goSlide(${i+1})"><span class="k">${i+1}</span>${esc(x.title||x.quote||x.id)}${x.live?' <span class="tag">'+x.live+'</span>':''}</button>`).join("")}</div>`;
-  app.innerHTML=h;
+  const {n,p}=decode(est.slide); const s=SLIDES[Math.min(Math.max(1,n),SLIDES.length)-1]; const mx=maxStep(s); const next=SLIDES[n]||null;
+  const tit=(s.title||s.quote||s.id).replace(/<[^>]+>/g,"");
+  const fim=timerFim(rows); const timerOn=fim>Date.now();
+  const mom=MOMENTOS[est.momento_ativo]||{}; const nDev=new Set(rows.filter(r=>["p1","p2","p3","pp","pe","regua"].includes(r.momento)&&r.momento===est.momento_ativo).map(r=>r.dispositivo)).size; const pres=Object.keys(presentes(rows)).length;
+  const proximo=p<mx?`Próximo passo (${p+1}/${mx})`:(next?`Slide ${n+1} · ${(next.title||next.quote||next.id).replace(/<[^>]+>/g,"").slice(0,38)}`:"Fim");
+  let h=header("controlo");
+  h+=`<div class="card" style="text-align:center;padding:18px 14px"><div class="muted">slide ${n} / ${SLIDES.length}${mx?` · passo ${p}/${mx}`:""}</div><h1 style="margin:6px 0 4px;font-size:1.5rem">${esc(tit)}</h1>${s.kicker?`<div class="muted">${esc(s.kicker)}</div>`:""}</div>`;
+  h+=`<button class="primary" style="font-size:1.35rem;padding:22px" onclick="stepFwd()">Avançar →<br><span style="font-size:.85rem;font-weight:400;opacity:.9">${esc(proximo)}</span></button>`;
+  h+=`<button class="ghost" style="width:100%;margin-top:10px" onclick="stepBack()">← Voltar</button>`;
+  let st=[]; if(est.momento_ativo!=="espera"&&est.momento_ativo!=="fim") st.push(`<b>${esc(mom.titulo||est.momento_ativo)}</b>${est.momento_ativo==="regua"?" · ronda "+est.rodada:""} aberto · ${nDev} respostas`); st.push(`${pres} presentes`);
+  if(s.timer) st.push(timerOn?`relógio <b id="clock" data-fim="${fim}">--:--</b> <a href="#" onclick="relogio(${s.timer});return false">parar</a>`:`relógio ${s.timer} min <a href="#" onclick="relogio(${s.timer});return false">arrancar</a>`);
+  if(s.live==="sorteio") st.push(`<a href="#" onclick="sortear(${s.k});return false">sortear de novo</a>`);
+  h+=`<div class="card" style="margin-top:14px;font-size:.95rem">${st.join("<br>")}</div>`;
+  h+=`<p class="center"><a href="#" class="muted" onclick="adminMais=!adminMais;lastSig='';tick();return false">${adminMais?"menos":"mais opções…"}</a></p>`;
+  if(adminMais){
+    const ms=["espera","p1","p2","regua","pp","pe","p3","fim"];
+    h+=`<p class="muted">Forçar pulso:</p><div class="adminbar">${ms.map(x=>`<button class="${est.momento_ativo===x?'on':''}" onclick="go('${x}')">${esc(MOMENTOS[x].titulo)}</button>`).join("")}</div>`;
+    h+=`<div class="adminbar"><span>Ronda:</span>${[1,2,3].map(r=>`<button class="${est.rodada===r?'on':''}" onclick="ronda(${r})">${r}</button>`).join("")}<button onclick="sortear(2)">Sortear duplas</button><button onclick="sortear(3)">Sortear trios</button></div>`;
+    const by={}; rows.forEach(r=>{by[r.momento]=by[r.momento]||new Set(); by[r.momento].add(r.dispositivo);});
+    h+=`<div class="card"><table class="t"><tr><th>Momento</th><th>Dispositivos</th></tr>${["presenca","p1","p2","regua","pp","pe","p3","email"].map(x=>`<tr><td>${x}</td><td>${by[x]?by[x].size:0}</td></tr>`).join("")}</table></div>`;
+    h+=`<div class="adminbar"><button onclick="exportar()">Exportar CSV</button><button onclick="window.open(location.pathname+'#ecra','_blank')">Abrir ecrã</button></div>`;
+    h+=`<h2>Saltar para</h2><div class="slidelist">${SLIDES.map((x,i)=>`<button class="${i+1===n?'on':''}" onclick="goSlide(${i+1},0)"><span class="k">${i+1}</span>${esc((x.title||x.quote||x.id).replace(/<[^>]+>/g,""))}${x.live?' <span class="tag">'+x.live+'</span>':''}</button>`).join("")}</div>`;
+  }
+  app.innerHTML=h; clearInterval(clockIv); if(document.getElementById("clock")){ pintarRelogio(); clockIv=setInterval(pintarRelogio,500); }
 }
 window.go=async m=>{ await setEstado({momento_ativo:m}); lastSig=""; tick(); };
 window.ronda=async r=>{ await setEstado({rodada:r,momento_ativo:"regua"}); lastSig=""; tick(); };
