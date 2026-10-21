@@ -145,6 +145,9 @@ body.ecra #app{max-width:none;padding:0;margin:0}
 .stage .rv{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease}
 .stage .rv.on{opacity:1;transform:none}
 .stage td.rv,.stage th.rv{transform:none;transition:opacity .55s ease}
+.stage .sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px} .stage .sgrid .card{display:flex;gap:18px;align-items:center;padding:20px 24px} .stage .sgrid .num{font-size:56px;margin:0} .stage .sgrid .names span{display:block;font-family:"Playfair Display",serif;font-size:28px;font-weight:700;line-height:1.25}
+.stage .clockwrap{position:absolute;top:120px;right:72px} .stage .clock{font-family:"Playfair Display",serif;font-weight:900;font-size:64px;line-height:1;background:var(--ink);color:#fff;padding:14px 26px;border-radius:8px;box-shadow:6px 6px 0 var(--must);letter-spacing:1px} .stage .clock.fim{background:var(--coral)} .stage .clock.zero{animation:blink 1s step-start infinite} .stage .clock.idle{font-family:"Open Sans",sans-serif;font-weight:600;font-size:16px;background:transparent;color:var(--dim);box-shadow:none;padding:6px 0;letter-spacing:.5px} @keyframes blink{50%{opacity:.35}}
+.stage .folha p{font-size:22px;display:flex;gap:12px;align-items:flex-start;margin-bottom:14px} .stage .folha .num{font-size:40px;margin:0;line-height:1} .stage .folha p b:not(.num){margin-right:6px}
 .stage .pg{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(20,25,43,.12)} .stage .pg i{display:block;height:100%;background:var(--coral);transition:width .4s}
 </style>
 </head>
@@ -177,7 +180,9 @@ const SLIDES = [
  {id:"qr", title:"Entre no pulso", live:"qr", momento:"p1",
   body:`<p class="lead">Anónimo. Sem nome. Sem login.</p><p>Dez perguntas, três minutos — antes de qualquer conteúdo.</p><p class="soft">Responda com o que faria de verdade, não com o ideal.</p>`},
 
- {id:"abertura", layout:"illus", img:"img/r-abertura.jpg", size:"1600px 900px", pos:"160px 0", cw:600, kicker:"Abertura", title:"O seu maior <em>problema</em>",
+ {id:"duplas1", kicker:"Sorteio", title:"Duplas", live:"sorteio", k:2},
+
+ {id:"abertura", timer:8, layout:"illus", img:"img/r-abertura.jpg", size:"1600px 900px", pos:"160px 0", cw:600, kicker:"Abertura", title:"O seu maior <em>problema</em>",
   body:`<div class="steps vsm">${rv(1,`<div class="step"><b class="num">1</b><div><b class="blue">Em duplas, 8 minutos</b><br>Conte ao colega o maior problema que já viveu. O colega só escuta.</div></div>`)}${rv(2,`<div class="step"><b class="num">2</b><div><b class="blue">Depois, uma pergunta</b><br>Se pudesse, eliminava-o da sua vida?</div></div>`)}${rv(3,`<div class="step"><b class="num">3</b><div><b class="blue">Duas ou três duplas, 30 segundos</b><br>Não o problema — só a resposta, e porquê.</div></div>`)}</div>`},
 
  {id:"sofa", layout:"illus", img:"img/r-sofa.jpg", quote:"«O ser humano queria ser sofá. Mas ele é bicicleta.»"},
@@ -197,13 +202,13 @@ const SLIDES = [
 <tr class="rv" data-s="5"><td class="lab">Ferramenta</td><td>Checklist, procedimento</td><td><b>Método McKinsey</b>: decompor (MECE), árvore de questões, hipótese</td><td><b>Design Thinking / MVP</b>: protótipo pequeno, observar, iterar</td><td>Comando: estabilizar primeiro</td></tr>
 </table><p class="small">Dave Snowden · <i>Cynefin</i>, galês: «o lugar das múltiplas pertenças» — a resposta depende do terreno onde se está</p>`},
 
- {id:"errar", kicker:"Em duplas · 5 minutos", title:"E se errarmos o tipo?",
+ {id:"errar", timer:5, kicker:"Em duplas · 5 minutos", title:"E se errarmos o tipo?",
   body:`<p class="soft">Um exemplo da vida comum para cada cruzamento. Nada de direito.</p><div class="cols2 tight">${rv(1,`<div class="card"><h3>Simples tratado como complicado</h3><p>Contratar um consultor para a lâmpada.</p></div>`)}${rv(2,`<div class="card"><h3>Complexo tratado como simples</h3><p>Um adolescente e uma regra só.</p></div>`)}${rv(3,`<div class="card"><h3>Caótico tratado como simples</h3><p>O barco a afundar e alguém a ler o manual.</p></div>`)}${rv(4,`<div class="card"><h3>Simples tratado como complexo</h3><p>Duas horas de reunião sobre a lâmpada.</p></div>`)}</div>`},
 
  {id:"fronteira", title:"O erro mais comum",
   body:`<p class="lead">Não é resolver mal. É tratar um problema complexo como se fosse complicado.</p><div class="cols2">${rv(1,`<div class="card dim"><h3>Na vida</h3><p>Insónia tratada como carro avariado: procurar o especialista que dá <i>a</i> resposta — em vez de mudar uma coisa pequena, dormir uma semana, observar, ajustar.</p></div>`)}${rv(2,`<div class="card hi"><h3>No escritório</h3><p>Procurar a lei que não existe, o precedente que não há, o parecer que fecha a questão.</p><p>Em problema complexo, o parecer que fecha é o parecer errado. O certo abre uma rota de teste.</p></div>`)}</div>${rv(3,`<p class="lead blue">Na fronteira ninguém chegou antes — é exatamente onde o cliente mais precisa de si.</p>`)}`},
 
- {id:"exercicio", kicker:"Em duplas · 8 minutos", title:"Classifiquem dois problemas reais",
+ {id:"exercicio", timer:8, kicker:"Em duplas · 8 minutos", title:"Classifiquem dois problemas reais",
   body:`<div class="cols2"><div><p>Dois problemas que viveram na PLMJ. Em que quadrante caem?</p><p>Mão no ar por quadrante.</p>${rv(1,`<p class="lead blue">Quantos «complexos» foram tratados como «complicados»?</p>`)}</div><div class="quad"><div>Simples</div><div>Complicado</div><div class="p">Complexo</div><div class="p">Caótico</div></div></div>`},
 
  {id:"casa", title:"Isto é da casa ou do ofício?", live:"p1b",
@@ -241,12 +246,16 @@ const SLIDES = [
  {id:"passo3", num:3, title:"Recomendar — comunicar para o outro decidir",
   body:`<p class="soft" style="margin-top:-12px">Quem recebe decide com o que ouve. Uma proposta clara, com o risco dito e um prazo, é o que torna um «sim» possível.</p><div class="cols2"><div class="card hi tpl">${rv(1,`<p>Recomendo…</p>`)}${rv(2,`<p>porque…</p>`)}${rv(3,`<p>o risco é…, e reduzo-o com…</p>`)}${rv(4,`<p>preciso de… até…</p>`)}</div><div>${rv(5,`<p class="small dim b">Antes</p><p class="dim">«Será que dava para…?» · «um dia destes» · «o que vocês acham?»</p><p class="small blue b">Depois</p><p>«Mãe, <span class="hl">quero propor a nossa ceia de Natal no dia 21</span>, lá em casa, e eu organizo — <span class="hl">porque assim fico convosco com calma e vou à viagem</span> de 22 a 28. <span class="hl">Sei que não é o dia 25; por isso volto para o réveillon.</span> <span class="hl">Diz-me até domingo</span> se o dia 21 também dá para o pai.»</p>`)}</div></div>${rv(5,`<p class="small soft">«Quero propor», não «será que dava». Datas, não «um dia destes». Aceite o objetivo do outro antes de defender o seu. <span class="dim">Resposta primeiro — Minto, McKinsey.</span></p>`)}`},
 
- {id:"emprestimo", kicker:"Em duplas · 10 minutos", title:"Aquecimento",
-  body:`<p class="lead">Um amigo próximo, em dificuldade, pede 1.500 € emprestados.</p><p>Tem o dinheiro, mas é a sua reserva — e já viu esse amigo não devolver a outros.</p>${rv(1,`<p>Folha de 1 página: reenquadrar · três rotas com risco · recomendação em quatro linhas.</p><p class="soft">Três duplas apresentam só o C e a recomendação.</p>`)}`},
+ {id:"duplas2", kicker:"Sorteio · novas duplas", title:"Duplas", live:"sorteio", k:2},
 
- {id:"ronda1", kicker:"Ronda 1 · cliente externo", title:"Assinar ou não assinar", live:"regua", momento:"regua", rodada:1, body:rondaBody("Uma empresa cliente quer fechar em dez dias um contrato com um fornecedor estrangeiro de quem depende. Uma cláusula da minuta é inaceitável à luz da lei portuguesa. O fornecedor «não negocia a minuta». O diretor comercial escreve: «Preciso de saber se podemos assinar isto. Sexta-feira.»")},
- {id:"ronda2", kicker:"Ronda 2 · cliente interno", title:"Um parecer para amanhã", live:"regua", momento:"regua", rodada:2, body:rondaBody("Terça, 18h. Um sócio pede «um parecer para amanhã de manhã» sobre uma questão que, feita a sério, levaria uma semana. Pelo contexto, tem uma reunião com o cliente às 10h e precisa de chegar lá com uma posição, não com um documento.")},
- {id:"ronda3", kicker:"Ronda 3 · compliance · pitch para a sala", title:"«Resolve.»", live:"regua", momento:"regua", rodada:3, body:rondaBody("O onboarding de um cliente novo está travado há duas semanas: o compliance exige um documento que o cliente diz não conseguir em menos de dois meses. O sócio quer começar. O compliance não abre exceções — e tem razão. O e-mail do sócio diz só: «Resolve.»")},
+ {id:"emprestimo", timer:10, kicker:"Em duplas · 10 minutos", title:"Aquecimento",
+  body:`<div class="cols2 w55"><div><p class="caso">Um amigo próximo, em dificuldade, pede 1.500 € emprestados. Tem o dinheiro, mas é a sua reserva — e já viu esse amigo não devolver a outros.</p><p class="small" style="margin-top:14px">No fim, três duplas leem só a rota C e a recomendação.</p></div><div class="card hi folha"><h3>Na folha</h3><p><b class="num">1</b><span><b>Reenquadrar</b> — a posição de cada lado, o interesse por trás, e a pergunta nova.</span></p><p><b class="num">2</b><span><b>Três rotas</b> — A (o pedido), B (a recusa), C (a terceira via). Cada uma com o seu risco — e, no C, como o reduz.</span></p><p><b class="num">3</b><span><b>Recomendar</b> — «Recomendo… porque… o risco é… e reduzo-o com… preciso de… até…».</span></p></div></div>`},
+
+ {id:"trios", kicker:"Sorteio", title:"Trios", live:"sorteio", k:3},
+
+ {id:"ronda1", timer:10, kicker:"Ronda 1 · cliente externo", title:"Assinar ou não assinar", live:"regua", momento:"regua", rodada:1, body:rondaBody("Uma empresa cliente quer fechar em dez dias um contrato com um fornecedor estrangeiro de quem depende. Uma cláusula da minuta é inaceitável à luz da lei portuguesa. O fornecedor «não negocia a minuta». O diretor comercial escreve: «Preciso de saber se podemos assinar isto. Sexta-feira.»")},
+ {id:"ronda2", timer:10, kicker:"Ronda 2 · cliente interno", title:"Um parecer para amanhã", live:"regua", momento:"regua", rodada:2, body:rondaBody("Terça, 18h. Um sócio pede «um parecer para amanhã de manhã» sobre uma questão que, feita a sério, levaria uma semana. Pelo contexto, tem uma reunião com o cliente às 10h e precisa de chegar lá com uma posição, não com um documento.")},
+ {id:"ronda3", timer:10, kicker:"Ronda 3 · compliance · pitch para a sala", title:"«Resolve.»", live:"regua", momento:"regua", rodada:3, body:rondaBody("O onboarding de um cliente novo está travado há duas semanas: o compliance exige um documento que o cliente diz não conseguir em menos de dois meses. O sócio quer começar. O compliance não abre exceções — e tem razão. O e-mail do sócio diz só: «Resolve.»")},
 
  {id:"placar", title:"Placar", live:"placar"},
 
@@ -258,7 +267,7 @@ const SLIDES = [
  {id:"tese", layout:"accent", quote:"O cliente não paga para conhecer o obstáculo. Paga para descobrir o caminho.", live:"eval", momento:"fim", body:`<p>Obrigado.</p><p class="small" style="color:rgba(255,255,255,.85)">A folha de trabalho e o toolkit estão no vosso telemóvel, em PDF.</p>`}
 ];
 function steps(arr){ return `<div class="steps">`+arr.map((s,i)=>rv(i+1,`<div class="step"><b class="num">${i+1}</b><div><b class="blue">${s[0]}</b><br>${s[1]}</div></div>`)).join("")+`</div>`; }
-function rondaBody(caso){ return `<div class="cols2 w55"><div><p class="caso">${caso}</p><div class="timing"><div><b>10 min</b> folha de 1 página</div><div><b>2 min</b> pitch para o trio-cliente</div><div><b>pulso</b> o trio-cliente avalia com a régua</div></div></div><div class="livebox" id="live"></div></div>`; }
+function rondaBody(caso){ return `<div class="cols2 w55"><div><p class="caso">${caso}</p><div class="timing"><div><b>10 min</b> folha: reenquadrar · 3 rotas com risco · recomendação</div><div><b>2 min</b> pitch para o trio-cliente</div><div><b>pulso</b> o trio-cliente avalia com a régua</div></div></div><div class="livebox" id="live"></div></div>`; }
 function maxStep(s){ const all=(s.body||"")+(s.after||""); let m=0; all.replace(/data-s="(\d+)"/g,(_,n)=>{m=Math.max(m,+n);}); return m; }
 
 
@@ -294,8 +303,8 @@ const Q = {
   {id:"P2",t:"E dos sócios e seniores com quem trabalha, que proporção quer receber alternativas em vez de só a conclusão?",o:["Quase ninguém","Menos de metade","Cerca de metade","Mais de metade","Quase todos"]}
  ],
  regua:[
-  {id:"trio",t:"O vosso trio é o número…",o:["1","2","3","4","5","6"],row:true},
-  {id:"alvo",t:"Estão a avaliar o trio número…",o:["1","2","3","4","5","6"],row:true},
+  {id:"trio",t:"O vosso trio é o número…",o:["1","2","3","4","5","6","7","8"],row:true},
+  {id:"alvo",t:"Estão a avaliar o trio número…",o:["1","2","3","4","5","6","7","8"],row:true},
   {id:"q1",t:"A recomendação veio antes da análise?",o:["Sim","Não"],row:true},
   {id:"q2",t:"A terceira rota preserva o que cada lado queria?",o:["Sim","Não"],row:true},
   {id:"q3",t:"O risco foi dito, com o que se faz para o reduzir?",o:["Sim","Não"],row:true},
@@ -326,19 +335,35 @@ const setEstado = (patch)=>sb(`plmj_estado?sessao=eq.${CONFIG.SESSAO}`,{method:"
 const getRespostas = (momento)=>sb(`plmj_respostas?sessao=eq.${CONFIG.SESSAO}${momento?`&momento=eq.${momento}`:""}&select=dispositivo,momento,item,valor,criado&limit=5000`);
 async function upsert(rows){ return sb(`plmj_respostas?on_conflict=sessao,dispositivo,momento,item`,{method:"POST",body:JSON.stringify(rows),headers:{Prefer:"resolution=merge-duplicates,return=minimal"}}); }
 function devId(){ let id=null; try{id=localStorage.getItem("plmj_dev");}catch(e){} if(!id){id=Math.random().toString(36).slice(2)+Date.now().toString(36); try{localStorage.setItem("plmj_dev",id);}catch(e){}} return id; }
+const ANIMAIS=["Golfinho","Leão","Tigre","Falcão","Lobo","Raposa","Coruja","Urso","Pantera","Águia","Cavalo","Tubarão","Gato","Lince","Jaguar","Búfalo","Pinguim","Gaivota","Cegonha","Baleia","Orca","Foca","Lontra","Castor","Veado","Garça","Pato","Tartaruga","Camaleão","Andorinha","Pardal","Melro","Corvo","Grilo","Formiga","Abelha","Borboleta","Libélula","Cisne","Flamingo"];
+function cracha(){ let c=null; try{c=localStorage.getItem("plmj_cracha");}catch(e){} if(!c){ const id=devId(); let h=0; for(const ch of id) h=(h*31+ch.charCodeAt(0))>>>0; c=ANIMAIS[h%ANIMAIS.length]+" "+(10+((h>>7)%90)); try{localStorage.setItem("plmj_cracha",c);}catch(e){} } return c; }
+const getExtras = ()=>sb(`plmj_respostas?sessao=eq.${CONFIG.SESSAO}&momento=in.(presenca,grupos)&select=dispositivo,momento,item,valor,criado&limit=2000`);
+function presentes(rows){ const m={}, vivo={}; const lim=Date.now()-10*60*1000; rows.filter(r=>r.momento==="presenca"&&r.item==="visto").forEach(r=>{ if(Date.parse(r.valor)>lim) vivo[r.dispositivo]=1; }); rows.filter(r=>r.momento==="presenca"&&r.item==="cracha"&&vivo[r.dispositivo]).forEach(r=>m[r.dispositivo]=r.valor); return m; }
+function grupos(rows,item){ const r=rows.find(x=>x.momento==="grupos"&&x.item===item); try{ return r?JSON.parse(r.valor):null; }catch(e){ return null; } }
+function agrupar(devs,k){ const a=[...devs]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } const g=[]; for(let i=0;i<a.length;i+=k) g.push(a.slice(i,i+k)); if(g.length>1&&g[g.length-1].length===1){ const last=g.pop(); g[g.length-1].push(...last); } return g; }
+window.sortear=async(k)=>{ const rows=await getExtras(); const devs=Object.keys(presentes(rows)); const g=agrupar(devs,k); await upsert([{sessao:CONFIG.SESSAO,dispositivo:"SORTEIO",momento:"grupos",item:k===2?"duplas":"trios",valor:JSON.stringify(g)}]); lastSig=""; tick(); };
+function timerFim(rows){ const r=rows.find(x=>x.momento==="timer"&&x.item==="fim"); return r&&r.valor?Date.parse(r.valor):0; }
+window.relogio=async(min)=>{ const fim=timerFim(lastRows); const v=(fim&&fim>Date.now())?"":new Date(Date.now()+min*60000).toISOString(); await upsert([{sessao:CONFIG.SESSAO,dispositivo:"TIMER",momento:"timer",item:"fim",valor:v}]); lastSig=""; tick(); };
+let clockIv=null;
+function pintarRelogio(){ const el=document.getElementById("clock"); if(!el) return; const fim=+el.dataset.fim; const left=Math.max(0,Math.round((fim-Date.now())/1000)); const m=String(Math.floor(left/60)).padStart(2,"0"), s=String(left%60).padStart(2,"0"); el.textContent=m+":"+s; el.classList.toggle("zero",left===0); el.classList.toggle("fim",left<=30); }
+function meuGrupo(rows){ const me=devId(); const p=presentes(rows); const out={}; for(const item of ["duplas","trios"]){ const g=grupos(rows,item); if(!g) continue; const i=g.findIndex(x=>x.includes(me)); if(i>=0) out[item]={n:i+1,outros:g[i].filter(d=>d!==me).map(d=>p[d]||"?")}; } return out; }
 const esc = s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pct = (n,d)=>d?Math.round(100*n/d):0;
 const PURL = ()=>location.origin+location.pathname;
 
 /* ---------- participante ---------- */
 let pState={momento:null,answers:{},sent:{}};
-function header(sub){return `<div class="top"><div><div class="brand">Pulso</div><div class="sub">${esc(sub||"PLMJ · Problem Solving")}</div></div><div class="sub"><a href="toolkit.pdf" target="_blank" style="color:var(--azul);font-weight:700;text-decoration:none">Folha + toolkit (PDF)</a><br>anónimo</div></div>`;}
+function header(sub){ const isP=mode()==="p"; return `<div class="top"><div><div class="brand">Pulso</div><div class="sub">${esc(sub||"PLMJ · Problem Solving")}</div></div><div class="sub" style="text-align:right">${isP?`<b style="color:var(--roxo);font-size:1.05rem">${esc(cracha())}</b><br>`:""}<a href="toolkit.pdf" target="_blank" style="color:var(--azul);font-weight:700;text-decoration:none">Folha + toolkit (PDF)</a></div></div>`+(isP?grupoBar():""); }
+let pExtras=[];
+function grupoBar(){ const g=meuGrupo(pExtras); if(!g.duplas&&!g.trios) return ""; let h='<div class="card" style="padding:12px 16px;margin-bottom:16px">'; if(g.trios) h+=`<div><b>O vosso trio: ${g.trios.n}</b> · com ${esc(g.trios.outros.join(", ")||"—")}</div>`; if(g.duplas) h+=`<div class="muted">Dupla ${g.duplas.n}: com ${esc(g.duplas.outros.join(", ")||"—")}</div>`; return h+'</div>'; }
+let INSTAGRAM="rogeriooliveira____";
 function renderParticipante(est){
   const m = est.momento_ativo; const info = MOMENTOS[m]||MOMENTOS.espera;
-  if(m==="espera"||m==="fim"){ app.innerHTML = header()+`<div class="card center"><h1>${esc(info.titulo)}</h1><p>${esc(info.desc)}</p>${m==="espera"?'<p class="muted">Mantenha esta página aberta.</p>':'<a class="primary" style="display:block;text-align:center;text-decoration:none" href="toolkit.pdf" target="_blank">Descarregar a folha de trabalho e o toolkit (PDF)</a>'}</div>`; return; }
+  if(m==="espera"||m==="fim"){ app.innerHTML = header()+`<div class="card center"><h1>${esc(info.titulo)}</h1><p>${esc(info.desc)}</p>${m==="espera"?'<p class="muted">Mantenha esta página aberta.</p>':`<a class="primary" style="display:block;text-align:center;text-decoration:none" href="toolkit.pdf" target="_blank">Descarregar a folha de trabalho e o toolkit (PDF)</a>${INSTAGRAM?`<a class="ghost" style="display:block;text-align:center;text-decoration:none;margin-top:10px" href="https://instagram.com/${INSTAGRAM}" target="_blank">Seguir @${esc(INSTAGRAM)} no Instagram</a>`:""}`}</div>${m==="fim"?(pState.emailSent?'<div class="card center"><p>Obrigado — o toolkit segue por e-mail.</p></div>':`<div class="card"><h3>Quer receber o toolkit por e-mail? (opcional)</h3><p class="muted">Guardado à parte, sem ligação às suas respostas.</p><input type="text" id="em" inputmode="email" placeholder="o seu e-mail"><button class="primary" onclick="enviarEmail()">Enviar</button></div>`):""}`; return; }
   const key = m==="regua"?`regua_r${est.rodada}`:m;
   if(pState.sent[key]){ app.innerHTML = header()+`<div class="card center"><h2>Recebido.</h2><p class="muted">Obrigado. Aguarde a próxima ronda.</p>${m==="regua"?'<button class="ghost" onclick="editar()">Corrigir a avaliação</button>':""}</div>`; return; }
   const qs = Q[m]; const a = pState.answers[key]||(pState.answers[key]={});
+  if(m==="regua"&&!a.trio){ const g=meuGrupo(pExtras); if(g.trios) a.trio=String(g.trios.n); }
   let html = header()+`<h1>${esc(info.titulo)}${m==="regua"?` <span class="tag">ronda ${est.rodada}</span>`:""}</h1><p class="muted">${esc(info.desc)}</p>`;
   qs.forEach((q,i)=>{
     html+=`<div class="q"><div class="t"><span class="n">${i+1}</span>${esc(q.t)}${q.opt?' <span class="muted">(opcional)</span>':""}</div>`;
@@ -362,6 +387,9 @@ window.enviar=async(m,key,rodada)=>{
   catch(e){ b.disabled=false; b.textContent="Enviar"; alert("Não foi possível enviar. Verifique a ligação e tente de novo."); console.error(e); }
 };
 try{ pState.sent=JSON.parse(localStorage.getItem("plmj_sent")||"{}"); }catch(e){}
+window.enviarEmail=async()=>{ const v=($("#em").value||"").trim(); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ alert("Verifique o e-mail."); return; } const tok="EMAIL-"+Math.random().toString(36).slice(2); try{ await upsert([{sessao:CONFIG.SESSAO,dispositivo:tok,momento:"email",item:"email",valor:v}]); pState.emailSent=true; pState.momento=null; tick(); }catch(e){ alert("Não foi possível enviar."); } };
+let presencaAt=0;
+async function registarPresenca(){ if(Date.now()-presencaAt<60000) return; presencaAt=Date.now(); try{ await upsert([{sessao:CONFIG.SESSAO,dispositivo:devId(),momento:"presenca",item:"cracha",valor:cracha()},{sessao:CONFIG.SESSAO,dispositivo:devId(),momento:"presenca",item:"visto",valor:new Date().toISOString()}]); }catch(e){ presencaAt=0; console.error(e); } }
 
 /* ---------- painéis em direto (partilhados) ---------- */
 function count(rows,item,opts){ const c={}; opts.forEach(o=>c[o]=0); let n=0; rows.filter(r=>r.item===item).forEach(r=>{ if(c[r.valor]!==undefined){c[r.valor]++; n++;} }); return {c,n}; }
@@ -403,6 +431,8 @@ function liveContent(kind,est,rows,slide){
   if(kind==="regua") return reguaHtml(rows,slide.rodada,"lpanel");
   if(kind==="placar") return `<div class="lgrid c2">${placarHtml(rows,Math.max(1,est.rodada),P)}<div>${[1,2,3].filter(r=>r<=est.rodada).map(r=>`<div class="lpanel" style="margin-bottom:14px"><h3>Ronda ${r} · média ${reguaStats(rows,r).n?reguaStats(rows,r).avg.toFixed(1):"–"} / 4 · ${reguaStats(rows,r).n} avaliações</h3></div>`).join("")}</div></div>`;
   if(kind==="p3") return `<div class="lgrid">${barsHtml("Os colegas levam alternativa? (estimativa, Pulso 2)","P1",qOf("p2","P1").o,rows,false,P)}${barsHtml("E eu, comparado com eles?","A1",qOf("p3","A1").o,rows,true,P)}${barsHtml("Confiança de usar na próxima semana","X2",qOf("p3","X2").o,rows,false,P)}</div><div class="lgrid c2" style="margin-top:22px">${nuvemHtml(rows,"O1","Uma alternativa que não foi apresentada — o que teria sido preciso?",P)}${nuvemHtml(rows,"O2","O que precisaria de saber sobre o cliente?",P)}</div>`;
+  if(kind==="sorteio"){ const p=presentes(rows); const item=slide.k===2?"duplas":"trios"; const g=grupos(rows,item)||[]; const nome=slide.k===2?"Dupla":"Trio";
+    return `<div class="sorteio"><div class="small" style="margin-bottom:14px">${Object.keys(p).length} presentes · carregue <b>S</b> para sortear de novo</div><div class="sgrid">${g.map((grp,i)=>`<div class="card ${slide.k===3?'hi':''}"><b class="num">${i+1}</b><div class="names">${grp.map(d=>`<span>${esc(p[d]||"?")}</span>`).join("")}</div></div>`).join("")||'<p class="soft">Ainda sem sorteio — carregue S.</p>'}</div></div>`; }
   if(kind==="eval") return `<div class="qr" style="align-items:flex-start"><div id="qr"></div><div class="qrurl" style="color:#fff">Avalie a sessão</div></div>`;
   return "";
 }
@@ -436,11 +466,13 @@ function renderEcra(est,rows){
     const bg=s.bg?`<div class="bg" style="background-image:url(${s.bg});background-position:${s.pos||'center'}"></div><div class="shade heavy"></div>`:"";
     inner=`<div class="stage ${s.layout||''} ${s.bg?'hasbg':''}">${bg}${logoN}${logoP}${devs!==null?`<div class="count"><b>${devs}</b>respostas</div>`:""}<div class="content">${title}${body}${after}</div>${foot}${nav}${pg}</div>`;
   }
-  app.innerHTML=inner;
+  const fim=timerFim(rows); if(s.timer){ const st=document.createElement("div"); st.className="clockwrap"; st.innerHTML=fim&&fim>Date.now()-5000?`<div class="clock" id="clock" data-fim="${fim}">--:--</div>`:`<div class="clock idle">${s.timer} min · <b>T</b> para arrancar</div>`; inner=inner.replace('<div class="foot">',st.outerHTML+'<div class="foot">'); }
+  app.innerHTML=inner; clearInterval(clockIv); if(document.getElementById("clock")){ pintarRelogio(); clockIv=setInterval(pintarRelogio,250); }
   // passos: já revelados aparecem sem animação; o passo atual anima
   const key=n+"|"+p; const same=(key===lastSlideN); lastSlideN=key;
   document.querySelectorAll(".stage .rv").forEach(el=>{ const k=+el.dataset.s; if(k<p||(same&&k<=p)) el.classList.add("on"); });
   requestAnimationFrame(()=>requestAnimationFrame(()=>{ document.querySelectorAll(".stage .rv").forEach(el=>{ if(+el.dataset.s<=p) el.classList.add("on"); }); }));
+  if(s.live==="sorteio"){ const item=s.k===2?"duplas":"trios"; if(!grupos(rows,item)&&Object.keys(presentes(rows)).length&&!window.__autoSort){ window.__autoSort=item; sortear(s.k).then(()=>{window.__autoSort=null;}); } }
   if(s.live==="qr"||s.live==="eval"){ const el=$("#qr"); if(el){ try{ if(typeof QRCode==="undefined") throw new Error("qr lib"); new QRCode(el,{text:s.live==="qr"?PURL():EVAL_URL,width:s.live==="qr"?420:300,height:s.live==="qr"?420:300,colorDark:"#231F20",correctLevel:QRCode.CorrectLevel.L}); }catch(e){ el.innerHTML=`<div style="font-size:22px;word-break:break-all;max-width:420px">${esc(s.live==="qr"?PURL():EVAL_URL)}</div>`; } } }
   fitStage();
 }
@@ -454,7 +486,7 @@ window.goSlide=(n,p=0)=>{ n=Math.min(Math.max(1,n),SLIDES.length); const s=SLIDE
 let pendingPatch=null, saveChain=Promise.resolve();
 window.stepFwd=()=>{ const {n,p}=decode(curEst.slide); const s=SLIDES[Math.min(Math.max(1,n),SLIDES.length)-1]; if(p<maxStep(s)) goSlide(n,p+1); else goSlide(n+1,0); };
 window.stepBack=()=>{ const {n,p}=decode(curEst.slide); if(p>0) goSlide(n,p-1); else goSlide(n-1,0); };
-document.addEventListener("keydown",async e=>{ if(mode()!=="ecra") return; if(["ArrowRight","PageDown"," ","Enter","ArrowDown"].includes(e.key)){ e.preventDefault(); stepFwd();} if(["ArrowLeft","PageUp","Backspace","ArrowUp"].includes(e.key)){ e.preventDefault(); stepBack();} if(e.key==="f"||e.key==="F"){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); } });
+document.addEventListener("keydown",async e=>{ if(mode()!=="ecra") return; if(["ArrowRight","PageDown"," ","Enter","ArrowDown"].includes(e.key)){ e.preventDefault(); stepFwd();} if(["ArrowLeft","PageUp","Backspace","ArrowUp"].includes(e.key)){ e.preventDefault(); stepBack();} if(e.key==="f"||e.key==="F"){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); } if(e.key==="s"||e.key==="S"){ const {n}=decode(curEst.slide); const s=SLIDES[n-1]; if(s&&s.live==="sorteio") sortear(s.k); } if(e.key==="t"||e.key==="T"){ const {n}=decode(curEst.slide); const s=SLIDES[n-1]; if(s&&s.timer) relogio(s.timer); } });
 
 /* ---------- tela (só resultados, reserva) ---------- */
 function renderTela(est,rows){
@@ -477,7 +509,8 @@ function renderAdmin(est,rows){
   h+=`<p class="muted">Pulso aberto nos telemóveis: <b>${esc(MOMENTOS[est.momento_ativo].titulo)}</b>${est.momento_ativo==="regua"?" · ronda "+est.rodada:""} — muda sozinho ao avançar; aqui pode forçar:</p><div class="adminbar">${ms.map(x=>`<button class="${est.momento_ativo===x?'on':''}" onclick="go('${x}')">${esc(MOMENTOS[x].titulo)}</button>`).join("")}</div>`;
   h+=`<div class="adminbar"><span>Ronda:</span>${[1,2,3].map(r=>`<button class="${est.rodada===r?'on':''}" onclick="ronda(${r})">${r}</button>`).join("")}</div>`;
   const by={}; rows.forEach(r=>{by[r.momento]=by[r.momento]||new Set(); by[r.momento].add(r.dispositivo);});
-  h+=`<div class="card"><table class="t"><tr><th>Momento</th><th>Dispositivos</th></tr>${["p1","p2","regua","p3"].map(x=>`<tr><td>${x}</td><td>${by[x]?by[x].size:0}</td></tr>`).join("")}</table></div>`;
+  h+=`<div class="card"><table class="t"><tr><th>Momento</th><th>Dispositivos</th></tr>${["presenca","p1","p2","regua","p3","email"].map(x=>`<tr><td>${x}</td><td>${by[x]?by[x].size:0}</td></tr>`).join("")}</table></div>`;
+  h+=`<div class="adminbar"><button onclick="sortear(2)">Sortear duplas</button><button onclick="sortear(3)">Sortear trios</button>${s.timer?`<button class="${timerFim(rows)>Date.now()?'on':''}" onclick="relogio(${s.timer})">${timerFim(rows)>Date.now()?'Parar relógio':'Relógio '+s.timer+' min'}</button>`:""}</div>`;
   h+=`<div class="adminbar"><button onclick="goSlide(${n+1},0)">Saltar para o slide seguinte</button><button onclick="exportar()">Exportar CSV</button><button onclick="window.open(location.pathname+'#ecra','_blank')">Abrir ecrã</button></div>`;
   h+=`<h2>Slides</h2><div class="slidelist">${SLIDES.map((x,i)=>`<button class="${i+1===n?'on':''}" onclick="goSlide(${i+1})"><span class="k">${i+1}</span>${esc(x.title||x.quote||x.id)}${x.live?' <span class="tag">'+x.live+'</span>':''}</button>`).join("")}</div>`;
   app.innerHTML=h;
@@ -499,9 +532,9 @@ async function tick(){
     if(Date.now()<localUntil){ est={...est,slide:curEst.slide,momento_ativo:curEst.momento_ativo,rodada:curEst.rodada}; }
     curEst=est;
     const md=mode();
-    if(md==="p"){ const k=est.momento_ativo+"|"+est.rodada; if(k!==pState.momento){pState.momento=k; renderParticipante(est);} return; }
+    if(md==="p"){ registarPresenca(); let ex=[]; try{ ex=await getExtras(); }catch(e){} const gsig=JSON.stringify(ex.filter(r=>r.momento==="grupos").map(r=>r.valor)); const k=est.momento_ativo+"|"+est.rodada+"|"+gsig; if(k!==pState.momento){pState.momento=k; pExtras=ex; renderParticipante(est);} return; }
     const rows=await getRespostas(); lastRows=rows;
-    const sig=JSON.stringify([md,est.momento_ativo,est.rodada,est.slide,rows.length,adminOK]);
+    const sig=JSON.stringify([md,est.momento_ativo,est.rodada,est.slide,rows.length,adminOK,timerFim(rows)]);
     if(sig!==lastSig){ lastSig=sig; md==="ecra"?renderEcra(est,rows):md==="tela"?renderTela(est,rows):renderAdmin(est,rows); }
   }catch(e){ app.innerHTML=header()+`<div class="err">Erro de ligação: ${esc(e.message)}</div>`; console.error(e); }
 }
