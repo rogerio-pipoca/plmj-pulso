@@ -651,24 +651,29 @@ window.exportar=async()=>{
 
 /* ---------- loop ---------- */
 const mode = ()=>({"#tela":"tela","#admin":"admin","#ecra":"ecra"})[location.hash]||"p";
-let lastSig="", curEst={slide:1};
+let lastSig="", curEst={slide:1}, lastRowsAt=0, lastSlideSeen=null, lastMomSeen=null, lastExtrasAt=0, pExtrasCache=[];
+let ticking=false;
 async function tick(){
+  if(ticking) return; ticking=true;
   try{
     let est=await getEstado(); if(!est) throw new Error("estado não encontrado");
     if(pendingSaves>0||Date.now()<localUntil){ est={...est,slide:curEst.slide,momento_ativo:curEst.momento_ativo,rodada:curEst.rodada}; }
     curEst=est;
     const md=mode();
-    if(md==="p"){ registarPresenca(); let ex=[]; try{ ex=await getExtras(); }catch(e){} const gsig=JSON.stringify(ex.filter(r=>r.momento==="grupos").map(r=>r.valor)); const k=est.momento_ativo+"|"+est.rodada+"|"+gsig; if(k!==pState.momento){pState.momento=k; pExtras=ex; renderParticipante(est);} return; }
-    const rows=await getRespostas(); lastRows=rows;
+    if(md==="p"){ registarPresenca(); if(Date.now()-lastExtrasAt>5000){ try{ pExtrasCache=await getExtras(); lastExtrasAt=Date.now(); }catch(e){} } const ex=pExtrasCache; const gsig=JSON.stringify(ex.filter(r=>r.momento==="grupos").map(r=>r.valor)); const k=est.momento_ativo+"|"+est.rodada+"|"+gsig; if(k!==pState.momento){pState.momento=k; pExtras=ex; renderParticipante(est);} return; }
+    const slideChanged=(est.slide!==lastSlideSeen)||(est.momento_ativo!==lastMomSeen); lastSlideSeen=est.slide; lastMomSeen=est.momento_ativo;
+    if(slideChanged||Date.now()-lastRowsAt>3000||!lastRows.length){ lastRows=await getRespostas(); lastRowsAt=Date.now(); }
+    const rows=lastRows;
     const sig=JSON.stringify([md,est.momento_ativo,est.rodada,est.slide,rows.length,adminOK,timerFim(rows)]);
     if(sig!==lastSig){ lastSig=sig; md==="ecra"?renderEcra(est,rows):md==="tela"?renderTela(est,rows):renderAdmin(est,rows); }
   }catch(e){ app.innerHTML=header()+`<div class="err">Erro de ligação: ${esc(e.message)}</div>`; console.error(e); }
+  finally{ ticking=false; }
 }
 function tema(){ const u=new URLSearchParams(location.search); let tm=u.get("tema"); if(tm){ try{localStorage.setItem("plmj_tema",tm);}catch(e){} } else { try{tm=localStorage.getItem("plmj_tema");}catch(e){} } return tm||"pro"; }
 function applyMode(){ const md=mode(); document.body.classList.toggle("t-pro",tema()==="pro"); document.body.classList.toggle("tela",md==="tela"); document.body.classList.toggle("ecra",md==="ecra"); lastSig=""; pState.momento=null; }
 applyMode(); tick();
 window.addEventListener("hashchange",()=>{applyMode(); tick();});
-setInterval(tick, 3000);
+setInterval(tick, mode()==="p"?2000:600);
 </script>
 </body>
 </html>
