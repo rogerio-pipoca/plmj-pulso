@@ -131,9 +131,9 @@ body.ecra #app{max-width:none;padding:0;margin:0}
 .stage.photo.side .bg{background-size:contain;background-position:right center;animation:none;left:auto;width:660px;right:72px;top:130px;bottom:90px;border-radius:6px;border:2.5px solid #14192B;box-shadow:10px 10px 0 var(--must)} .stage.photo.side .content{width:760px} .stage.photo.side .quote{font-size:54px}
 .stage.photo.side .shade{background:none} .stage.photo.side .foot{border-color:#14192B;color:#4A5264}
 .stage.illus .bg{animation:none} .stage.illus::before{display:none} .stage.illus .content{width:720px;right:auto;display:flex;flex-direction:column;justify-content:center} .stage.illus .quote{font-size:66px} .stage.illus h1.title{font-size:54px} .stage.illus .lead{font-size:32px} .stage.illus p{font-size:23px} .stage.illus .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(247,243,236,1) 0%,rgba(247,243,236,.9) 30%,rgba(247,243,236,.35) 42%,rgba(247,243,236,0) 50%)}
-.stage.cover.hasimg .bg{animation:kb 60s ease-in-out infinite alternate} .stage.cover.hasimg .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(247,243,236,1) 0%,rgba(247,243,236,.98) 46%,rgba(247,243,236,.75) 60%,rgba(247,243,236,0) 76%)} .stage.cover.hasimg::before{display:none}
+.stage.cover.hasimg .bg{animation:kb 60s ease-in-out infinite alternate} .stage.cover.hasimg .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(247,243,236,1) 0%,rgba(247,243,236,.96) 40%,rgba(247,243,236,.5) 52%,rgba(247,243,236,0) 62%)} .stage.cover.hasimg::before{display:none}
 .stage.cover .content{display:flex;flex-direction:column;justify-content:center;top:0;bottom:0}
-.stage.cover h1{font-family:"Playfair Display",serif;font-size:150px;color:var(--ink);margin:0 0 22px;line-height:.98;font-weight:900;letter-spacing:-4px}
+.stage.cover h1{font-family:"Playfair Display",serif;font-size:118px;color:var(--ink);margin:0 0 22px;line-height:.98;font-weight:900;letter-spacing:-4px}
 .stage.cover h1 em{font-style:italic;color:var(--azul)}
 .stage.cover .sub{display:inline-block;font-size:24px;color:#14192B;background:var(--must);padding:8px 18px;margin-bottom:16px;letter-spacing:1px;font-weight:700;transform:rotate(-1.5deg);box-shadow:4px 4px 0 var(--ink);align-self:flex-start} .stage.cover .by{font-size:20px;color:var(--soft);margin-bottom:0}
 .stage.cover .logos{position:absolute;left:72px;bottom:60px;display:flex;gap:44px;align-items:center} .stage.cover .logos img{height:56px}
@@ -178,7 +178,7 @@ const CONFIG = {
 const EVAL_URL = "https://forms.office.com/pages/responsepage.aspx?id=4zEpxDNn5kGNQsSLozS7pAC51C8oVxxGmHFIdAiFiMBUQlg0UzNNV1hYTklYNzU2MllLQkVPNE05MCQlQCNjPTEkJUAjdD1n";
 const rv=(n,html,cls)=>`<div class="rv ${cls||''}" data-s="${n}">${html}</div>`;
 const SLIDES = [
- {id:"capa", layout:"cover", img:"img/r-capa.jpg", size:"112% auto", title:"Problem <em>Solving</em>", sub:"PLMJ · Plano de Formação 2026", by:"Rogério Oliveira · Nova SBE Executive Education"},
+ {id:"capa", layout:"cover", img:"img/r-via.jpg", size:"1600px 900px", pos:"230px 0", title:"Problem <em>Solving</em>", sub:"PLMJ · Plano de Formação 2026", by:"Rogério Oliveira · Nova SBE Executive Education"},
 
  {id:"qr", title:"Entre no pulso", live:"qr", momento:"p1",
   body:`<p class="lead">Anónimo. Sem nome. Sem login.</p><p>Dez perguntas, três minutos — antes de qualquer conteúdo.</p><p class="soft">Responda com o que faria de verdade, não com o ideal.</p>`},
@@ -466,7 +466,7 @@ function renderEcra(est,rows){
   const pg=`<div class="pg"><i style="width:${(n-1)/(SLIDES.length-1)*100}%"></i></div>`;
   let inner="";
   if(s.layout==="cover"){
-    inner=`<div class="stage cover ${s.img?'hasimg':''}">${s.img?`<div class="bg" style="background-image:url(${s.img});background-position:right center;background-size:${s.size||'cover'}"></div><div class="shade"></div>`:MOTIF}<div class="content"><h1>${s.title}</h1><div class="sub">${esc(s.sub)}</div><div class="by">${esc(s.by)}</div></div><div class="logos"><img src="${ASSETS.novaColor}" alt=""><img src="${ASSETS.plmjSq}" alt=""></div>${nav}</div>`;
+    inner=`<div class="stage cover ${s.img?'hasimg':''}">${s.img?`<div class="bg" style="background-image:url(${s.img});background-position:${s.pos||'right center'};background-size:${s.size||'cover'}"></div><div class="shade"></div>`:MOTIF}<div class="content"><h1>${s.title}</h1><div class="sub">${esc(s.sub)}</div><div class="by">${esc(s.by)}</div></div><div class="logos"><img src="${ASSETS.novaColor}" alt=""><img src="${ASSETS.plmjSq}" alt=""></div>${nav}</div>`;
   } else if(s.layout==="illus"){
     inner=`<div class="stage illus"><div class="bg" style="background-image:url(${s.img});background-position:${s.pos||'center'};${s.size?`background-size:${s.size};`:''}"></div><div class="shade"></div>${logoN}${logoP}<div class="content" style="${s.cw?`width:${s.cw}px`:''}">${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}${s.title?`<h1 class="title">${s.title}</h1>`:""}${s.quote?`<div class="quote">${esc(s.quote).replace(/\n/g,"<br>")}</div>`:""}${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${foot}${nav}${pg}</div>`;
   } else if(s.layout==="photo"){
