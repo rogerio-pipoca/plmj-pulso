@@ -441,7 +441,11 @@ function renderEcra(est,rows){
 }
 function fitStage(){ const st=document.querySelector(".stage"); if(!st) return; const k=Math.min(window.innerWidth/1600,window.innerHeight/900); st.style.transform=`scale(${k})`; st.style.left=((window.innerWidth-1600*k)/2)+"px"; st.style.top=((window.innerHeight-900*k)/2)+"px"; }
 window.addEventListener("resize",fitStage);
-window.goSlide=async(n,p=0)=>{ n=Math.min(Math.max(1,n),SLIDES.length); const s=SLIDES[n-1]; const patch={slide:encode(n,p)}; if(s.momento) patch.momento_ativo=s.momento; if(s.rodada) patch.rodada=s.rodada; await setEstado(patch); lastSig=""; tick(); };
+let localUntil=0, lastRows=[];
+window.goSlide=(n,p=0)=>{ n=Math.min(Math.max(1,n),SLIDES.length); const s=SLIDES[n-1]; const patch={slide:encode(n,p)}; if(s.momento) patch.momento_ativo=s.momento; if(s.rodada) patch.rodada=s.rodada;
+  curEst={...curEst,...patch}; localUntil=Date.now()+2500; lastSig="";
+  if(mode()==="ecra") renderEcra(curEst,lastRows); else if(mode()==="admin") renderAdmin(curEst,lastRows);
+  setEstado(patch).catch(e=>console.error(e)); };
 window.stepFwd=()=>{ const {n,p}=decode(curEst.slide); const s=SLIDES[Math.min(Math.max(1,n),SLIDES.length)-1]; if(p<maxStep(s)) goSlide(n,p+1); else goSlide(n+1,0); };
 window.stepBack=()=>{ const {n,p}=decode(curEst.slide); if(p>0) goSlide(n,p-1); else goSlide(n-1,0); };
 document.addEventListener("keydown",async e=>{ if(mode()!=="ecra") return; if(["ArrowRight","PageDown"," ","Enter","ArrowDown"].includes(e.key)){ e.preventDefault(); stepFwd();} if(["ArrowLeft","PageUp","Backspace","ArrowUp"].includes(e.key)){ e.preventDefault(); stepBack();} if(e.key==="f"||e.key==="F"){ document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen(); } });
@@ -485,10 +489,12 @@ const mode = ()=>({"#tela":"tela","#admin":"admin","#ecra":"ecra"})[location.has
 let lastSig="", curEst={slide:1};
 async function tick(){
   try{
-    const est=await getEstado(); if(!est) throw new Error("estado não encontrado"); curEst=est;
+    let est=await getEstado(); if(!est) throw new Error("estado não encontrado");
+    if(Date.now()<localUntil){ est={...est,slide:curEst.slide,momento_ativo:curEst.momento_ativo,rodada:curEst.rodada}; }
+    curEst=est;
     const md=mode();
     if(md==="p"){ const k=est.momento_ativo+"|"+est.rodada; if(k!==pState.momento){pState.momento=k; renderParticipante(est);} return; }
-    const rows=await getRespostas();
+    const rows=await getRespostas(); lastRows=rows;
     const sig=JSON.stringify([md,est.momento_ativo,est.rodada,est.slide,rows.length,adminOK]);
     if(sig!==lastSig){ lastSig=sig; md==="ecra"?renderEcra(est,rows):md==="tela"?renderTela(est,rows):renderAdmin(est,rows); }
   }catch(e){ app.innerHTML=header()+`<div class="err">Erro de ligação: ${esc(e.message)}</div>`; console.error(e); }
