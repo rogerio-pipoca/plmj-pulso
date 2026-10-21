@@ -104,9 +104,10 @@ body.ecra #app{max-width:none;padding:0;margin:0}
 .stage .timing div{font-size:22px;margin:8px 0;color:var(--soft)} .stage .timing b{display:inline-block;width:110px;color:var(--coral)}
 .stage .livebox{min-height:300px} .stage .livebox .lpanel{padding:20px 24px;min-height:300px} .stage .livebox .bar{font-size:18px;grid-template-columns:190px 1fr 56px} .stage .livebox h3{font-size:22px}
 .stage .lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px} .stage .lgrid.c2{grid-template-columns:1fr 1fr}
-.stage .lpanel{background:#fff;border:2px solid var(--ink);border-radius:6px;padding:14px 18px;box-shadow:5px 5px 0 var(--ink)}
-.stage .lpanel h3{font-size:19px;color:var(--ink);margin-bottom:8px;line-height:1.2} .stage .lpanel .muted{color:var(--dim)}
-.stage .bar{font-size:16px;line-height:1.2;grid-template-columns:150px 1fr 50px;margin:5px 0;gap:8px} .stage .bar .trk{height:16px;background:#EEE9DF;border-radius:3px} .stage .bar .fil{border-radius:3px} .stage .bar .lab{overflow:hidden;color:var(--soft)} .stage .bar .val{color:var(--ink)} .stage .bar.alt .fil{background:var(--coral)}
+.stage .lpanel{background:#fff;border:2px solid var(--ink);border-radius:6px;padding:16px 20px;box-shadow:5px 5px 0 var(--ink)}
+.stage .lgrid.big{gap:28px} .stage .lgrid.big .lpanel{padding:30px 32px;min-height:560px} .stage .lgrid.big .lpanel h3{font-size:30px;margin-bottom:22px} .stage .lgrid.big .bar{font-size:24px;grid-template-columns:1fr 80px;grid-template-areas:"lab val" "trk trk";margin:14px 0;gap:6px 14px} .stage .lgrid.big .bar .lab{grid-area:lab} .stage .lgrid.big .bar .val{grid-area:val;font-size:26px} .stage .lgrid.big .bar .trk{grid-area:trk;height:26px;border-radius:4px}
+.stage .lpanel h3{font-size:20px;color:var(--ink);margin-bottom:8px;line-height:1.2} .stage .lpanel .muted{color:var(--dim)}
+.stage .bar{font-size:17.5px;line-height:1.15;grid-template-columns:165px 1fr 56px;margin:5px 0;gap:10px} .stage .bar .trk{height:17px;background:#EEE9DF;border-radius:3px} .stage .bar .fil{border-radius:3px} .stage .bar .lab{overflow:hidden;color:var(--soft)} .stage .bar .val{color:var(--ink)} .stage .bar.alt .fil{background:var(--coral)}
 .stage table.t td,.stage table.t th{border-color:rgba(20,25,43,.2)} .stage table.t th{color:var(--coral)}
 .stage .count{position:absolute;top:56px;right:180px;font-size:18px;color:var(--soft)} .stage .count b{font-family:"Playfair Display",serif;font-size:34px;color:var(--coral);margin-right:6px}
 .stage .verb{font-size:17px;line-height:1.3;padding:6px 10px;margin:5px 0;background:#F7F3EC;border-left:4px solid var(--coral);color:var(--ink)}
@@ -276,7 +277,7 @@ const SLIDES = [
 },
 
  {id:"klink1", layout:"photo", img:"img/klink-barco.jpg", pos:"center 40%", kicker:"1984 · Lüderitz, Namíbia → Praia da Espera, Bahia", quote:"O risco não foi eliminado.\nFoi desenhado.", cite:"Amyr Klink · Cem Dias Entre Céu e Mar",
-  body:rv(1,`<p>Queria um barco que não virasse. Não existia sem ficar pesado e lento.</p><p>O engenheiro desenhou um barco <b>feito para virar e voltar sozinho</b>. Virou várias vezes. Voltou todas.</p>`)},
+  body:""},
 
  {id:"klink2", layout:"photo", img:"img/klink-mapa.jpg", pos:"center 55%", side:true, kicker:"100 dias · 6.800 km · a remo", quote:"«Metade do que estava escrito no meu projeto não aconteceu. Ainda bem!»", cite:"Amyr Klink",
   body:`<p>Dois anos a preparar. O plano não era prever tudo — era aguentar o que não se previu.</p>`},
@@ -495,7 +496,7 @@ function placarHtml(rows,upTo,cls){
   if(!keys.length) h+=`<tr><td colspan="9" class="muted">ainda sem avaliações</td></tr>`;
   return h+`</table></div>`;
 }
-function nuvemHtml(rows,item,title,cls){ const o=rows.filter(r=>r.item===item&&r.valor&&r.valor.trim()); const max=cls?5:1000; const show=o.slice(-max); return `<div class="${cls||'panel'}"><h3>${esc(title)}${o.length>max?` <span class="muted">· ${o.length}, últimas ${max}</span>`:""}</h3>${show.map(r=>`<div class="verb">${esc(r.valor.slice(0,220))}</div>`).join("")||'<p class="muted">—</p>'}</div>`; }
+function nuvemHtml(rows,item,title,cls){ const o=rows.filter(r=>r.item===item&&r.valor&&r.valor.trim()); const max=cls?3:1000; const show=o.slice(-max); return `<div class="${cls||'panel'}"><h3>${esc(title)}${o.length>max?` <span class="muted">· ${o.length}, últimas ${max}</span>`:""}</h3>${show.map(r=>`<div class="verb">${esc(r.valor.slice(0,220))}</div>`).join("")||'<p class="muted">—</p>'}</div>`; }
 
 /* ---------- ECRÃ (slides) ---------- */
 const decode=v=>{ v=+v||1; return v>100?{n:Math.floor(v/100),p:v%100}:{n:v,p:0}; };
@@ -504,7 +505,7 @@ function liveContent(kind,est,rows,slide){
   const P="lpanel";
   if(kind==="qr") return `<div class="qrbig"><div class="qr"><div id="qr"></div><div class="qrurl">${esc(PURL().replace("https://",""))}</div></div><div>${slide.body}</div></div>`;
   if(kind==="p1") return `<div class="lgrid">${[["S1","E-mail do sócio: o que faz?"],["S2","Cláusula fora do âmbito: o que faz?"],["S3","«Posso fazer isto?» — como responde?"]].map(([id,tt])=>barsHtml(tt,id,qOf("p1",id).o,rows,false,P)).join("")}</div><div class="lgrid" style="margin-top:16px">${barsHtml("No último documento, a recomendação ocupava…","M1b",qOf("p1","M1b").o,rows,true,P)}${barsHtml("Diria numa frase o que o cliente quer alcançar?","C1",qOf("p1","C1").o,rows,true,P)}${barsHtml("Quem recebeu o documento…","M2",qOf("p1","M2").o,rows,true,P)}</div>`;
-  if(kind==="p1b") return `<div class="lgrid">${barsHtml("«Posso fazer isto?» — como responde?","S3",qOf("p1","S3").o,rows,false,P)}${barsHtml("Cláusula fora do âmbito: o que faz?","S2",qOf("p1","S2").o,rows,false,P)}${barsHtml("A recomendação ocupava…","M1b",qOf("p1","M1b").o,rows,true,P)}</div>`;
+  if(kind==="p1b") return `<div class="lgrid big">${barsHtml("«Posso fazer isto?» — como responde?","S3",qOf("p1","S3").o,rows,false,P)}${barsHtml("Cláusula fora do âmbito: o que faz?","S2",qOf("p1","S2").o,rows,false,P)}${barsHtml("A recomendação ocupava…","M1b",qOf("p1","M1b").o,rows,true,P)}</div>`;
   if(kind==="p2") return `<div class="lgrid">${barsHtml("Qual seria pior para quem assinou?","E1",qOf("p2","E1").o,rows,true,P)}${barsHtml("Se um colega levasse uma alternativa ao sócio…","E3",qOf("p2","E3").o,rows,true,P)}${barsHtml("Tempo a perceber o objetivo antes de escrever","T2",qOf("p2","T2").o,rows,false,P)}</div><div class="lgrid" style="margin-top:16px">${barsHtml("Primeira conversa quando algo correu mal","E2",qOf("p2","E2").o,rows,false,P)}${barsHtml("Colegas que levam alternativa (estimativa)","P1",qOf("p2","P1").o,rows,false,P)}${barsHtml("Sócios que querem alternativas (estimativa)","P2",qOf("p2","P2").o,rows,false,P)}</div>`;
   if(kind==="regua") return reguaHtml(rows,slide.rodada,"lpanel");
   if(kind==="placar") return `<div class="lgrid c2">${placarHtml(rows,Math.max(1,est.rodada),P)}<div>${[1,2,3].filter(r=>r<=est.rodada).map(r=>`<div class="lpanel" style="margin-bottom:14px"><h3>Ronda ${r} · média ${reguaStats(rows,r).n?reguaStats(rows,r).avg.toFixed(1):"–"} / 4 · ${reguaStats(rows,r).n} avaliações</h3></div>`).join("")}</div></div>`;
@@ -565,7 +566,7 @@ function renderEcra(est,rows){
     inner=`<div class="stage ${s.layout||''} ${s.bg?'hasbg':''}">${bg}${logoN}${logoP}${devs!==null?`<div class="count"><b>${devs}</b>respostas</div>`:""}<div class="content">${title}${body}${after}</div>${foot}${nav}${pg}</div>`;
   }
   const fim=timerFim(rows); if(s.timer){ const st=document.createElement("div"); st.className="clockwrap"; st.innerHTML=fim&&fim>Date.now()-5000?`<div class="clock" id="clock" data-fim="${fim}">--:--</div>`:`<div class="clock idle">${s.timer} min · <b>T</b> para arrancar</div>`; inner=inner.replace('<div class="foot">',st.outerHTML+'<div class="foot">'); }
-  app.innerHTML=inner; const le=document.getElementById("leitura"); if(le){ const L=leituras(rows); le.innerHTML=L.length?`<div class="small dim" style="letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:6px">Leitura</div>`+L.map(x=>`<p class="lead blue" style="font-size:28px;margin-bottom:6px">${esc(x)}</p>`).join(""):""; } clearInterval(clockIv); if(document.getElementById("clock")){ pintarRelogio(); clockIv=setInterval(pintarRelogio,250); }
+  app.innerHTML=inner; const le=document.getElementById("leitura"); if(le){ const L=leituras(rows); le.innerHTML=L.length?`<div class="small dim" style="letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:4px;font-size:14px">Leitura</div>`+L.map(x=>`<p class="lead blue" style="font-size:24px;margin-bottom:4px;line-height:1.2">${esc(x)}</p>`).join(""):""; } clearInterval(clockIv); if(document.getElementById("clock")){ pintarRelogio(); clockIv=setInterval(pintarRelogio,250); }
   // passos: já revelados aparecem sem animação; o passo atual anima
   const key=n+"|"+p; const same=(key===lastSlideN); lastSlideN=key;
   document.querySelectorAll(".stage .rv").forEach(el=>{ const k=+el.dataset.s; if(k<p||(same&&k<=p)) el.classList.add("on"); });
