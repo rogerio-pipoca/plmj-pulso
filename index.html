@@ -405,7 +405,8 @@ const $ = s=>document.querySelector(s);
 const app = $("#app");
 const H = ()=>({apikey:CONFIG.SUPABASE_ANON,Authorization:"Bearer "+CONFIG.SUPABASE_ANON,"Content-Type":"application/json"});
 async function sb(path,opt={}){
-  const r = await fetch(CONFIG.SUPABASE_URL+"/rest/v1/"+path,{...opt,headers:{...H(),...(opt.headers||{})}});
+  const ctl=new AbortController(); const to=setTimeout(()=>ctl.abort(),9000);
+  let r; try{ r = await fetch(CONFIG.SUPABASE_URL+"/rest/v1/"+path,{...opt,signal:ctl.signal,headers:{...H(),...(opt.headers||{})}}); } finally{ clearTimeout(to); }
   if(!r.ok) throw new Error(r.status+" "+await r.text());
   const t = await r.text(); return t?JSON.parse(t):null;
 }
@@ -662,9 +663,9 @@ window.exportar=async()=>{
 /* ---------- loop ---------- */
 const mode = ()=>({"#tela":"tela","#admin":"admin","#ecra":"ecra"})[location.hash]||"p";
 let lastSig="", curEst={slide:1}, lastRowsAt=0, lastSlideSeen=null, lastMomSeen=null, lastExtrasAt=0, pExtrasCache=[];
-let ticking=false;
+let ticking=false, tickingSince=0;
 async function tick(){
-  if(ticking) return; ticking=true;
+  if(ticking&&Date.now()-tickingSince<15000) return; ticking=true; tickingSince=Date.now();
   try{
     let est=await getEstado(); if(!est) throw new Error("estado não encontrado");
     if(pendingSaves>0||Date.now()<localUntil){ est={...est,slide:curEst.slide,momento_ativo:curEst.momento_ativo,rodada:curEst.rodada}; }
@@ -676,13 +677,14 @@ async function tick(){
     const rows=lastRows;
     const sig=JSON.stringify([md,est.momento_ativo,est.rodada,est.slide,rows.length,adminOK,timerFim(rows)]);
     if(sig!==lastSig){ lastSig=sig; md==="ecra"?renderEcra(est,rows):md==="tela"?renderTela(est,rows):renderAdmin(est,rows); }
-  }catch(e){ app.innerHTML=header()+`<div class="err">Erro de ligação: ${esc(e.message)}</div>`; console.error(e); }
+  }catch(e){ console.error(e); if(mode()==="p"){ pState.momento=null; if(!app.innerHTML||/Erro de ligação/.test(app.innerHTML)) app.innerHTML=header()+`<div class="card center"><p class="muted">A ligar… se demorar, recarregue a página.</p></div>`; } else { app.innerHTML=header()+`<div class="err">Erro de ligação: ${esc(e.message)}</div>`; } }
   finally{ ticking=false; }
 }
 function tema(){ const u=new URLSearchParams(location.search); let tm=u.get("tema"); if(tm){ try{localStorage.setItem("plmj_tema",tm);}catch(e){} } else { try{tm=localStorage.getItem("plmj_tema");}catch(e){} } return tm||"pro"; }
 function applyMode(){ const md=mode(); document.body.classList.toggle("t-pro",tema()==="pro"); document.body.classList.toggle("tela",md==="tela"); document.body.classList.toggle("ecra",md==="ecra"); lastSig=""; pState.momento=null; }
 applyMode(); tick();
 window.addEventListener("hashchange",()=>{applyMode(); tick();});
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden){ ticking=false; pState.momento=null; lastSig=""; tick(); } });
 setInterval(tick, mode()==="p"?2000:600);
 </script>
 </body>
