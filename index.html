@@ -197,6 +197,14 @@ body.t-pro .stage.cover .sub{background:none;box-shadow:none;transform:none;padd
 body.t-pro .stage.cover .by{color:rgba(255,255,255,.75)}
 body.t-pro .stage.cover svg.motif{display:block;opacity:.9}
 body.t-pro .stage .lead{font-weight:700}
+
+/* motion da capa — suave */
+.stage.cover .m-curve{stroke-dasharray:1200;stroke-dashoffset:1200;animation:mdraw 7s cubic-bezier(.4,0,.2,1) .8s forwards}
+.stage.cover .m-end{opacity:0;animation:mfade 1.6s ease 7.2s forwards}
+.stage.cover .m-dots{opacity:0;animation:mfade 2.4s ease .2s forwards}
+.stage.cover .m-rings circle{transform-origin:760px 300px;animation:mbreathe 14s ease-in-out infinite alternate}
+.stage.cover .m-r2{animation-delay:-3s} .stage.cover .m-r3{animation-delay:-6s} .stage.cover .m-r4{animation-delay:-9s}
+@keyframes mdraw{to{stroke-dashoffset:0}} @keyframes mfade{to{opacity:1}} @keyframes mbreathe{from{transform:scale(.985);opacity:.55}to{transform:scale(1.015);opacity:1}}
 </style>
 </head>
 <body>
@@ -504,7 +512,7 @@ function liveContent(kind,est,rows,slide){
   if(kind==="eval") return `<div class="qr" style="align-items:flex-start"><div id="qr"></div><div class="qrurl" style="color:#fff">Avalie a sessão</div></div>`;
   return "";
 }
-const MOTIF=`<svg class="motif" viewBox="0 0 900 900" fill="none" stroke-linecap="round"><g stroke="rgba(20,25,43,.12)" stroke-width="1.5"><circle cx="760" cy="300" r="140"/><circle cx="760" cy="300" r="260"/><circle cx="760" cy="300" r="380"/><circle cx="760" cy="300" r="500"/></g><path d="M80 780 L820 300" stroke="#14192B" stroke-width="3" stroke-dasharray="2 16"/><path d="M80 780 L820 120" stroke="#14192B" stroke-width="3" stroke-dasharray="2 16"/><path d="M80 780 C 420 760, 520 380, 820 210" stroke="#FF5A36" stroke-width="9"/><circle cx="820" cy="210" r="16" fill="#F2B705" stroke="#14192B" stroke-width="3"/><circle cx="80" cy="780" r="10" fill="#14192B"/></svg>`;
+const MOTIF=`<svg class="motif" viewBox="0 0 900 900" fill="none" stroke-linecap="round"><g class="m-rings" stroke="rgba(20,25,43,.12)" stroke-width="1.5"><circle class="m-r1" cx="760" cy="300" r="140"/><circle class="m-r2" cx="760" cy="300" r="260"/><circle class="m-r3" cx="760" cy="300" r="380"/><circle class="m-r4" cx="760" cy="300" r="500"/></g><path class="m-dots" d="M80 780 L820 300" stroke="#14192B" stroke-width="3" stroke-dasharray="2 16"/><path class="m-dots" d="M80 780 L820 120" stroke="#14192B" stroke-width="3" stroke-dasharray="2 16"/><path class="m-curve" d="M80 780 C 420 760, 520 380, 820 210" stroke="#FF5A36" stroke-width="9"/><circle class="m-end" cx="820" cy="210" r="16" fill="#F2B705" stroke="#14192B" stroke-width="3"/><circle cx="80" cy="780" r="10" fill="#14192B"/></svg>`;
 let lastSlideN=0;
 function renderEcra(est,rows){
   const {n:raw,p}=decode(est.slide); const n=Math.min(Math.max(1,raw),SLIDES.length); const s=SLIDES[n-1]; const ms=maxStep(s);
