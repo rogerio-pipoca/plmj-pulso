@@ -275,7 +275,7 @@ const SLIDES = [
  {id:"abre3", kicker:"Telemóvel", title:"Pulso 3", live:"abre", momento:"p3", body:`<p class="lead">Para fechar: sete itens, três minutos.</p><p>Três perguntas sobre si, duas respostas livres para a organização, e uma situação concreta da próxima semana.</p>`},
  {id:"res3", title:"Autoimagem × comportamento", live:"p3"},
 
- {id:"tese", layout:"accent", quote:"O cliente não paga para conhecer o obstáculo. Paga para descobrir o caminho.", live:"eval", momento:"fim", body:`<p>Obrigado.</p><p class="small" style="color:rgba(255,255,255,.85)">A folha de trabalho e o toolkit estão no vosso telemóvel, em PDF.</p>`}
+ {id:"tese", layout:"accent", quote:"Um cliente não contrata advogados para conhecer os obstáculos. Mas para descobrirem o caminho.", live:"eval", momento:"fim", body:`<p>Obrigado.</p><p class="small" style="color:rgba(255,255,255,.85)">No telemóvel: avaliação da sessão, folha e toolkit em PDF.</p>`}
 ];
 function steps(arr){ return `<div class="steps">`+arr.map((s,i)=>rv(i+1,`<div class="step"><b class="num">${i+1}</b><div><b class="blue">${s[0]}</b><br>${s[1]}</div></div>`)).join("")+`</div>`; }
 function rondaBody(caso){ return `<div class="cols2 w55"><div><p class="caso">${caso}</p><div class="timing"><div><b>10 min</b> folha: reenquadrar · 3 rotas com risco · recomendação</div><div><b>2 min</b> pitch para o trio-cliente</div><div><b>pulso</b> o trio-cliente avalia com a régua</div></div><div class="pitchline"></div></div><div class="livebox" id="live"></div></div>`; }
@@ -288,7 +288,7 @@ const MOMENTOS = {
   p2:{titulo:"Pulso 2",desc:"Sete perguntas sobre a sua área — não sobre o escritório inteiro."},
   regua:{titulo:"Régua da ronda",desc:"O vosso trio avalia o pitch que acabou de ouvir. Uma resposta por trio."},
   p3:{titulo:"Pulso 3",desc:"Para fechar. Sete itens."},
-  fim:{titulo:"Obrigado",desc:"A sessão terminou. Avalie a formação no QR do último slide. A folha de trabalho e o toolkit ficam aqui em PDF."}
+  fim:{titulo:"Obrigado",desc:"A sessão terminou."}
 };
 
 const Q = {
@@ -375,7 +375,7 @@ function grupoBar(){ const g=meuGrupo(pExtras); if(!g.duplas&&!g.trios) return "
 let INSTAGRAM="rogeriooliveira____";
 function renderParticipante(est){
   const m = est.momento_ativo; const info = MOMENTOS[m]||MOMENTOS.espera;
-  if(m==="espera"||m==="fim"){ app.innerHTML = header()+`<div class="card center"><h1>${esc(info.titulo)}</h1><p>${esc(info.desc)}</p>${m==="espera"?'<p class="muted">Mantenha esta página aberta.</p>':`<a class="primary" style="display:block;text-align:center;text-decoration:none" href="toolkit.pdf" target="_blank">Descarregar a folha de trabalho e o toolkit (PDF)</a>${INSTAGRAM?`<a class="ghost" style="display:block;text-align:center;text-decoration:none;margin-top:10px" href="https://instagram.com/${INSTAGRAM}" target="_blank">Seguir @${esc(INSTAGRAM)} no Instagram</a>`:""}`}</div>${m==="fim"?(pState.emailSent?'<div class="card center"><p>Obrigado — o toolkit segue por e-mail.</p></div>':`<div class="card"><h3>Quer receber o toolkit por e-mail? (opcional)</h3><p class="muted">Guardado à parte, sem ligação às suas respostas.</p><input type="text" id="em" inputmode="email" placeholder="o seu e-mail"><button class="primary" onclick="enviarEmail()">Enviar</button></div>`):""}`+rodape(); return; }
+  if(m==="espera"||m==="fim"){ app.innerHTML = header()+`<div class="card center"><h1>${esc(info.titulo)}</h1><p>${esc(info.desc)}</p>${m==="espera"?'<p class="muted">Mantenha esta página aberta.</p>':`<a class="primary" style="display:block;text-align:center;text-decoration:none" href="${EVAL_URL}" target="_blank">Avaliar a sessão (2 min)</a><a class="primary" style="display:block;text-align:center;text-decoration:none;background:var(--roxo)" href="toolkit.pdf" target="_blank">Folha de trabalho e toolkit (PDF)</a>${INSTAGRAM?`<a class="ghost" style="display:block;text-align:center;text-decoration:none;margin-top:10px" href="https://instagram.com/${INSTAGRAM}" target="_blank">Seguir @${esc(INSTAGRAM)} no Instagram</a>`:""}`}</div>${m==="fim"?(pState.emailSent?'<div class="card center"><p>Obrigado — o toolkit segue por e-mail.</p></div>':`<div class="card"><h3>Quer receber o toolkit por e-mail? (opcional)</h3><p class="muted">Guardado à parte, sem ligação às suas respostas.</p><input type="text" id="em" inputmode="email" placeholder="o seu e-mail"><button class="primary" onclick="enviarEmail()">Enviar</button></div>`):""}`+rodape(); return; }
   const key = m==="regua"?`regua_r${est.rodada}`:m;
   if(pState.sent[key]){ app.innerHTML = header()+`<div class="card center"><h2>Recebido.</h2><p class="muted">Obrigado. Aguarde a próxima ronda.</p>${m==="regua"?'<button class="ghost" onclick="editar()">Corrigir a avaliação</button>':""}</div>`+rodape(); return; }
   const qs = Q[m]; const a = pState.answers[key]||(pState.answers[key]={});
