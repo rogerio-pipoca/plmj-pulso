@@ -26,7 +26,7 @@ h1{font-size:1.9rem;color:var(--roxo)} h2{font-size:1.35rem;color:var(--roxo)} h
 .row{display:flex;gap:8px;flex-wrap:wrap}
 .row .opt{flex:1 1 auto;width:auto;min-width:56px;text-align:center}
 textarea,input[type=text]{width:100%;font:inherit;padding:11px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
-button.primary{display:block;width:100%;background:var(--azul);color:#fff;border:0;border-radius:12px;padding:14px;font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;margin-top:10px}
+a.primary,button.primary{display:block;width:100%;background:var(--azul);color:#fff;border:0;border-radius:12px;padding:14px;font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;margin-top:10px}
 button.primary:disabled{opacity:.45;cursor:default}
 button.ghost{background:#fff;color:var(--roxo);border:1.5px solid var(--roxo);border-radius:10px;padding:10px 14px;font:inherit;font-weight:600;cursor:pointer}
 .muted{color:var(--muted);font-size:.9rem}
@@ -255,7 +255,7 @@ const SLIDES = [
 
  {id:"res3", title:"Autoimagem × comportamento", live:"p3", momento:"p3"},
 
- {id:"tese", layout:"accent", quote:"O cliente não paga para conhecer o obstáculo. Paga para descobrir o caminho.", live:"eval", momento:"fim", body:`<p>Obrigado.</p>`}
+ {id:"tese", layout:"accent", quote:"O cliente não paga para conhecer o obstáculo. Paga para descobrir o caminho.", live:"eval", momento:"fim", body:`<p>Obrigado.</p><p class="small" style="color:rgba(255,255,255,.85)">A folha de trabalho e o toolkit estão no vosso telemóvel, em PDF.</p>`}
 ];
 function steps(arr){ return `<div class="steps">`+arr.map((s,i)=>rv(i+1,`<div class="step"><b class="num">${i+1}</b><div><b class="blue">${s[0]}</b><br>${s[1]}</div></div>`)).join("")+`</div>`; }
 function rondaBody(caso){ return `<div class="cols2 w55"><div><p class="caso">${caso}</p><div class="timing"><div><b>10 min</b> folha de 1 página</div><div><b>2 min</b> pitch para o trio-cliente</div><div><b>pulso</b> o trio-cliente avalia com a régua</div></div></div><div class="livebox" id="live"></div></div>`; }
@@ -268,7 +268,7 @@ const MOMENTOS = {
   p2:{titulo:"Pulso 2",desc:"Sete perguntas sobre a sua área — não sobre o escritório inteiro."},
   regua:{titulo:"Régua da ronda",desc:"O vosso trio avalia o pitch que acabou de ouvir. Uma resposta por trio."},
   p3:{titulo:"Pulso 3",desc:"Para fechar. Sete itens."},
-  fim:{titulo:"Obrigado",desc:"A sessão terminou. Avalie a formação no QR do último slide."}
+  fim:{titulo:"Obrigado",desc:"A sessão terminou. Avalie a formação no QR do último slide. A folha de trabalho e o toolkit ficam aqui em PDF."}
 };
 
 const Q = {
@@ -332,10 +332,10 @@ const PURL = ()=>location.origin+location.pathname;
 
 /* ---------- participante ---------- */
 let pState={momento:null,answers:{},sent:{}};
-function header(sub){return `<div class="top"><div><div class="brand">Pulso</div><div class="sub">${esc(sub||"PLMJ · Resolução de Problemas")}</div></div><div class="sub">anónimo</div></div>`;}
+function header(sub){return `<div class="top"><div><div class="brand">Pulso</div><div class="sub">${esc(sub||"PLMJ · Problem Solving")}</div></div><div class="sub"><a href="toolkit.pdf" target="_blank" style="color:var(--azul);font-weight:700;text-decoration:none">Folha + toolkit (PDF)</a><br>anónimo</div></div>`;}
 function renderParticipante(est){
   const m = est.momento_ativo; const info = MOMENTOS[m]||MOMENTOS.espera;
-  if(m==="espera"||m==="fim"){ app.innerHTML = header()+`<div class="card center"><h1>${esc(info.titulo)}</h1><p>${esc(info.desc)}</p>${m==="espera"?'<p class="muted">Mantenha esta página aberta.</p>':""}</div>`; return; }
+  if(m==="espera"||m==="fim"){ app.innerHTML = header()+`<div class="card center"><h1>${esc(info.titulo)}</h1><p>${esc(info.desc)}</p>${m==="espera"?'<p class="muted">Mantenha esta página aberta.</p>':'<a class="primary" style="display:block;text-align:center;text-decoration:none" href="toolkit.pdf" target="_blank">Descarregar a folha de trabalho e o toolkit (PDF)</a>'}</div>`; return; }
   const key = m==="regua"?`regua_r${est.rodada}`:m;
   if(pState.sent[key]){ app.innerHTML = header()+`<div class="card center"><h2>Recebido.</h2><p class="muted">Obrigado. Aguarde a próxima ronda.</p>${m==="regua"?'<button class="ghost" onclick="editar()">Corrigir a avaliação</button>':""}</div>`; return; }
   const qs = Q[m]; const a = pState.answers[key]||(pState.answers[key]={});
