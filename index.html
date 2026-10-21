@@ -205,9 +205,9 @@ const SLIDES = [
   body:`<div class="cols2"><div><p>Dois problemas que viveram na PLMJ. Em que quadrante caem?</p><p>Mão no ar por quadrante.</p>${rv(1,`<p class="lead blue">Quantos «complexos» foram tratados como «complicados»?</p>`)}</div><div class="quad"><div>Simples</div><div>Complicado</div><div class="p">Complexo</div><div class="p">Caótico</div></div></div>`},
 
  {id:"casa", title:"Isto é da casa ou do ofício?", live:"p1b",
-  after:rv(1,`<p class="lead blue">Os números são vossos, de há uma hora. Não há diagnóstico meu aqui — só a pergunta.</p>`)},
+},
 
- {id:"klink1", layout:"photo", img:"img/klink-barco.jpg", pos:"center 40%", kicker:"1984 · Lüderitz, Namíbia → Praia da Espera, Bahia", quote:"O risco não foi eliminado. Foi desenhado.", cite:"Amyr Klink · Cem Dias Entre Céu e Mar",
+ {id:"klink1", layout:"photo", img:"img/klink-barco.jpg", pos:"center 40%", kicker:"1984 · Lüderitz, Namíbia → Praia da Espera, Bahia", quote:"O risco não foi eliminado.\nFoi desenhado.", cite:"Amyr Klink · Cem Dias Entre Céu e Mar",
   body:rv(1,`<p>Queria um barco que não virasse. Não existia sem ficar pesado e lento.</p><p>O engenheiro desenhou um barco <b>feito para virar e voltar sozinho</b>. Virou várias vezes. Voltou todas.</p>`)},
 
  {id:"klink2", layout:"photo", img:"img/klink-mapa.jpg", pos:"center 55%", side:true, kicker:"100 dias · 6.800 km · a remo", quote:"«Metade do que estava escrito no meu projeto não aconteceu. Ainda bem!»", cite:"Amyr Klink",
@@ -413,13 +413,13 @@ function renderEcra(est,rows){
   if(s.layout==="cover"){
     inner=`<div class="stage cover ${s.img?'hasimg':''}">${s.img?`<div class="bg" style="background-image:url(${s.img});background-position:right center;background-size:${s.size||'cover'}"></div><div class="shade"></div>`:MOTIF}<div class="content"><h1>${s.title}</h1><div class="sub">${esc(s.sub)}</div><div class="by">${esc(s.by)}</div></div><div class="logos"><img src="${ASSETS.novaColor}" alt=""><img src="${ASSETS.plmjSq}" alt=""></div>${nav}</div>`;
   } else if(s.layout==="illus"){
-    inner=`<div class="stage illus"><div class="bg" style="background-image:url(${s.img});background-position:${s.pos||'center'};${s.size?`background-size:${s.size};`:''}"></div><div class="shade"></div>${logoN}${logoP}<div class="content" style="${s.cw?`width:${s.cw}px`:''}">${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}${s.title?`<h1 class="title">${s.title}</h1>`:""}${s.quote?`<div class="quote">${esc(s.quote)}</div>`:""}${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${foot}${nav}${pg}</div>`;
+    inner=`<div class="stage illus"><div class="bg" style="background-image:url(${s.img});background-position:${s.pos||'center'};${s.size?`background-size:${s.size};`:''}"></div><div class="shade"></div>${logoN}${logoP}<div class="content" style="${s.cw?`width:${s.cw}px`:''}">${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}${s.title?`<h1 class="title">${s.title}</h1>`:""}${s.quote?`<div class="quote">${esc(s.quote).replace(/\n/g,"<br>")}</div>`:""}${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${foot}${nav}${pg}</div>`;
   } else if(s.layout==="photo"){
-    inner=`<div class="stage photo ${s.side?'side':''}"><div class="bg" style="background-image:url(${s.img});background-position:${s.pos||'center'}"></div><div class="shade"></div>${logoN}${logoP}<div class="content">${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote)}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${foot}${nav}${pg}</div>`;
+    inner=`<div class="stage photo ${s.side?'side':''}"><div class="bg" style="background-image:url(${s.img});background-position:${s.pos||'center'}"></div><div class="shade"></div>${logoN}${logoP}<div class="content">${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote).replace(/\n/g,"<br>")}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${foot}${nav}${pg}</div>`;
   } else if(s.quote){
     const live=s.live?liveContent(s.live,est,rows,s):"";
     const bgq=s.bg?`<div class="bg" style="background-image:url(${s.bg});background-position:${s.pos||'center'}"></div><div class="shade ${s.layout==='accent'?'accentbg':'heavy'}"></div>`:"";
-    inner=`<div class="stage ${s.layout||''} ${s.bg?'hasbg':''}">${bgq}${logoN}${logoP}<div class="content" style="${s.live?'display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:center':''}"><div>${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote)}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${s.live?`<div>${live}</div>`:""}</div>${foot}${nav}${pg}</div>`;
+    inner=`<div class="stage ${s.layout||''} ${s.bg?'hasbg':''}">${bgq}${logoN}${logoP}<div class="content" style="${s.live?'display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:center':''}"><div>${s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:""}<div class="quote">${esc(s.quote).replace(/\n/g,"<br>")}</div>${s.cite?`<div class="cite">${esc(s.cite)}</div>`:""}${s.body||""}</div>${s.live?`<div>${live}</div>`:""}</div>${foot}${nav}${pg}</div>`;
   } else {
     const kick=s.kicker?`<div class="kicker">${esc(s.kicker)}</div>`:"";
     const title=s.num?`<div class="numtitle"><span class="num">${s.num}</span><h1 class="title" style="margin:0">${esc(s.title)}</h1></div>`:`${kick}<h1 class="title">${esc(s.title)}</h1>`;
